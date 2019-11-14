@@ -1,0 +1,56 @@
+## Set all editors to the custom configuration by default
+RTE.default.preset = c3_full
+RTE.config.tt_content.bodytext.preset = c3_full
+RTE.config.tx_news_domain_model_news.bodytext.preset = c3_full
+RTE.config.tt_content.header.preset = c3_inline
+
+#RTE.default.proc {
+#    # no remapping should happen, tags should stay as they are
+#    HTMLparser_rte {
+#        tags {
+#            b.remap >
+#            i.remap >
+#        }
+#    }
+#    # no remapping should happen, tags should stay as they are
+#    HTMLparser_db {
+#        tags {
+#            strong.remap >
+#            em.remap >
+#        }
+#    }
+#}
+
+TCEFORM {
+	tt_content {
+		## Customize layout class for content elements
+        layout {
+            addItems {
+            }
+        }
+        frame_class {
+			altLabels {
+			}
+			addItems {
+			}
+		}
+		## Customize space before & after class for content elements
+		space_before_class {
+			#removeItems = extra-small,extra-large
+		}
+		space_after_class {
+			#removeItems = extra-small,extra-large
+		}
+		## Customize header labels of content elements
+		header_layout {
+			addItems.50 = Baxi Style [.p + .h1]
+			#removeItems = 0,5
+			#altLabels {
+			#	1 = Seitenüberschrift [H1]
+			#	2 = Inhaltliche Überschrift [H2]
+			#	3 = Zwischenüberschrift [H3]
+			#	4 = Schriftgröße [H4]
+			#}
+		}
+	}
+}

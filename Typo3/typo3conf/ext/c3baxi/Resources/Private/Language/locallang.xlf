@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-06-05T10:53:49Z" product-name="c3baxi">
+		<header/>
+		<body>
+			<trans-unit id="tx_c3baxi_domain_model_haltestelle">
+				<source>Haltestelle</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_haltestelle.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_haltestelle.latitude">
+				<source>Latitude</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_haltestelle.longitude">
+				<source>Longitude</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_haltestelle.zone">
+				<source>Zone</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_zone">
+				<source>Zone</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_zone.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_linie">
+				<source>Linie</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_linie.nr">
+				<source>Nr</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_linie.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrt">
+				<source>Fahrt</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrt.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrt.linie">
+				<source>Linie</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrtzeit">
+				<source>Fahrt Zeit</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrtzeit.zeit">
+				<source>Zeit</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrtzeit.fahrt">
+				<source>Fahrt</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_fahrtzeit.zone">
+				<source>Zone</source>
+			</trans-unit>
+			<trans-unit id="company.new">
+				<source>neues Unternehmen</source>
+			</trans-unit>
+			<trans-unit id="company.import">
+				<source>Unternehmen importieren</source>
+			</trans-unit>
+			<trans-unit id="company.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="company.address">
+				<source>Adresse</source>
+			</trans-unit>
+			<trans-unit id="company.street">
+				<source>Strasse</source>
+			</trans-unit>
+			<trans-unit id="company.city">
+				<source>Ort</source>
+			</trans-unit>
+			<trans-unit id="company.zip">
+				<source>PLZ</source>
+			</trans-unit>
+			<trans-unit id="company.contact">
+				<source>Kontaktdaten</source>
+			</trans-unit>
+			<trans-unit id="company.contact_person">
+				<source>Ansprechpartner</source>
+			</trans-unit>
+			<trans-unit id="company.telefon">
+				<source>Telefon</source>
+			</trans-unit>
+			<trans-unit id="company.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="company.info">
+				<source>Info / Notizen</source>
+			</trans-unit>
+			<trans-unit id="booking.no_bookings_available">
+				<source>Es sind momentan keine Buchungen vorhanden</source>
+			</trans-unit>
+			<trans-unit id="rating.type.booking">
+				<source>Buchung</source>
+			</trans-unit>
+			<trans-unit id="rating.no_comment">
+				<source>ohne Kommentar</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

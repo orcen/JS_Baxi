@@ -1,0 +1,23 @@
+.button {
+	border: 2px solid #AAA;
+	background-color: #CCC;
+	padding: $offset/2 $gutter;
+	border-radius: $global-border-radius--large;
+	text-transform: uppercase;
+	font-weight: bold;
+
+	&--submit {
+		background-color: #95c11f;
+		border: 2px solid darken(#95c11f, 15%);
+		color: #FFF;
+		margin-left: auto;
+
+		.button + & {
+			margin-left: $gutter;
+		}
+	}
+
+	&--cancel {
+		margin-right: auto;
+	}
+}

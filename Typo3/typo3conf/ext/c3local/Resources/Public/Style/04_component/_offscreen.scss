@@ -1,0 +1,22 @@
+#offscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	transform: translateX(-100%);
+	transition: transform .3s linear;
+	will-change: transform;
+	background: $color_tertiary;
+	z-index: 10000;
+
+	padding: $offset*4 $gutter;
+
+	&.from-right {
+		transform: translateX(100%);
+	}
+
+	&.in {
+		transform: translateX(0);
+	}
+}

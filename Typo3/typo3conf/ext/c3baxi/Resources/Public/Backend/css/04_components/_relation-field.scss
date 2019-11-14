@@ -1,0 +1,36 @@
+.relation_field {
+	display: flex;
+	justify-content: flex-start;
+
+	&-block {
+		flex: 1 1 50%;
+		max-width: 400px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		@at-root {
+			& + .relation_field-block {
+				margin-left: $gutter;
+			}
+		}
+
+		h4 {
+			font-weight: bold;
+		}
+	}
+
+	&-list {
+		height: 25em;
+		overflow: auto;
+		border: 1px solid #aaaaaa;
+		padding: 0 $gutter/2;
+
+		> * {
+			margin: 0;
+		}
+
+		> .list {
+			min-height: 100%;
+		}
+	}
+}

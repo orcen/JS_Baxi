@@ -1,0 +1,24 @@
+{
+    "name": "c3/c3baxi",
+    "type": "typo3-cms-extension",
+    "description": "",
+    "authors": [],
+    "version": "1.0.0",
+    "require": {
+        "typo3/cms-core": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "C3\\C3baxi\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "C3\\C3baxi\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "c3baxi": "self.version",
+        "typo3-ter/c3baxi": "self.version"
+    }
+}

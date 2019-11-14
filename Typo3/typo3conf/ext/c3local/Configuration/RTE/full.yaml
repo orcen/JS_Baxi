@@ -1,0 +1,76 @@
+# Load default processing options
+imports:
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+
+# Basis configuration for the editor
+# For complete documentation see http://docs.ckeditor.com/#!/api/CKEDITOR.config
+editor:
+  config:
+    contentsCss: "EXT:c3local/Resources/Public/Style/local.css"
+    height: 500
+    allowedContent: true
+    extraAllowedContent:
+      - span
+      - i
+
+    processing:
+      HTMLparse_db:
+        tags:
+          span:
+            rmTagIfNoAttrib: false
+            removeEmpty: false
+
+    stylesSet:
+      # block level styles
+      - { name: "Styling (h1)", element: ['h2', 'h3', 'h4', 'h5', 'h6', 'p'], attributes: { 'class': 'h1' }}
+      - { name: "Styling (h2)", element: ['h1', 'h3', 'h4', 'h5', 'h6', 'p'], attributes: { 'class': 'h2' }}
+      - { name: "Styling (h3)", element: ['h1', 'h2', 'h4', 'h5', 'h6', 'p'], attributes: { 'class': 'h3' }}
+      - { name: "Styling (h4)", element: ['h1', 'h2', 'h3', 'h5', 'h6', 'p'], attributes: { 'class': 'h4' }}
+      - { name: "Styling (p)", element: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], attributes: { 'class': 'p' }}
+      - { name: "Link-Button", element: ['a'], attributes: { 'class': 'link-button' }}
+      - { name: "Link-Back", element: ['a'], attributes: { 'class': 'back' }}
+      - { name: "JS: GA Opt-Out", element: ['span'], attributes: { 'class': 'js-gaOptOut' }}
+      - { name: "FB: FB Opt-Out", element: ['span'], attributes: { 'class': 'js-fbOptOut' }}
+
+    format_tags: "p;h1;h2;h3;h4"
+
+    toolbar:
+      - { name: document, items: [ Source ] }
+      - { name: clipboard, items: [ Cut, Copy, Paste, PasteText, PasteFromWord, "-", Undo, Redo ] }
+      - { name: editing, items: [ Find, Replace, SelectAll ] }
+      - "/"
+      - { name: basicstyles, items: [ RemoveFormat, Bold, Italic, Underline, Subscript, Superscript ] }
+      - { name: align, items: [ JustifyLeft, JustifyCenter, JustifyRight, JustifyBlock ] }
+      - { name: insert, items: [ NumberedList, BulletedList, SpecialChar, Table ] }
+      - { name: links, items: [ Link, Unlink, Anchor ] }
+      - "/"
+      - { name: styles, items: [ Styles, Format ] }
+
+    justifyClasses:
+      - align-left
+      - align-center
+      - align-right
+      - align-justify
+
+    extraPlugins:
+      - justify
+      - find
+
+    removePlugins:
+      - image
+
+    removeButtons:
+
+    allowTags:
+      - svg
+      - use
+      - i
+      - span
+
+    allowTagsOutside:
+      - svg
+      - use
+      - i
+      - span

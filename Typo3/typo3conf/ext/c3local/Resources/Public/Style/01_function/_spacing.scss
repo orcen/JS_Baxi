@@ -1,0 +1,10 @@
+$offset: 26px !default;
+$gutter: 25px !default;
+
+@function offset( $n : 1) {
+	@return $offset * $n;
+}
+
+@function gutter( $n : 1) {
+	@return $gutter * $n;
+}

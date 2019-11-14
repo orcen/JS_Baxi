@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="a" data-name="Unbenannter Verlauf 3" x1="13.041" y1="85.812" x2="13.041" y2="81.645" gradientTransform="matrix(24, 0, 0, -24, -262.98, 2059.48)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#535967"/>
+      <stop offset="1" stop-color="#292c33"/>
+    </linearGradient>
+    <linearGradient id="b" data-name="Unbenannter Verlauf 2" x1="15.349" y1="82.457" x2="15.349" y2="78.291" gradientTransform="matrix(20, 0, 0, -20, -256.98, 1657.48)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.365" stop-color="#e6e6e6"/>
+      <stop offset="1" stop-color="#d9d9d9"/>
+    </linearGradient>
+  </defs>
+  <title>Favoriten_kontur</title>
+  <g>
+    <circle cx="50" cy="50" r="50" fill="url(#a)"/>
+    <path d="M49.958,8.333a41.688,41.688,0,1,0,.042,0ZM63.417,72.458,50,64.375,36.583,72.458a2.083,2.083,0,0,1-3.125-2.25L37,54.958,25.208,44.75a2.1,2.1,0,0,1,1.209-3.667L42,39.75l6.083-14.375a2.084,2.084,0,0,1,3.834,0L58,39.708l15.583,1.334a2.083,2.083,0,0,1,1.167,3.666L62.958,54.917,66.5,70.208a2.083,2.083,0,0,1-3.083,2.25Z" transform="translate(0 0)" fill="url(#b)"/>
+  </g>
+</svg>

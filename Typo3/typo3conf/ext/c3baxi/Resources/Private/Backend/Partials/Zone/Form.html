@@ -1,0 +1,65 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:form action="{f:if(condition: '{zone}', then: 'update', else: 'create')}"
+        name="Zone"
+        object="{zone}" additionalAttributes="{'data-ajax':'C3BaxiZone'}">
+
+    <f:if condition="{zone}">
+        <f:form.hidden name="zone" value="{zone}" />
+    </f:if>
+
+    <p>
+        <label>Name</label>
+        <f:form.textfield name="name" value="{zone.name}" additionalAttributes="{autocomplete:'off'}" />
+    </p>
+
+    <div class="relation_field">
+        <div class="relation_field-block">
+            <h4>Zugewiessene Haltestellen</h4>
+            <p class="filter filter--simple">
+                <label>Filtern:</label>
+                <f:form.textfield name="station_filter" value=""
+                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#stationen'}"
+                />
+            </p>
+            <div class="relation_field-list">
+                <f:if condition="! {zone}">
+                    <f:form.hidden name="liste" additionalAttributes="{autocomplete:'off'}" value="" />
+                </f:if>
+                <ul class="list" id="stations" data-droppable="true" data-uid="{zone.uid}">
+                    <f:for each="{assigned_stations}" as="station">
+                        <li class="list-item" data-draggable="true" data-uid="{station.uid}">{station.name}</li>
+                    </f:for>
+                </ul>
+
+            </div>
+        </div>
+        <div class="relation_field-block">
+            <h4>Verf&uuml;gbare Haltestellen</h4>
+            <p class="filter filter--simple">
+                <label>Filtern:</label>
+                <f:form.textfield name="station_filter" value=""
+                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#free_stations'}"
+                />
+            </p>
+            <div class="relation_field-list">
+                <ul class="list" id="free_stations" data-droppable="true" data-uid="-{zone.uid}">
+                    <f:for each="{free_stations}" as="station" key="uid">
+                        <li class="list-item" data-draggable="true" data-uid="{uid}">{station}</li>
+                    </f:for>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bar bar--controls">
+        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
+        <f:form.button type="submit" name="action_after" value="close" class="button button--submit">Speichern und schliessen</f:form.button>
+        <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
+    </div>
+
+
+</f:form>
+</html>

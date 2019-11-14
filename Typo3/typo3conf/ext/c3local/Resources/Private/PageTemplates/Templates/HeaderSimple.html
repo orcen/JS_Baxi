@@ -1,0 +1,30 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <header class="header">
+        <v:page.resources.fal table="pages" field="media" uid="{page.uid}" as="images" slide="-1">
+            <picture class="header-banner">
+
+                <f:for each="{images}" as="image">
+
+                    <f:if condition="{v:condition.string.contains(haystack:'{image.url}',needle:'2x',then:'true',else:'false')} == 'true'">
+                        <f:then>
+                            <source srcset="{image.url}"
+                                    media="(max-width: {image.width}px) AND (-webkit-min-device-pixel-ratio: 2)" />
+                        </f:then>
+                        <f:else>
+                            <source srcset="{image.url}" media="(max-width: {image.width}px)" />
+                        </f:else>
+                    </f:if>
+
+                </f:for>
+                <img src="{images.0.url}" />
+            </picture>
+        </v:page.resources.fal>
+
+
+    </header>
+</f:section>

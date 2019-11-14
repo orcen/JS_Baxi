@@ -1,0 +1,74 @@
+
+<f:form action="findRoute" pageUid="11" id="routeFinder">
+    <h1>Fahrt buchen</h1>
+
+    <div class="js-steps">
+        <div role="group" class="form-group">
+            <p class="align-center">Wähle zuerst deine <strong class="underline">Starthaltestelle</strong></p>
+            <p>
+                <f:form.textfield name="routeShow[start]"
+                                  placeholder="Starthaltestelle wählen"
+                                  additionalAttributes="{'data-autocomplete' : 'haltestelle'}" />
+                <label>Starthaltestelle w&auml;hlen</label>
+                <f:form.hidden name="route[start]" id="routeStart" value="" />
+            </p>
+            <p class="button-wrap button-wrap--next">
+                <f:form.button name="next" class="btn btn--next stepForm-next">
+                    <span>Weiter</span>
+                    <baxi:icon name="Pfeil_R" width="30" height="30" />
+                </f:form.button>
+            </p>
+        </div>
+        <div role="group" style="display:none;" class="form-group">
+
+            <p class="align-center">Wähle jetzt deine <strong class="underline">Zielhaltestelle</strong></p>
+            <p>
+                <f:form.textfield name="routeShow[end]" placeholder="Zielhaltestelle wählen"
+                                  additionalAttributes="{'data-autocomplete' : 'haltestelle'}" />
+                <label>Zielhaltestelle w&auml;hlen</label>
+                <f:form.hidden name="route[end]" id="routeEnd" value="" />
+            </p>
+            <p class="button-wrap button-wrap--back">
+                <f:form.button name="next" class="btn btn--back stepForm-prev">
+                    <baxi:icon name="Pfeil_L" width="30" height="30" />
+                    <span>Zur&uuml;ck</span>
+                </f:form.button>
+            </p>
+            <p class="button-wrap button-wrap--next">
+                <f:form.button name="next" class="btn btn--next stepForm-next">
+                    <span>Weiter</span>
+                    <baxi:icon name="Pfeil_R" width="30" height="30" />
+                </f:form.button>
+            </p>
+
+        </div>
+        <div role="group" style="display:none;" class="form-group">
+
+            <p class="align-center">Wähle zuletzt noch deine gewünschte
+                <strong class="underline">Abfahrtszeit</strong></p>
+            <p>
+                <f:form.textfield name="routeShow[time]"
+                                  additionalAttributes="{autocompplete: 'off', data-picker: 'time', data-target: 'routeTime'}"
+                                  readonly="true"
+                                  placeholder="Abfahrtszeit wählen" />
+                <label>Abfahrtszeit w&auml;hlen</label>
+                <f:form.hidden name="route[time]" id="routeTime" value="" />
+            </p>
+            <p class="button-wrap button-wrap--back">
+                <f:form.button name="next" class="btn btn--back stepForm-prev">
+                    <baxi:icon name="Pfeil_L" width="30" height="30" />
+                    <span>Zur&uuml;ck</span>
+                </f:form.button>
+            </p>
+            <p class="button-wrap button-wrap--next">
+                <f:form.button name="next" class="btn btn--next">
+                    <span>Fahrt suchen</span>
+                    <baxi:icon name="Pfeil_R" width="30" height="30" />
+                </f:form.button>
+            </p>
+
+        </div>
+    </div>
+
+
+</f:form>

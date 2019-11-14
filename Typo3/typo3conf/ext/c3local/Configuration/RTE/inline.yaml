@@ -1,0 +1,31 @@
+# Load default processing options
+imports:
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+
+# Basis configuration for the editor
+# For complete documentation see http://docs.ckeditor.com/#!/api/CKEDITOR.config
+editor:
+  config:
+    height: 50
+    autoParagraph: true
+    enterMode: 2
+
+    toolbar:
+      - { name: document, items: [ Source ] }
+      - { name: clipboard, items: [ Cut, Copy, Paste, PasteText, PasteFromWord, "-", Undo, Redo ] }
+      - { name: editing, items: [ Find, Replace, SelectAll ] }
+      - "/"
+      - { name: basicstyles, items: [ RemoveFormat, Bold, Italic, Underline, Subscript, Superscript ] }
+      - { name: links, items: [ Link, Unlink, Anchor ] }
+      - { name: styles, items: [ Styles ] }
+
+    extraPlugins:
+      - justify
+      - find
+
+    removePlugins:
+      - image
+
+    removeButtons:

@@ -1,0 +1,64 @@
+label {
+	min-width: 15ch;
+	display: inline-block;
+}
+
+input {
+	&[type="text"],
+	&[type="number"],
+	&[type="date"],
+	&[type="password"],
+	&[type="email"]{
+		border-radius: $global-border-radius;
+		padding: $offset/4 $gutter/2;
+		min-width: 30ch;
+	}
+
+	&[type="text"]{}
+	&[type="number"]{}
+	&[type="date"]{}
+	&[type="password"]{}
+
+
+
+	&[type="checkbox"]{}
+	&[type="radio"]{}
+
+	&.time {
+		min-width: 8ch;
+		text-align: center;
+	}
+}
+
+textarea{
+	border-radius: $global-border-radius;
+	padding: $offset/4 $gutter/2;
+	vertical-align: top;
+}
+
+select {
+	border-radius: $global-border-radius;
+	padding: $offset/4 $gutter/2;
+	min-width: 30ch;
+}
+
+
+.checkbox_group {
+
+	label {
+		border-radius: $global-border-radius;
+		padding: $offset/4 $gutter/2;
+		border: 1px solid #AAA;
+		background-color: #CCC;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		min-width: 4ch;
+	}
+
+	input[type="checkbox"]{
+		margin: 0 1ch 0 0;
+		border-radius: $global-border-radius;
+		display: inline-block;
+	}
+}

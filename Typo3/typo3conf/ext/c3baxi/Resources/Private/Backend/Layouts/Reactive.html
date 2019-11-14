@@ -1,0 +1,21 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:be.container
+        includeCssFiles="{0: '{f:uri.resource(path:\'Backend/css/reactive.css\')}'}"
+        includeJsFiles="{
+            0:'{f:uri.resource(path: \'Backend/JavaScript/tabs.js\')}',
+             2 : '{f:uri.resource(path: \'JavaScript/C3DragAndDrop.js\')}',
+             10: '{f:uri.resource(path: \'Backend/JavaScript/default.js\')}'}">
+
+    <div class="reactive">
+
+        <header class="header">
+            <f:render section="header" />
+        </header>
+
+        <main class="content">
+            <f:render section="content" />
+        </main>
+    </div>
+
+</f:be.container>
+</html>

@@ -1,0 +1,55 @@
+<div>
+    <ul class="list">
+        <f:for each="{companies}" as="company">
+            <li class="list-item baxi_collapsible">
+                <h4>
+                    <span data-toggle="collapse"
+                          data-target="#company-{company.uid}">
+                              <core:icon identifier="actions-view-list-expand" />
+                          </span>
+                    {company.name}
+                </h4>
+                <span class="list-actions">
+                    <f:link.action class="btn btn-icon btn-default" action="edit" controller="Company"
+                                   arguments="{company : company}">
+                        <core:icon identifier="actions-open" />
+                    </f:link.action>
+                </span>
+                <div id="company-{company.uid}" class="baxi_tabs baxi_collapsible-block list">
+                    <nav class="baxi_tabs-header">
+                        <span data-target="routes-{company.uid}" class="is-active">Linien</span>
+                        <span data-target="contact-{company.uid}">Kontakt</span>
+                        <span data-target="info-{company.uid}">Info</span>
+                    </nav>
+
+                    <div data-tabid="routes-{company.uid}" class="baxi_tabs-tab is-active">
+                        <f:if condition="{company.routes}">
+                            <f:then>
+                                <f:for each="{company.routes}" as="route">
+                                    <p>{route.nr} - {route.name}</p>
+                                </f:for>
+                            </f:then>
+                            <f:else>
+                                <p>keine zugewiesenen Linie</p>
+                            </f:else>
+                        </f:if>
+                    </div>
+
+                    <div data-tabid="contact-{company.uid}" class="baxi_tabs-tab">
+                        <address>
+                            <p><strong><f:translate key="company.name"/>:</strong> {company.name}</p>
+                            <p><strong><f:translate key="company.contact_person"/>:</strong> {company.contactPerson}</p>
+                            <p><strong><f:translate key="company.street"/>:</strong> {company.street}</p>
+                            <p><strong><f:translate key="company.zip"/>:</strong> {company.zip}  {company.city}</p>
+                            <p><strong><f:translate key="company.telefon"/>:</strong> {company.telefon}</p>
+                            <p><strong><f:translate key="company.email"/>:</strong> <f:link.email email="{company.email}">{company.email}</f:link.email></p>
+                        </address>
+                    </div>
+                    <div data-tabid="info-{company.uid}" class="baxi_tabs-tab">
+                        {company.info}
+                    </div>
+                </div>
+            </li>
+        </f:for>
+    </ul>
+</div>

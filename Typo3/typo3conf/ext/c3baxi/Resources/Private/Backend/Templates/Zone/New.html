@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:layout name="Reactive" />
+
+    <f:section name="header">
+
+        <nav class="bar">
+            <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
+            <h1>New Zone</h1>
+        </nav>
+
+    </f:section>
+
+    <f:section name="content">
+
+        <div class="block">
+            <f:render partial="Zone/Form" arguments="{_all}" />
+        </div>
+    </f:section>
+</html>

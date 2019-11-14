@@ -1,0 +1,176 @@
+.form {
+
+	&--account {
+		margin-top: $offset;
+	}
+}
+.form-group {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+
+	> p {
+		font-size: $font-size-lg;
+		flex: 1 1 100%;
+	}
+
+	@media (min-width: 640px) {
+		> .button-wrap {
+			flex-basis: 200px;
+
+			+ .button-wrap {
+				margin-left: $gutter;
+			}
+
+			&--next {
+				order: 10;
+			}
+		}
+	}
+
+
+	.control-label {
+		display: block;
+		text-align: center;
+		color: $color_white;
+		margin-bottom: $offset/4;
+		font-size: $font-size-xs;
+		font-weight: bold;
+		flex: 1 0 100%;
+	}
+
+	input[type="text"],input[type="email"],input[type="search"],input[type="number"],input[type="password"], select, textarea {
+		font-weight: bold;
+	}
+
+	.alert {
+		position: absolute;
+		z-index: 100;
+		top: 100%;
+		left: 0;
+		width: calc(100% - 30px);
+		margin: 0 15px;
+		padding: $offset/2 $gutter;
+		background: mix($color_secondary, $color_black, 80);
+		border: 1px solid $color_secondary;
+		border-radius: $offset/2;
+		text-align: center;
+
+		h4 {
+			margin-bottom: 0;
+			font-weight: bold;
+		}
+
+		.close {
+			background: transparent;
+			position: absolute;
+			top: $offset/4;
+			right: $gutter/2;
+			border: 0;
+			color: $color_black;
+		}
+	}
+
+	& + & {
+		margin-top: $offset/2;
+	}
+
+	& + &.femanager_submit,
+	& + &--submit{
+		margin-top: $offset*1.5;
+	}
+}
+
+.field-wrap {
+	&:first-of-type {
+		margin-top: 0;
+	}
+
+	.results--reserve & {
+		label {
+			display: block;
+			text-align: center;
+			margin-bottom: 5px;
+			color: $color_white;
+			font-size: $font-size-sm;
+			font-weight: bold;
+
+			small {
+				font-weight: 400;
+			}
+		}
+
+		.field-description {
+			text-align: center;
+			display: block;
+			color: $color_white;
+			font-size: $font-size-xs;
+			margin-top: 2px;
+		}
+
+		.btn + .field-description {
+			margin-top: 6px;
+			font-size: $font-size-sm;
+		}
+	}
+}
+
+input {
+	//&:autofill {
+	//	background: #FFF;
+	//	filter: none;
+	//}
+	//&:-moz-autofill {
+	//	background: #FFF;
+	//	filter: none;
+	//}
+
+	&:-moz-autofill, &:-moz-autofill-preview {
+		filter: none;
+	}
+
+	&:-webkit-autofill {
+		background: #FFF;
+		filter: none;
+	}
+
+	&[type="number"] {
+		-moz-appearance: textfield;
+		-webkit-appearance: textfield;
+		appearance: textfield;
+	}
+}
+
+
+.felogin{
+	&-forgot-link {
+		font-weight: bold;
+		text-align: center;
+	}
+}
+
+.femanager{
+	&_terms.form-group {
+		display: block;
+		text-align: center;
+		color: $color_white;
+		margin-top: $offset*2;
+
+		h3 {
+			margin-bottom: $offset/2;
+			font-weight: bold;
+		}
+		p {
+			margin: 0;
+			a {
+				text-decoration: underline;
+			}
+		}
+
+		.checkbox {
+			margin-top: $offset;
+			font-weight: bold;
+		}
+	}
+
+}

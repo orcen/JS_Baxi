@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+
+    <header class="header">
+
+        <nav class="header-nav">
+            <f:link.page class="header-button js-transition" pageUid="2">
+                <span class="btn btn--glass btn--round has-icon">
+                    <baxi:icon name="Konto" />
+                </span>
+                Konto
+            </f:link.page>
+            <span data-action="help" data-question="4" class="header-button">
+                <span class="btn btn--glass btn--round has-icon">
+                    <baxi:icon name="Hilfe" />
+                </span>
+                Hilfe
+            </span>
+        </nav>
+
+        <f:image class="header-banner" src="EXT:c3local/Resources/Public/Images/BAXI_App_Grafiken_Home@2x.png" />
+    </header>
+</f:section>

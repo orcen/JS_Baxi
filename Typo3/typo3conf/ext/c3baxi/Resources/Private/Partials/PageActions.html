@@ -1,0 +1,31 @@
+<div class="page_actions">
+    <f:link.page pageUid="{pageUid}" class="page_actions-button">
+        <baxi:icon name="back" />
+        Zur&uuml;ck
+    </f:link.page>
+
+    <div class="page_actions-title">
+        <h3>{title}</h3>
+        <f:if condition="{subtitle} != ''"><p>{subtitle}</p></f:if>
+    </div>
+<f:if condition="{hideHelp} != true">
+    <f:then>
+        <f:if condition="{helpID}">
+            <f:then>
+                <span class="page_actions-button" data-action="help" data-question="{helpID}">
+                    Hilfe <baxi:icon name="Hilfe_Klein" />
+                </span>
+            </f:then>
+            <f:else>
+                <f:link.page pageUid="4" class="page_actions-button">
+                    Hilfe <baxi:icon name="Hilfe_Klein" />
+                </f:link.page>
+            </f:else>
+        </f:if>
+
+    </f:then>
+    <f:else>
+        <span class="page_actions-button">&nbsp;</span>
+    </f:else>
+</f:if>
+</div>

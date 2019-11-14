@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:form action="{f:if(condition: '{fahrtZeit}', then : 'update', else : 'create')}" name="Fahrt" object="{fahrtZeit}">
+    <f:if condition="{fahrtZeit}">
+        <f:form.hidden name="fahrtZeit" value="{fahrtZeit}" />
+    </f:if>
+
+
+    <p>
+        <label>Zone</label>
+
+        <f:form.select name="zone" options="{zonen}"></f:form.select>
+    </p>
+
+    <p>
+        <label>Fahrten</label>
+        <f:form.select name="fahrt" options="{fahrten}"></f:form.select>
+    </p>
+
+
+    <p>
+        <f:form.submit value="Speichern" />
+    </p>
+</f:form>
+
+</html>

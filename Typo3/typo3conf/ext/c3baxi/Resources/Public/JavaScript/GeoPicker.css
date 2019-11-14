@@ -1,0 +1,205 @@
+.position_picker-list_item.is-selected {
+  font-weight: bold;
+}
+.position_picker-map {
+  height: 100vh;
+}
+.position_picker-map .marker--selected {
+  transform: scale(2);
+}
+.position_picker-map img[src="https://baxi.c3-coding.de/typo3conf/ext/c3baxi/Resources/Public/Icons/Position@2x.png"],
+.position_picker-map img[src*="#selected"] {
+  animation: breathe 1s linear alternate infinite;
+}
+@keyframes breathe {
+  from {
+    transform: scale(0.6);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.position_picker-content {
+  --content-height: 25vh;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100% !important;
+  background-color: #95C11F;
+  padding: 23px 20px 50px;
+  border-radius: 23px 23px 0 0;
+  box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.1);
+  transition: height 0.3s linear;
+  z-index: 750;
+  animation: slideOpen 0.5s ease-in-out forwards;
+}
+@media (min-width: 768px) {
+  .position_picker-content {
+    padding: 30px 60px;
+  }
+}
+.position_picker-content.slidedown {
+  animation: slideDown 0.3s linear forwards;
+}
+@keyframes slideDown {
+  from {
+    height: calc(100vh - 90px);
+  }
+  to {
+    height: var(--content-height);
+  }
+}
+.position_picker-content.slideup {
+  animation: slideUp 0.3s linear forwards;
+}
+@keyframes slideUp {
+  to {
+    height: calc(100vh - 90px);
+  }
+  from {
+    height: 0;
+  }
+}
+.position_picker-content-close {
+  position: absolute;
+  top: -50px;
+  width: 40px;
+  height: 40px;
+  display: block;
+  margin-left: -20px;
+  left: 50%;
+  border-radius: 50%;
+  background: url("../Icons/closeBtn.png") no-repeat center center;
+}
+.position_picker-content.is-extended {
+  z-index: 9100;
+}
+.position_picker-content.is-selected, .position_picker-content--selected {
+  background: #003E5C;
+  color: #FFF;
+}
+.position_picker-content.is-selected h3, .position_picker-content--selected h3 {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.position_picker-content.is-selected .subtitle, .position_picker-content--selected .subtitle {
+  text-align: center;
+  max-width: 60%;
+  margin: 6px auto 30px;
+}
+.position_picker-content.is-selected .subtitle span + span, .position_picker-content--selected .subtitle span + span {
+  margin-left: 30px;
+}
+.position_picker-content .controls {
+  text-align: center;
+  overflow: hidden;
+}
+.position_picker-content .controls-btn {
+  margin: 24px 13px 0;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+}
+.position_picker-content .controls-btn .btn {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  margin: 0 auto 4px;
+}
+.position_picker-content .controls-btn.is-disabled {
+  opacity: 0.5;
+}
+.position_picker-list {
+  margin-top: 26px;
+  color: #fff;
+}
+.position_picker-list h3 {
+  font-weight: 500;
+  font-size: 12px;
+  text-align: left;
+  margin-bottom: 0;
+}
+.position_picker-list ul {
+  margin-top: 0;
+}
+.position_picker-list--suggest li {
+  padding: 20px 0;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #FFF;
+}
+.position_picker-list--suggest li small {
+  font-weight: normal;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.position_picker-picker {
+  position: absolute;
+  font-size: 10px;
+  top: 0;
+  right: 0;
+  background: #DDD;
+  padding: 2px;
+  z-index: 99999;
+}
+.position_picker-overlay {
+  display: none;
+  z-index: 650;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  /* Note: currently only Safari supports backdrop-filter */
+  backdrop-filter: blur(15px);
+  --webkit-backdrop-filter: blur(15px);
+}
+.position_picker .favorites {
+  list-style: none;
+  text-align: center;
+}
+.position_picker .favorites-item {
+  display: inline-block;
+  text-align: center;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 12px;
+  width: 60px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: top;
+}
+.position_picker .favorites-item .btn {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 8px;
+  padding: 0;
+}
+.position_picker .favorites-item .btn .icon {
+  width: 24px;
+  height: 24px;
+}
+.position_picker .favorites-item:nth-child(n+2) {
+  margin-left: 16px;
+}
+.position_picker input[name=geoPicker_search] {
+  background: url("../../../../c3local/Resources/Public/Images/SVG/suche.svg"), linear-gradient(#e3e4e1 0%, #fff 31%, #fdfefc 67.6%, #e3e4e1 100%);
+  background-repeat: repeat, repeat;
+  background-size: auto, auto;
+  background-size: 20px 20px, auto auto;
+  background-repeat: no-repeat;
+  background-position: 30px center, 0 0;
+}
+
+@keyframes slideOpen {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/*# sourceMappingURL=GeoPicker.css.map */

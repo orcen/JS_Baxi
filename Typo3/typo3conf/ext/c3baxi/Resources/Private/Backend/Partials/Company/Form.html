@@ -1,0 +1,102 @@
+
+<f:form action="{f:if(condition: '{action} == \'new\'', then : 'create', else : 'update')}" name="Fahrt"
+        object="{company}">
+
+    <f:if condition="{company}">
+        <f:form.hidden name="company" value="{company}" />
+    </f:if>
+
+    <p>
+        <label><f:translate key="company.name"/></label>
+        <f:form.textfield name="name" value="{company.name}" />
+    </p>
+
+    <div>
+        <h4><f:translate key="company.address"/></h4>
+        <p>
+            <label><f:translate key="company.street"/></label>
+            <f:form.textfield name="street" value="{company.street}" />
+        </p>
+        <p>
+            <label><f:translate key="company.city"/></label>
+            <f:form.textfield name="city" value="{company.city}" />
+        </p>
+        <p>
+            <label><f:translate key="company.zip"/></label>
+            <f:form.textfield name="zip" value="{company.zip}" />
+        </p>
+    </div>
+
+    <div>
+        <h4><f:translate key="company.contact" /></h4>
+        <p>
+            <label><f:translate key="company.contact_person"/></label>
+            <f:form.textfield name="contact_person" value="{company.contactPerson}" />
+        </p>
+        <p>
+            <label><f:translate key="company.telefon"/></label>
+            <f:form.textfield name="telefon" value="{company.telefon}" />
+        </p>
+        <p>
+            <label><f:translate key="company.email"/></label>
+            <f:form.textfield type="email" name="email" value="{company.email}" />
+        </p>
+    </div>
+
+    <p>
+        <label><f:translate key="company.info"/></label>
+        <f:form.textarea name="info" rows="4" cols="80" value="{company.info}" />
+    </p>
+
+    <div class="relation_field">
+        <div class="relation_field-block">
+            <h4>Zugewiessene Linien</h4>
+            <p class="filter filter--simple">
+                <label>Filtern:</label>
+                <f:form.textfield name="route_filter" value=""
+                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#stationen'}"
+                />
+            </p>
+            <div class="relation_field-list">
+                <f:if condition="! {company}">
+                    <f:form.hidden name="liste" value="" />
+                </f:if>
+                <ul class="list" id="stations" data-droppable="true" data-uid="{company.uid}">
+                    <f:for each="{assigned_routes}" as="route">
+                        <li class="list-item" data-draggable="true" data-uid="{route.uid}">{route.name}</li>
+                    </f:for>
+                </ul>
+
+            </div>
+        </div>
+        <div class="relation_field-block">
+            <h4>Verf&uuml;gbare Linien</h4>
+            <p class="filter filter--simple">
+                <label>Filtern:</label>
+                <f:form.textfield name="route_filter" value=""
+                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#free_stations'}"
+                />
+            </p>
+            <div class="relation_field-list">
+                <ul class="list" id="free_routes" data-droppable="true" data-uid="-{company.uid}">
+                    <f:for each="{free_routes}" as="route" key="uid">
+                        <li class="list-item" data-draggable="true" data-uid="{uid}">{route}</li>
+                    </f:for>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bar bar--controls">
+        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
+        <f:if condition="{action} == 'edit'">
+            <f:form.button type="submit" name="action_after" value="close"
+                           class="button button--submit">Speichern
+                                                         und schliessen</f:form.button>
+            <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
+        </f:if>
+    </div>
+
+</f:form>

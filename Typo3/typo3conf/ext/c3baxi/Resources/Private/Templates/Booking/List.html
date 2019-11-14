@@ -1,0 +1,29 @@
+<div>
+    <f:render partial="PageActions"
+              arguments="{
+              title:'Gebuchte Fahrten',
+              subtitle:'',
+              pageUid:2, helpID: helpUid}"></f:render>
+
+    <div class="page_text">
+        {content.bodytext -> f:format.htmlentitiesDecode()}
+    </div>
+
+    <div class="subcontent">
+
+        <f:if condition="{booking_comming}">
+            <h4>Anstehende Fahrten</h4>
+            <f:for as="fahrt" each="{booking_comming}">
+                <f:render partial="Booking/BoxBooking" arguments="{fahrt : fahrt}"></f:render>
+            </f:for>
+        </f:if>
+
+        <f:if condition="{booking_past}">
+            <h4>Vergangene Fahrten</h4>
+            <f:for as="fahrt" each="{booking_past}">
+                <f:render partial="Booking/BoxBooking" arguments="{fahrt : fahrt}"></f:render>
+            </f:for>
+        </f:if>
+
+    </div>
+</div>

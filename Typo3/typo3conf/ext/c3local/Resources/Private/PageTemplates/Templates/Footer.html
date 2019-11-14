@@ -1,0 +1,15 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+
+    <f:if condition="{data.layout} === 1">
+        <footer class="footer">
+            <f:if condition="{data.pid} != 0">
+            <f:then><f:link.page pageUid="{data.pid}">Zur&uuml;ck</f:link.page></f:then>
+            </f:if>
+        </footer>
+    </f:if>
+</f:section>

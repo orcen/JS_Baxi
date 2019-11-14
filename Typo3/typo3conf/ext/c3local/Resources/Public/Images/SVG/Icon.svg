@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="115" height="115" viewBox="0 0 115 115">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#525866"/>
+      <stop offset="1" stop-color="#292c33"/>
+    </linearGradient>
+    <filter id="Kontur" x="0" y="0" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.365" stop-color="#e6e6e6"/>
+      <stop offset="1" stop-color="#d9d9d9"/>
+    </linearGradient>
+  </defs>
+  <g id="Icon" transform="translate(-321.5 -65.5)">
+    <g transform="matrix(1, 0, 0, 1, 321.5, 65.5)" filter="url(#Kontur)">
+      <circle id="Kontur-2" data-name="Kontur" cx="50" cy="50" r="50" transform="translate(7.5 5.5)" fill="url(#linear-gradient)"/>
+    </g>
+    <path id="Kontur-3" data-name="Kontur" d="M43.75,0A43.75,43.75,0,1,1,0,43.75,43.75,43.75,0,0,1,43.75,0Z" transform="translate(335.25 77.25)" fill="url(#linear-gradient-2)"/>
+    <path id="Schliessen" d="M42.779,1A3.3,3.3,0,0,0,38.1,1L21.875,17.2,5.649.971A3.308,3.308,0,0,0,.971,5.649L17.2,21.875.971,38.1a3.308,3.308,0,0,0,4.679,4.679L21.875,26.554,38.1,42.779A3.308,3.308,0,0,0,42.779,38.1L26.554,21.875,42.779,5.649A3.325,3.325,0,0,0,42.779,1Z" transform="translate(379.001 90.063) rotate(45)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

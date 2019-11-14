@@ -1,0 +1,74 @@
+
+.align-center {
+	text-align: center;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-justify {
+	text-align: justify;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+.linethrough {
+	text-decoration: line-through;
+}
+
+strong {
+	font-weight: bold;
+}
+
+small {
+	font-size: smaller;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+svg {
+	vertical-align: bottom;
+	display: inline-block;
+}
+
+svg.hidden {
+	visibility: hidden;
+	height: 0;
+	width: 0;
+	overflow: hidden;
+	position: absolute;
+	top: -100px;
+	left: -100px;
+}
+
+svg.icon {
+	width: 1em;
+	height: 1em;
+	fill: currentColor;
+	vertical-align: middle;
+	margin-top: -3px;
+	display: inline-block;
+}
+
+[disabled] {
+	pointer-events: none;
+	cursor: default;
+}
+
+@import "03_element/link";
+@import "03_element/paragraph";
+@import "03_element/list";
+@import "03_element/heading";
+@import "03_element/button";
+@import "03_element/form";
+@import "03_element/embed";

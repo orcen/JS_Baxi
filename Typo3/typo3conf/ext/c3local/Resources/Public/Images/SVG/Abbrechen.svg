@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="a" data-name="Unbenannter Verlauf 3" x1="-309.418" y1="80.73" x2="-309.418" y2="84.897" gradientTransform="translate(7476.02 -1937.52) scale(24)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#525866"/>
+      <stop offset="1" stop-color="#292c33"/>
+    </linearGradient>
+    <linearGradient id="b" data-name="Unbenannter Verlauf 4" x1="13.737" y1="17.739" x2="13.737" y2="21.691" gradientTransform="translate(-238.48 -364.02) scale(21)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.365" stop-color="#e6e6e6"/>
+      <stop offset="1" stop-color="#d9d9d9"/>
+    </linearGradient>
+    <linearGradient id="c" data-name="Unbenannter Verlauf 5" x1="26.976" y1="36.847" x2="26.976" y2="41.013" gradientTransform="translate(-233.23 -358.773) scale(10.499 10.5)" xlink:href="#a"/>
+  </defs>
+  <g>
+    <circle cx="50" cy="50" r="50" fill="url(#a)"/>
+    <path d="M50,8.5A41.5,41.5,0,1,1,8.5,50,41.525,41.525,0,0,1,50,8.5Z" fill="url(#b)"/>
+    <path d="M70.9,29.1a3.32,3.32,0,0,0-4.7,0h0L50,45.3,33.8,29.1a3.323,3.323,0,0,0-4.7,4.7L45.3,50,29.1,66.2a3.323,3.323,0,1,0,4.7,4.7L50,54.7,66.2,70.9a3.323,3.323,0,1,0,4.7-4.7L54.7,50,70.9,33.8A3.32,3.32,0,0,0,70.9,29.1Z" fill="url(#c)"/>
+  </g>
+</svg>

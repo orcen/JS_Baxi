@@ -1,0 +1,239 @@
+<svg class="hidden">
+    <defs>
+        <linearGradient id="linearGradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#525866"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <filter id="Kontur" x="0" y="0" width="39" height="39" filterUnits="userSpaceOnUse">
+            <feOffset dy="2" input="SourceAlpha"/>
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feFlood flood-opacity="0.302"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+
+        <filter id="KontoKontur" x="0" y="0" width="51" height="51" filterUnits="userSpaceOnUse">
+            <feOffset dy="2" input="SourceAlpha"/>
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feFlood flood-opacity="0.302"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <linearGradient id="linearGradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="0.365" stop-color="#e6e6e6"/>
+            <stop offset="1" stop-color="#d9d9d9"/>
+        </linearGradient>
+        <!-- add button-->
+        <linearGradient id="addGradient1" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#525866"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <filter id="addKontur" x="0" y="0" width="115" height="115" filterUnits="userSpaceOnUse">
+            <feOffset dy="2" input="SourceAlpha"/>
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feFlood flood-opacity="0.302"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <linearGradient id="addGradient2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="0.365" stop-color="#e6e6e6"/>
+            <stop offset="1" stop-color="#d9d9d9"/>
+        </linearGradient>
+        <linearGradient id="likeGradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#525866"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <filter id="likeKontur" x="0" y="0" width="51" height="51" filterUnits="userSpaceOnUse">
+            <feOffset dy="2" input="SourceAlpha"/>
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feFlood flood-opacity="0.302"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <linearGradient id="HilfeA" x1="9.027" y1="90.874" x2="9.027" y2="88.097"
+                        gradientTransform="matrix(36, 0, 0, -36, -274.98, 3271.48)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#535967"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <linearGradient id="HilfeB" x1="10.533" y1="88.672" x2="10.533" y2="85.894"
+                        gradientTransform="matrix(30, 0, 0, -30, -265.98, 2668.48)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="0.365" stop-color="#e6e6e6"/>
+            <stop offset="1" stop-color="#d9d9d9"/>
+        </linearGradient>
+        <linearGradient id="KontoA" x1="9.027" y1="90.874" x2="9.027" y2="88.097"
+                        gradientTransform="matrix(36, 0, 0, -36, -274.98, 3271.48)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#535967"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <linearGradient id="KontoB" x1="10.533" y1="88.672" x2="10.533" y2="85.894"
+                        gradientTransform="matrix(30, 0, 0, -30, -265.98, 2668.48)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="0.365" stop-color="#e6e6e6"/>
+            <stop offset="1" stop-color="#d9d9d9"/>
+        </linearGradient>
+        <style>
+            .a {
+            fill: url(#a);
+            }
+            .KontoA {
+            fill: url(#KontoA);
+            }
+
+            .KontoB {
+            fill: url(#KontoB);
+            }
+        </style>
+        <linearGradient id="a" x1="9.027" y1="90.874" x2="9.027" y2="88.097"
+                        gradientTransform="matrix(36, 0, 0, -36, -274.98, 3271.48)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#535967"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <linearGradient id="abbrechenA" x1="-309.418" y1="80.73" x2="-309.418" y2="84.897"
+                        gradientTransform="translate(7476.02 -1937.52) scale(24)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#525866"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <linearGradient id="abbrechenB" x1="13.737" y1="17.739" x2="13.737" y2="21.691"
+                        gradientTransform="translate(-238.48 -364.02) scale(21)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="0.365" stop-color="#e6e6e6"/>
+            <stop offset="1" stop-color="#d9d9d9"/>
+        </linearGradient>
+        <linearGradient id="abbrechenC" x1="26.976" y1="36.847" x2="26.976" y2="41.013"
+                        gradientTransform="translate(-233.23 -358.773) scale(10.499 10.5)">
+            <stop offset="0" stop-color="#525866"/>
+            <stop offset="1" stop-color="#292c33"/>
+        </linearGradient>
+        <defs>
+            <linearGradient id="konturA" x1="13.041" y1="85.812" x2="13.041" y2="81.645" gradientTransform="matrix(24, 0, 0, -24, -262.98, 2059.48)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#535967"/>
+                <stop offset="1" stop-color="#292c33"/>
+            </linearGradient>
+            <linearGradient id="konturB" x1="15.349" y1="82.457" x2="15.349" y2="78.291" gradientTransform="matrix(20, 0, 0, -20, -256.98, 1657.48)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#fff"/>
+                <stop offset="0.365" stop-color="#e6e6e6"/>
+                <stop offset="1" stop-color="#d9d9d9"/>
+            </linearGradient>
+        </defs>
+    </defs>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 12.444" id="BAXI">
+        <path d="M12.382.786A1.162 1.162 0 0 0 11.278 0H2.722a1.17 1.17 0 0 0-1.1.786L.086 5.2A1.615 1.615 0 0 0 0 5.709v5.569a1.167 1.167 0 0 0 2.333 0v-.389h9.333v.389a1.167 1.167 0 0 0 2.333 0V5.709a1.652 1.652 0 0 0-.086-.513zm-9.66 7.77a1.167 1.167 0 1 1 1.167-1.167 1.165 1.165 0 0 1-1.167 1.167zm8.556 0a1.167 1.167 0 1 1 1.167-1.167 1.165 1.165 0 0 1-1.167 1.167zM1.556 4.667L2.543 1.7a.788.788 0 0 1 .739-.529h7.436a.788.788 0 0 1 .739.529l.988 2.971z"></path>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" id="einstellungen" viewBox="0 0 12.97 13.333">
+        <path d="M13.71,9.32a4.6,4.6,0,0,0,0-1.307l1.407-1.1a.336.336,0,0,0,.08-.427L13.864,4.18a.335.335,0,0,0-.407-.147L11.8,4.7a4.871,4.871,0,0,0-1.127-.653L10.417,2.28A.325.325,0,0,0,10.09,2H7.424a.325.325,0,0,0-.327.28L6.844,4.047A5.122,5.122,0,0,0,5.717,4.7l-1.66-.667a.325.325,0,0,0-.407.147L2.317,6.487a.329.329,0,0,0,.08.427L3.8,8.013a5.287,5.287,0,0,0-.047.653A5.287,5.287,0,0,0,3.8,9.32L2.4,10.42a.336.336,0,0,0-.08.427L3.65,13.153a.335.335,0,0,0,.407.147l1.66-.667a4.871,4.871,0,0,0,1.127.653L7.1,15.053a.325.325,0,0,0,.327.28H10.09a.325.325,0,0,0,.327-.28l.253-1.767a5.122,5.122,0,0,0,1.127-.653l1.66.667a.325.325,0,0,0,.407-.147L15.2,10.847a.336.336,0,0,0-.08-.427ZM8.757,11A2.333,2.333,0,1,1,11.09,8.667,2.336,2.336,0,0,1,8.757,11Z"
+              transform="translate(-2.271 -2)"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 10.022" id="Pfeil_R">
+        <path d="M18.263 3.499H1.521a1.521 1.521 0 0 0 0 3.041h16.742v2.722a.753.753 0 0 0 1.293.532l4.227-4.243a.781.781 0 0 0 0-1.08L19.556.227a.756.756 0 0 0-1.293.532z"></path>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 10.022" id="Pfeil_L">
+        <path d="M9.737,12.2H26.479a1.521,1.521,0,1,1,0,3.041H9.737V17.96a.753.753,0,0,1-1.293.532L4.217,14.25a.781.781,0,0,1,0-1.08L8.444,8.928a.756.756,0,0,1,1.293.532Z"
+              transform="translate(-4 -8.701)"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.721 12.393" id="Umstieg">
+        <path d="M2.527 2.863H9.19v1.193a.33.33 0 0 0 .57.238l1.86-1.86a.33.33 0 0 0 0-.473L9.76.094a.333.333 0 0 0-.567.24v1.195H1.86a.669.669 0 0 0-.67.665v2.669a.667.667 0 0 0 1.333 0zM9.19 9.53H2.527V8.336a.33.33 0 0 0-.567-.233L.1 9.963a.33.33 0 0 0 0 .473l1.86 1.858a.333.333 0 0 0 .567-.24v-1.191H9.86a.669.669 0 0 0 .667-.667V7.529a.667.667 0 0 0-1.333 0z"></path>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 25.033" id="Standort">
+        <path d="M9 0a9.01 9.01 0 0 0-9 9c0 5.361 5.683 12.754 8.023 15.57a1.276 1.276 0 0 0 1.967 0C12.317 21.754 18 14.361 18 9a9.01 9.01 0 0 0-9-9zm3.857 10.286h-2.571v2.571a1.286 1.286 0 0 1-2.571 0v-2.571H5.143a1.286 1.286 0 1 1 0-2.571h2.571V5.143a1.286 1.286 0 1 1 2.571 0v2.571h2.571a1.286 1.286 0 1 1 0 2.571z"
+        ></path>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.999 24" id="Uhr">
+        <path d="M11.987 24a11.9 11.9 0 0 1-8.478-3.515A11.924 11.924 0 0 1 0 12a11.927 11.927 0 0 1 3.51-8.484 11.9 11.9 0 0 1 8.478-3.517 11.938 11.938 0 0 1 8.5 3.517A11.919 11.919 0 0 1 24 12a11.916 11.916 0 0 1-3.517 8.483A11.941 11.941 0 0 1 11.987 24zm-.323-18a.854.854 0 0 0-.863.863v5.666a1.194 1.194 0 0 0 .588 1.031l4.979 2.988a.88.88 0 0 0 .451.123.828.828 0 0 0 .725-.412.845.845 0 0 0 .1-.659.838.838 0 0 0-.4-.528L12.6 12.313v-5.45A.854.854 0 0 0 11.737 6z"
+        ></path>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.333 13.333" id="Uhr_kontur">
+        <path d="M8.66,2a6.667,6.667,0,1,0,6.673,6.667A6.663,6.663,0,0,0,8.66,2Zm.007,12A5.333,5.333,0,1,1,14,8.667,5.332,5.332,0,0,1,8.667,14ZM8.52,5.333H8.48a.478.478,0,0,0-.48.48V8.96a.66.66,0,0,0,.327.573l2.767,1.66a.477.477,0,1,0,.487-.82L9,8.84V5.813a.478.478,0,0,0-.48-.48Z"
+              transform="translate(-2 -2)"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6.396" id="Dropdown">
+        <path d="M8.826,12.381l3.607,3.607a1.387,1.387,0,0,0,1.964,0L18,12.381A1.4,1.4,0,0,0,17.015,10H9.8A1.393,1.393,0,0,0,8.826,12.381Z"
+              transform="translate(-8.414 -10)"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19.114" id="Favoriten">
+        <path d="M13.443,19.58l4.85,2.933a1.166,1.166,0,0,0,1.741-1.262l-1.286-5.516,4.289-3.716a1.166,1.166,0,0,0-.666-2.045l-5.645-.479L14.518,4.282a1.169,1.169,0,0,0-2.15,0l-2.209,5.2-5.645.479a1.166,1.166,0,0,0-.666,2.045l4.289,3.716L6.852,21.239A1.166,1.166,0,0,0,8.593,22.5Z"
+              transform="translate(-3.443 -3.572)"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="Favoriten_kontur">
+            <circle cx="50" cy="50" r="50" fill="url(#konturA)"/>
+            <path d="M49.958,8.333a41.688,41.688,0,1,0,.042,0ZM63.417,72.458,50,64.375,36.583,72.458a2.083,2.083,0,0,1-3.125-2.25L37,54.958,25.208,44.75a2.1,2.1,0,0,1,1.209-3.667L42,39.75l6.083-14.375a2.084,2.084,0,0,1,3.834,0L58,39.708l15.583,1.334a2.083,2.083,0,0,1,1.167,3.666L62.958,54.917,66.5,70.208a2.083,2.083,0,0,1-3.083,2.25Z" transform="translate(0 0)" fill="url(#konturB)"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
+            id="Konto">
+        <circle class="KontoA" cx="50" cy="50" r="50"/>
+        <path class="KontoB"
+              d="M50,8.333A41.667,41.667,0,1,0,91.667,50,41.667,41.667,0,0,0,50,8.333Zm0,12.5a12.484,12.484,0,1,1-.033,0ZM50,80A30,30,0,0,1,25,66.583c.125-8.291,16.667-12.833,25-12.833s24.875,4.542,25,12.833A30,30,0,0,1,50,80Z"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="Hilfe">
+        <path d="M50,0A50,50,0,1,1,0,50,50,50,0,0,1,50,0Z" style="fill: url(#HilfeA)"/>
+        <path d="M50,8.333A41.667,41.667,0,1,0,91.667,50,41.667,41.667,0,0,0,50,8.333Zm4.167,70.834H45.833V70.833h8.334Zm8.611-32.292-3.75,3.833a14.6,14.6,0,0,0-4.334,7.042,19.088,19.088,0,0,0-.527,4.75H45.833V60.417a16.874,16.874,0,0,1,.917-5.459,16.666,16.666,0,0,1,3.958-6.333l5.167-5.25a8.178,8.178,0,0,0,2.292-7.5A8.3,8.3,0,0,0,52.375,29.5,8.4,8.4,0,0,0,42.1,34.792,3.681,3.681,0,0,1,38.681,37.5h-1.25a3.61,3.61,0,0,1-3.417-4.667A16.7,16.7,0,0,1,47.472,21.042a16.941,16.941,0,0,1,16.125,7.5A13.78,13.78,0,0,1,62.778,46.875Z"
+              style="fill: url(#HilfeB)"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="Hilfe_Klein">
+        <path d="M52,2a50,50,0,1,0,50,50A50.018,50.018,0,0,0,52,2Zm0,90A40,40,0,1,1,92,52,40.053,40.053,0,0,1,52,92ZM47,72H57V82H47Zm8.05-49.8A20.01,20.01,0,0,0,32.9,36.15,4.534,4.534,0,0,0,37.25,42h1a4.813,4.813,0,0,0,4.4-3.35,10.01,10.01,0,0,1,11.5-6.4A10.116,10.116,0,0,1,62,42.75c-.5,6.7-8.1,8.15-12.25,14.4,0,.05-.05.05-.05.1-.05.1-.1.15-.15.25A16.656,16.656,0,0,0,48.3,60c-.05.15-.15.25-.2.4a3.185,3.185,0,0,0-.1.35A18.587,18.587,0,0,0,47,67H57a10.622,10.622,0,0,1,1.4-5.35c.1-.15.15-.3.25-.45a13.79,13.79,0,0,1,1.4-1.95c.05-.05.1-.15.15-.2a17.571,17.571,0,0,1,1.65-1.7c4.8-4.55,11.3-8.25,9.95-17.8-1.2-8.7-8.05-16.05-16.75-17.35Z"/>
+    </symbol>
+
+    <symbol xmlns="http://www.w3.org/2000/svg" id="Abbrechen" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50" fill="url(#abbrechenA)"/>
+        <path d="M50,8.5A41.5,41.5,0,1,1,8.5,50,41.525,41.525,0,0,1,50,8.5Z" fill="url(#abbrechenB)"/>
+        <path d="M70.9,29.1a3.32,3.32,0,0,0-4.7,0h0L50,45.3,33.8,29.1a3.323,3.323,0,0,0-4.7,4.7L45.3,50,29.1,66.2a3.323,3.323,0,1,0,4.7,4.7L50,54.7,66.2,70.9a3.323,3.323,0,1,0,4.7-4.7L54.7,50,70.9,33.8A3.32,3.32,0,0,0,70.9,29.1Z"
+              fill="url(#abbrechenC)"/>
+    </symbol>
+
+
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="back">
+        <path id="back"
+              d="M98,47.851H26.317L57.634,15.693a6.77,6.77,0,0,0,0-9.358,6.274,6.274,0,0,0-9.049,0L6.295,49.762a6.688,6.688,0,0,0,0,9.292L48.586,102.48a6.274,6.274,0,0,0,9.049,0,6.688,6.688,0,0,0,0-9.292L26.317,61.03H98a6.592,6.592,0,0,0,0-13.18Z"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="info">
+        <path d="M52,2a50,50,0,1,0,50,50A50.018,50.018,0,0,0,52,2Zm0,75a5.015,5.015,0,0,1-5-5V52a5,5,0,0,1,10,0V72A5.015,5.015,0,0,1,52,77Zm5-40H47V27H57Z"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.778 100" id="delete">
+        <path d="M10.556,91.889A11.144,11.144,0,0,0,21.667,103H66.111A11.144,11.144,0,0,0,77.222,91.889V36.333A11.144,11.144,0,0,0,66.111,25.222H21.667A11.144,11.144,0,0,0,10.556,36.333ZM77.222,8.556H63.333L59.389,4.611A5.6,5.6,0,0,0,55.5,3H32.278a5.6,5.6,0,0,0-3.889,1.611L24.444,8.556H10.556a5.556,5.556,0,1,0,0,11.111H77.222a5.556,5.556,0,0,0,0-11.111Z"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115 115" id="add">
+        <g id="Icon" transform="translate(-321.5 -65.5)">
+            <g transform="matrix(1, 0, 0, 1, 321.5, 65.5)" filter="url(#addKontur)">
+                <circle id="Kontur-2" data-name="Kontur" cx="50" cy="50" r="50" transform="translate(7.5 5.5)"
+                        fill="url(#addGradient1)"/>
+            </g>
+            <path id="Kontur-3" data-name="Kontur" d="M43.75,0A43.75,43.75,0,1,1,0,43.75,43.75,43.75,0,0,1,43.75,0Z"
+                  transform="translate(335.25 77.25)" fill="url(#addGradient2)"/>
+            <path id="Schliessen"
+                  d="M42.779,1A3.3,3.3,0,0,0,38.1,1L21.875,17.2,5.649.971A3.308,3.308,0,0,0,.971,5.649L17.2,21.875.971,38.1a3.308,3.308,0,0,0,4.679,4.679L21.875,26.554,38.1,42.779A3.308,3.308,0,0,0,42.779,38.1L26.554,21.875,42.779,5.649A3.325,3.325,0,0,0,42.779,1Z"
+                  transform="translate(379.001 90.063) rotate(45)" fill="url(#addGradient1)"/>
+        </g>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" id="star" viewBox="0 0 20 19.114">
+        <path d="M13.443,19.58l4.85,2.933a1.166,1.166,0,0,0,1.741-1.262l-1.286-5.516,4.289-3.716a1.166,1.166,0,0,0-.666-2.045l-5.645-.479L14.518,4.282a1.169,1.169,0,0,0-2.15,0l-2.209,5.2-5.645.479a1.166,1.166,0,0,0-.666,2.045l4.289,3.716L6.852,21.239A1.166,1.166,0,0,0,8.593,22.5Z"
+              transform="translate(-3.443 -3.572)"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" id="ticket" viewBox="0 0 18.367 20">
+        <path d="M21.367,2.21a.479.479,0,0,0-.357.153l-.806.806a.505.505,0,0,1-.724,0l-.806-.806a.505.505,0,0,0-.724,0l-.806.806a.505.505,0,0,1-.724,0l-.806-.806a.505.505,0,0,0-.724,0l-.806.806a.505.505,0,0,1-.724,0l-.806-.806a.505.505,0,0,0-.724,0l-.806.806a.505.505,0,0,1-.724,0L9.48,2.353a.505.505,0,0,0-.724,0l-.806.816a.505.505,0,0,1-.724,0l-.806-.816a.505.505,0,0,0-.724,0l-.806.816a.505.505,0,0,1-.724,0l-.806-.816A.51.51,0,0,0,3,2.21V22.2a.479.479,0,0,0,.357-.153l.806-.806a.505.505,0,0,1,.724,0l.806.806a.505.505,0,0,0,.724,0l.806-.806a.505.505,0,0,1,.724,0l.806.806a.505.505,0,0,0,.724,0l.806-.806a.505.505,0,0,1,.724,0l.806.806a.505.505,0,0,0,.724,0l.806-.806a.505.505,0,0,1,.724,0l.806.806a.505.505,0,0,0,.724,0l.806-.806a.505.505,0,0,1,.724,0l.806.806a.505.505,0,0,0,.724,0l.806-.806a.505.505,0,0,1,.724,0l.806.806a.513.513,0,0,0,.357.153V2.21ZM17.286,17.3H7.082a1.02,1.02,0,1,1,0-2.041h10.2a1.02,1.02,0,1,1,0,2.041Zm0-4.082H7.082a1.02,1.02,0,1,1,0-2.041h10.2a1.02,1.02,0,1,1,0,2.041Zm0-4.082H7.082a1.02,1.02,0,0,1,0-2.041h10.2a1.02,1.02,0,1,1,0,2.041Z"
+              transform="translate(-3 -2.2)"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 12" id="call">
+        <path d="M14.667,3H1.333A1.337,1.337,0,0,0,0,4.333v9.333A1.337,1.337,0,0,0,1.333,15H14.667a1.332,1.332,0,0,0,1.327-1.333L16,4.333A1.337,1.337,0,0,0,14.667,3ZM5.333,5a2,2,0,1,1-2,2A2,2,0,0,1,5.333,5Zm4,8h-8v-.667c0-1.333,2.667-2.067,4-2.067s4,.733,4,2.067ZM11.9,10.333h.927a.328.328,0,0,1,.267.133l.733.967a.326.326,0,0,1-.033.433l-.907.907a.337.337,0,0,1-.447.027,5.038,5.038,0,0,1-1.587-2.473A4.832,4.832,0,0,1,10.667,9a4.917,4.917,0,0,1,.187-1.333A5.008,5.008,0,0,1,12.44,5.193a.329.329,0,0,1,.447.027l.907.907a.328.328,0,0,1,.033.433l-.733.967a.32.32,0,0,1-.267.133H11.9a3.945,3.945,0,0,0,0,2.673Z"
+              transform="translate(0 -3)"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="like">
+
+        <path d="M50,0A50,50,0,1,1,0,50,50,50,0,0,1,50,0Z" class="a"/>
+        <path d="M52.122,29.3l-12.4,12.4a4.47,4.47,0,0,0-1.3,3.155V67.21A4.489,4.489,0,0,0,42.9,71.685H63.052a4.509,4.509,0,0,0,4.117-2.709l7.294-17.03a6.725,6.725,0,0,0-6.177-9.356H55.633l2.125-10.25a3.375,3.375,0,0,0-.917-3.055,3.333,3.333,0,0,0-4.714.014l-.008.008ZM29.472,71.685a4.49,4.49,0,0,0,4.475-4.475V49.3a4.475,4.475,0,0,0-8.95,0v17.9A4.489,4.489,0,0,0,29.472,71.685Z"
+              transform="translate(0.001)" style="fill: #f9f9f9"/>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="dislike">
+        <path class="a" d="M50,0A50,50,0,1,1,0,50,50,50,0,0,1,50,0Z"/>
+        <path class="b" fill="#f9f9f9"
+              d="M47.875,70.165l12.4-12.4a4.473,4.473,0,0,0,1.3-3.156V32.254A4.49,4.49,0,0,0,57.1,27.779H36.944a4.509,4.509,0,0,0-4.116,2.708l-7.3,17.031a6.724,6.724,0,0,0,6.178,9.355H44.364l-2.125,10.25a3.375,3.375,0,0,0,.917,3.056,3.333,3.333,0,0,0,4.714-.014l.008-.008Zm22.65-42.386a4.49,4.49,0,0,0-4.475,4.475V50.159a4.475,4.475,0,1,0,8.95,0v-17.9A4.489,4.489,0,0,0,70.525,27.779Z"/>
+    </symbol>
+</svg>

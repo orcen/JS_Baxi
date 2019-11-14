@@ -1,0 +1,11 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="content">
+    <h1>Bearbeite Fahrt "{fahrt.name} ({fahrt.linie.nr})"</h1>
+
+    <f:link.action action="list">zur&uuml;ck</f:link.action>
+
+    <f:render partial="FahrtZeit/Form" arguments="{_all}" />
+</f:section>
+</html>

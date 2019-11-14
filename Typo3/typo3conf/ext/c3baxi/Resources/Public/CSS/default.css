@@ -1,0 +1,97 @@
+/*#routeFinder {
+	max-width: 600px;
+	margin: $offset*2 auto;
+	background-color: #95c11f;
+
+	.header {
+		background-color: #387994;
+		margin: -75px -75px 25px;
+		padding: 75px;
+			display: flex;
+		justify-content: space-between;
+
+		&-button {
+			text-align: center;
+		}
+	}
+
+	p + p {
+		margin-top: 1.465em;
+	}
+
+	input, button, select, textarea {
+		width: 100%;
+		min-width: 10ch;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	input[type="text"] {
+		width: 100%;
+		background: linear-gradient(180deg, #e8e9e7, #fefefe 45% ,#e7e8e6);
+		line-height: 2.5;
+		border: 0.2em solid #a0a3a4;
+		border-radius: 1.75em;
+		padding: .25em .5em;
+		font-size: 1.25em;
+	}
+
+	label {
+		display: none;
+	}
+
+	.btn {
+		cursor: pointer;
+		@include SuperFancyButton {
+
+		}
+
+		&--round {
+			@include SuperFancyButton {
+				border-radius: 50%;
+				width: 3em;
+				height: 3em;
+				padding: .25em;
+				background: radial-gradient(closest-side, rgba(#FFF, .125), rgba(#FFF, .25) 50%, rgba(#FFF, .75) 99%, transparent);
+
+				&::before {
+					left: 20%;
+					right: 20%;
+				}
+			}
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			> span {
+				line-height: 1;
+			}
+
+			.icon {
+				border-radius: 50%;
+				overflow: hidden;
+				display: inline-block;
+				position: relative;
+				z-index: 10;
+			}
+		}
+
+		&--next {
+			@include SuperFancyButton {
+				background: linear-gradient(to bottom, #f67b53, #d63701);
+				color: #FFF;
+				box-shadow: 0 2px 2px rgba(#d63701, .5);
+			}
+		}
+
+		&--back {
+			@include SuperFancyButton {
+				background: linear-gradient(to bottom, #64a5c0, #397585);
+				color: #FFF;
+				box-shadow: 0 2px 2px rgba(#397585, .5);
+			}
+		}
+	}
+}*/
+
+/*# sourceMappingURL=default.css.map */

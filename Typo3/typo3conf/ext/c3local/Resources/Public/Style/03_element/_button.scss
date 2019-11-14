@@ -1,0 +1,174 @@
+.btn {
+	@include SuperFancyButton {
+		background: linear-gradient(rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.85) 40.7%, #fff 100%);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		color: $color_black;
+	}
+	width: 100%;
+
+	.icon {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: $gutter*2;
+		fill: currentColor;
+		outline: none;
+		margin-top: 0;
+
+		.ce-bodytext &:first-child {
+			right: auto;
+			left: $gutter*2;
+		}
+	}
+
+	&.has-icon {
+		[class*="icon"] {
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 36px;
+			height: 36px;
+		}
+	}
+
+	&--glass {
+		display: block;
+		background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.4) 45.6%, rgba(255, 255, 255, 0.7) 65.6%, rgba(255, 255, 255, 0.9) 100%);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	&--round {
+		height: 0;
+		padding-top: 0;
+		height: 0;
+		position: relative;
+		padding-bottom: 100%;
+		border-radius: 50%;
+
+		&::before {
+			left: .5em;
+			right: .5em;
+		}
+
+		&::before {
+			border-radius: 50%;
+		}
+	}
+
+	&--marble {
+		@extend .btn--glass;
+		@extend .btn--round;
+		filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
+
+		&::before {
+			bottom: calc(50% - 3px);
+			left: 16.66666%;
+			right: 16.66666%;
+		}
+
+		&::after {
+			left: 10px;
+			top: 6px;
+			background: #fff;
+		}
+
+		&.has-icon .icon {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+
+	&--next {
+		background: linear-gradient(to bottom, #f67b53, #d63701);
+		color: #FFF;
+		box-shadow: 0 2px 2px rgba(#d63701, .5);
+
+		&::before {
+			left: 20px;
+			right: 20px;
+			background: linear-gradient(180deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, .125) 33%, rgba(255, 255, 255, .25));
+			background-size: cover;
+			background-blend-mode: color-burn;
+		}
+
+		&::after {
+			left: 1.25em;
+		}
+
+		.icon {
+			left: auto;
+			right: 40px;
+			width: 24px;
+			height: 24px;
+		}
+
+	}
+
+	&--back {
+		@include SuperFancyButton {
+			background: linear-gradient(to bottom, #64a5c0, #397585);
+			color: #FFF;
+			box-shadow: 0 2px 2px rgba(#397585, .5);
+		}
+
+		&::before {
+			left: 20px;
+			right: 20px;
+			background-size: cover;
+			background-blend-mode: color-burn;
+			background: linear-gradient(rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 28.1%, rgba(255, 255, 255, 0.25) 100%);
+		}
+
+		&::after {
+			background: #bed9e5;
+			left: 22px;
+		}
+
+		.icon {
+			//position: absolute;
+			//top: 50%;
+			//transform: translateY(-50%);
+			left: $gutter*2;
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	&--secondary {
+		border-radius: 33px;
+		background: linear-gradient(#65a6c1 0%, #3b7b96 57.1%, #34728d 100%);
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+		color: $color_white;
+
+		&::before {
+			background: linear-gradient(rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 28.1%, rgba(255, 255, 255, 0.25) 100%);
+		}
+
+		&::after {
+			background: #bed9e5;
+		}
+	}
+
+	&--cancel {
+		border-radius: 33px;
+		color: $color_white;
+		//background: linear-gradient(#f75454 0%, #df2e2e 57.1%, #d60000 100%);
+		background: linear-gradient($color_error 0%, $color_error_dark 57.1%, $color_error_darker 100%);
+		&::before {
+			background: linear-gradient(rgba($color_white, 0.3) 0%, rgba($color_white, 0.1) 28.1%, rgba($color_white, 0.25) 100%);
+		}
+
+		&::after {
+			background: $color_error_lighter;
+		}
+	}
+
+	&[disabled] {
+		//opacity: .75;
+		filter: grayscale(1);
+	}
+
+}

@@ -1,0 +1,38 @@
+<div class="baxi_tabs">
+    <nav class="baxi_tabs-header">
+        <span data-target="rating-graph" class="is-active">{f:translate(key: 'rating.diagram', default: 'Diagram')}</span>
+        <span data-target="rating-listed">{f:translate(key: 'rating.listing', default:'Liste')}</span>
+    </nav>
+    <div data-tabid="rating-graph" class="baxi_tabs-tab baxi_tabs-tab--seamless is-active">
+        <baxi:rating />
+    </div>
+    <div data-tabid="rating-listed" class="baxi_tabs-tab">
+        <div class="rating rating--list">
+            <f:for as="rating" each="{ratings}">
+                <div style="clear: both;" class="rating-item">
+                    <p class="rating-date">{rating.crdate -> f:format.date(format:'%d.%B %Y')}</p>
+                    <figure class="rating-value">
+                        <f:if condition="{rating.value} == 100">
+                        <f:then>
+                            <f:image src="EXT:c3baxi/Resources/Public/Icons/like.svg" width="60" height="60" />
+                        </f:then>
+                        <f:else>
+                            <f:image src="EXT:c3baxi/Resources/Public/Icons/dislike.svg" width="60" height="60" />
+                        </f:else>
+                        </f:if>
+                    </figure>
+
+                    <p class="rating-type sr-only" >{f:translate(key: 'rating.type.{rating.type}')}</p>
+                    <p class="rating-user"title="{f:translate(key: 'rating.user', default:'Benutzer')}">
+                        {baxi:user(userid : '{rating.cruserId}')}</p>
+                    <div class="rating-comment" title="{f:translate(key: 'rating.comment', default:'Kommentar')}">
+                        <f:if condition="{rating.comment}">
+                            <f:then>{rating.comment -> f:format.html(parseFuncTSPath: 'lib.parseFunc')}</f:then>
+                            <f:else><small>{f:translate(key:'rating.no_comment')}</small></f:else>
+                        </f:if>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+    </div>
+</div>

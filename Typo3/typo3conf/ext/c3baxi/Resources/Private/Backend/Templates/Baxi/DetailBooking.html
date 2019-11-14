@@ -1,0 +1,37 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Reactive" />
+
+<f:section name="header">
+    <div class="bar">
+        <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
+    </div>
+</f:section>
+<f:section name="content">
+
+    <h3>{ride.linie.nr} - {ride.name}</h3>
+    <h5>{date -> f:format.date(format:'d.m.Y')}</h5>
+
+<style>
+    td {
+        padding: 2px 5px;
+    }
+</style>
+    <table>
+        <thead>
+        <tr>
+            <td>Kunde</td>
+            <td>Plaetze</td>
+            <td>Einstieg Haltestelle</td>
+            <td>Ausstieg Haltestelle</td>
+        </tr>
+        </thead>
+        <f:for each="{bookings}" as="booking">
+            <tr>
+                <td>{booking.user.name} {booking.user.surname}</td>
+                <td style="text-align: center">{booking.adults + booking.children}</td>
+                <td>{booking.startStation.name} <small>({booking.startStation.zone.name})</small></td>
+                <td>{booking.endStation.name} <small>({booking.endStation.zone.name})</small></td>
+            </tr>
+        </f:for>
+    </table>
+</f:section>

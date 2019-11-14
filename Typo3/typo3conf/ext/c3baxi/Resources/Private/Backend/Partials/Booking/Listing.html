@@ -1,0 +1,59 @@
+
+<f:for as="day" key="date" each="{booking}">
+    <div class="booking">
+        <h3 class="align-center">{date -> f:format.date(format:'Y-m-d')}</h3>
+
+        <f:for as="fahrt" each="{day}">
+            <div class="booking-fahrt">
+                <div class="booking-header">
+                    <h4>{fahrt.data.linie.nr} - {fahrt.data.name}</h4>
+                    <p>Buchbar bis: {date -> f:format.date(format:'Y-m-d')} {fahrt.data.buchbarBis ->
+                       f:format.date(format:'H:i')}</p></div>
+                <div class="booking-stations">
+                    <f:for each="{fahrt.zonen}" as="zone">
+                        <f:if condition="{zone.plus} OR {zone.minus}">
+                            <p class="itinerar">
+                                <span><strong>{zone.data.name}</strong></span>
+                                <span>{f:if(condition: '{zone.plus} > 0', then: '+{zone.plus}', else: '0')}</span>
+                                <span>{f:if(condition: '{zone.minus} > 0', then: '-{zone.minus}', else: '0')}</span>
+                                <span><strong>{v:math.maximum(a: '{zone.plus - zone.minus}', b: 0 )}</strong></span>
+                            </p>
+                            <f:comment>
+                                <ul class="" style="margin-left: 0; padding-left:0;">
+                                    <f:for as="haltestelle" each="{zone.haltestellen}">
+                                        <li class="itinerar"><span>{haltestelle.name}</span><span>4</span>
+                                            <span>6</span>
+                                        </li>
+                                    </f:for>
+                                </ul>
+                            </f:comment>
+                        </f:if>
+                    </f:for>
+                </div>
+                <f:if condition="{actions}">
+                    <div class="booking-actions">
+                        <f:for each="{actions}" as="action">
+                            <f:switch expression="{action}">
+                                <f:case value="show">
+                                    <f:link.action action="detailBooking"
+                                                   arguments="{date: date, ride: fahrt.data}">
+                                        Details</f:link.action>
+                                </f:case>
+                                <f:case value="map">
+                                    <f:link.action action="showMapBooking"
+                                                   arguments="{date: date, ride: fahrt.data}">Map
+                                    </f:link.action>
+                                </f:case>
+                                <f:case value="book">
+                                    <f:link.action action="new" controller="Booking"
+                                                   arguments="{date: date, ride: fahrt.data}">add Booking
+                                    </f:link.action>
+                                </f:case>
+                            </f:switch>
+                        </f:for>
+                    </div>
+                </f:if>
+            </div>
+        </f:for>
+    </div>
+</f:for>

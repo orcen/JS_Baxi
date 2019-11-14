@@ -1,0 +1,54 @@
+<div class="booking">
+
+    <f:render partial="PageActions"
+              arguments="{
+              title:'{f:if(condition:\'{isComming}\', then:\'Anstehende Fahrt\', else:\'Vergangene Fahrt\')}',
+              subtitle:'{booking.date -> f:format.date(format:\'%d.%m.%Y\')}',
+              pageUid:10, helpID:6}"></f:render>
+
+    <baxi:route.selected start="{booking.startStation}" end="{booking.endStation}" fahrt="{booking.fahrt}" />
+
+
+    <f:render partial="PriceBox" arguments="{price : {}}"></f:render>
+
+
+    <div class="subcontent">
+
+        <div class="booking-info">
+            <div>
+                <span>Fahrtg&auml;ste</span>
+                <span>{booking.adults + booking.children}</span>
+            </div>
+            <div>
+                <span>Anmerkung</span>
+                <span>{f:if( condition: '{booking.info} != ""', then: '{booking.info}', else: 'Keine')}</span>
+            </div>
+        </div>
+
+
+        <f:if condition="{isComming}">
+            <p>
+                <f:link.action action="cancel" arguments="{booking : booking}"
+                               additionalAttributes="{data-action:'cancel'}"
+                               class="btn btn--cancel">
+                    Fahrt stornieren</f:link.action>
+            </p>
+            <p>Du kannst diese Fahrt bis {booking.fahrt.buchbarBis -> f:format.date( format:'H:i' )} Uhr
+               stornieren.</p>
+        </f:if>
+        <f:if condition="!{isComming}">
+            <f:if condition="{rating_allowed}">
+            <f:then>
+                <p>
+                    <span data-action="rate" data-booking="{booking.uid}" class="btn btn--secondary">Fahrt bewerten</p>
+            </f:then>
+            <f:else>
+                <p>
+                    <span class="btn btn--secondary is-disabled">Bewertung abgegeben</p>
+            </f:else>
+            </f:if>
+        </f:if>
+    </div>
+
+
+</div>

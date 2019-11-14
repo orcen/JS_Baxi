@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<ul class="list">
+    <f:for as="zone" each="{zonen}">
+        <li class="list-item baxi_collapsible">
+
+            <h4>
+                            <span data-toggle="collapse"
+                                  data-target="#zone-{zone.uid}">
+                              <core:icon identifier="actions-view-list-expand" />
+                          </span>
+                {zone.name}
+            </h4>
+            <span class="list-actions">
+                <f:link.action class="btn btn-icon btn-default" action="edit" controller="Zone"
+                               arguments="{zone : zone}">
+                    <core:icon identifier="actions-open" />
+                </f:link.action>
+                <f:link.action class="btn btn-icon btn-default" action="delete"
+                               controller="Zone" arguments="{zone : zone}">
+                    <core:icon identifier="actions-delete" />
+                </f:link.action>
+            </span>
+
+            <ul id="zone-{zone.uid}" class="baxi_collapsible-block list list--stations">
+                <f:for as="haltestelle" each="{zone.haltestellen}">
+                    <li class="list-item">
+                        <span><core:icon identifier="content-marker" />
+                            <f:if condition="{haltestelle.number}"><small>({haltestelle.number})</small></f:if>
+                            <f:link.action action="edit" controller="Haltestelle"
+                                           arguments="{haltestelle : haltestelle}">{haltestelle.name}</f:link.action></span>
+                        <span class="list-actions">
+                            <f:link.action action="edit" controller="Haltestelle"
+                                           arguments="{haltestelle : haltestelle}">
+                                <core:icon identifier="actions-open" /></f:link.action>
+                            <span><core:icon identifier="actions-delete" /></span>
+                        </span>
+                    </li>
+                </f:for>
+            </ul>
+        </li>
+    </f:for>
+</ul>

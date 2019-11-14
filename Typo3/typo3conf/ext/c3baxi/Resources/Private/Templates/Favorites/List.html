@@ -1,0 +1,47 @@
+<div id="kontoFavorites">
+
+    <f:render partial="PageActions"
+              arguments="{
+              title:'Favoriten',
+              subtitle:'{booking.date -> f:format.date(format:\'%d.%m.%Y\')}',
+              pageUid:2,hideHelp:'true'}"></f:render>
+
+
+    <div class="page_text">
+        <p>Füge bis <strong>zu fünf Haltestellen</strong> hinzu, auf die du bei der Fahrtsuche schnell zugreifen kannst.
+           Du kannst jedem Favoriten auch einen
+            <strong>eigenen Namen</strong> geben, damit du sie leichter zuordnen kannst.</p>
+    </div>
+
+    <div class="subcontent">
+        <f:if condition="{favorites}">
+            <f:then>
+                <f:for as="fav" each="{favorites}">
+                    <div class="box box--favorite">
+                        <p class="box-title">{fav.name}</p>
+                        <p class="box-subtitle">
+                            <baxi:station station="{fav.station}" hideZone="true" />
+                        </p>
+                        <span class="box-icon" data-action="deleteFavorite"
+                              data-uid="{fav.station.uid}"><baxi:icon name="delete" /></span>
+                        <span class="bubble"></span>
+                    </div>
+                </f:for>
+            </f:then>
+            <f:else>
+                <h3>Noch keine Favoriten hinzugef&uuml;gt</h3>
+            </f:else>
+        </f:if>
+
+
+            <p class="{f:if(condition: '{canAddFavorite}',else:'hidden')}">
+                <span id="add_favorite" data-autocomplete="favorites">
+                    <span class="btn btn--glass btn--round has-icon"><baxi:icon name="add" /></span>
+                    Favorit hinzufügen
+                </span>
+            </p>
+
+
+    </div>
+
+</div>

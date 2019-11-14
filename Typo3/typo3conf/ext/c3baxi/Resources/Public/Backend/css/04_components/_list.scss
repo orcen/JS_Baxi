@@ -1,0 +1,70 @@
+.list {
+	list-style: outside none;
+	padding: 0;
+	margin: 0;
+
+	&-item {
+		padding: $offset/4 $gutter/4;
+		border: 1px solid transparent;
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+
+		&:nth-child(n+2) {
+			border-top: 1px solid #CCC;
+		}
+
+		&[data-draggable="true"] {
+			border-top-color: transparent;
+
+			&:hover {
+				border-color: #CCC;
+				padding-left: 3ch;
+				cursor: pointer;
+				font-weight: bold;
+
+				&::before {
+					content: '\0205D';
+					width: 2ch;
+					height: 100%;
+					position: absolute;
+					display: inline-block;
+					background-color: #CCC;
+					color: #333;
+					text-align: center;
+					font-weight: bold;
+					top: 0;
+					left: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+			}
+		}
+
+		&::after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+
+		.list {
+			flex: 0 0 100%;
+		}
+	}
+
+	&-actions {
+		margin-left: auto;
+		float: right;
+	}
+	+ & {
+		margin-top: $offset;
+	}
+
+	&--stations {
+		.list-item {
+			display: flex;
+			flex-wrap: nowrap;
+		}
+	}
+}

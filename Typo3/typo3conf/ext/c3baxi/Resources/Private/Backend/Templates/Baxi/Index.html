@@ -1,0 +1,112 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Dashboard" />
+<f:section name="content">
+
+    <!-- Reservings Board -->
+    <section class="baxi_board baxi_board--wide">
+        <header class="baxi_board-header">
+            <h2 class="baxi_board-title">
+                <f:image src="EXT:c3baxi/Resources/Public/Icons/booking.svg" />Gebuchte Fahrten</h2>
+        </header>
+        <main class="baxi_board-content">
+            <f:render partial="Baxi/Booking" arguments="{_all}" />
+        </main>
+        <footer class="baxi_board-footer">
+            <nav class="baxi_board-actions">
+                <f:link.action action="new" controller="Booking" title="new Booking" class="btn btn-icon
+               btn-default">
+                    <core:icon identifier="actions-add" />
+                    new Booking
+                </f:link.action>
+            </nav>
+        </footer>
+    </section>
+
+
+    <!-- Rating Board -->
+    <section class="baxi_board">
+        <header class="baxi_board-header">
+            <h2 class="baxi_board-title">Bewertungen</h2>
+        </header>
+        <main class="baxi_board-content">
+
+            <f:render partial="Baxi/Rating" arguments="{_all}"/>
+        </main>
+
+        <footer class="baxi_board-footer">
+
+        </footer>
+    </section>
+
+
+    <!-- Routes Board -->
+    <section class="baxi_board baxi_board--small" style="clear: both">
+        <header class="baxi_board-header">
+            <h2 class="baxi_board-title">Linien</h2>
+        </header>
+
+        <main class="baxi_board-content">
+            <f:render partial="Baxi/Linien" arguments="{_all}" />
+        </main>
+        <footer class="baxi_board-footer">
+            <nav class="baxi_board-actions">
+                <f:link.action action="new" controller="Linie" title="neue Linie" class="btn btn-icon btn-default">
+                    <core:icon identifier="actions-add" />
+                    neue Linie
+                </f:link.action>
+            </nav>
+        </footer>
+    </section>
+
+
+
+
+    <!-- Zones Board -->
+    <section class="baxi_board baxi_board--small">
+        <header class="baxi_board-header">
+
+            <h2 class="baxi_board-title">
+                <f:image src="EXT:c3baxi/Resources/Public/Icons/zone.svg" /> Zonen</h2>
+        </header>
+        <main class="baxi_board-content">
+            <f:render partial="Baxi/Zonen" arguments="{_all}" />
+        </main>
+        <footer class="baxi_board-footer">
+            <nav class="baxi_board-actions">
+                <f:link.action action="new" controller="Zone" title="neue Zone" class="btn btn-icon btn-default">
+                    <core:icon identifier="actions-add" />
+                    neue Zone
+                </f:link.action>
+            </nav>
+        </footer>
+    </section>
+
+
+
+    <!-- Company Board -->
+    <section class="baxi_board baxi_board--small">
+        <header class="baxi_board-header">
+            <h2 class="baxi_board-title">Unternehmen</h2>
+        </header>
+        <main class="baxi_board-content">
+            <f:render partial="Baxi/Company" arguments="{_all}" />
+        </main>
+        <footer class="baxi_board-footer">
+            <nav class="baxi_board-actions">
+                <f:link.action action="new" controller="Company" title="{f:translate(key:'company.new')}"
+                               class="btn btn-icon btn-default">
+                    <core:icon identifier="actions-add" />
+                    <f:translate key="company.new" />
+                </f:link.action>
+                <f:link.action action="import" controller="Company" title="{f:translate(key:'company.import')}"
+                               class="btn btn-icon btn-default" additionalAttributes="{disabled: true}">
+                    <core:icon identifier="actions-database-import" state="disabled" />
+                    <span class="sr-only"><f:translate key="company.import" /></span>
+                </f:link.action>
+            </nav>
+        </footer>
+    </section>
+
+
+</f:section>
+</html>

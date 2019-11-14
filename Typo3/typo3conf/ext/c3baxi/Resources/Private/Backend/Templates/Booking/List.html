@@ -1,0 +1,60 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="content">
+    <h1>Listing for Booking</h1>
+
+    <f:flashMessages />
+    <f:render section="BookingTable"
+              arguments="{tableTitle: 'Kommende Fahrten',allowCancel: 'true',bookings: booking_comming}" />
+    <f:render section="BookingTable"
+              arguments="{tableTitle: 'Vergangene Fahrten',allowCancel: 'false',bookings: booking_past}" />
+
+</f:section>
+
+<f:section name="BookingTable">
+    <table class="tx_c3baxi">
+        <thead>
+        <tr>
+            <th colspan="6" class="tac"><strong>{tableTitle}</strong></th>
+        </tr>
+        <tr>
+            <th width="140">Linie - Fahrt</th>
+            <th width="40">Pasagiere</th>
+            <th width="60">Datum</th>
+            <th width="">Start<br />Ende
+            </th>
+            <th width="150">Fahrtgast</th>
+            <th class="action" width="150">
+                <f:if condition="{allowCancel}">
+                    <f:link.action action="new">New Booking</f:link.action>
+                </f:if>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <f:for each="{bookings}" as="booking">
+            <tr>
+                <td>{booking.fahrt.linie.nr} <br /> {booking.fahrt.name}</td>
+                <td>{booking.adults + booking.children}</td>
+                <td>{booking.date -> f:format.date(format:'d-m-Y H:i')}</td>
+                <td>{booking.startStation.name} ({booking.startStation.zone.name})<br />
+                    {booking.endStation.name} ({booking.endStation.zone.name})
+                </td>
+                <td>{booking.user.username}</td>
+                <td class="action" rowspan="{f:if(condition:'{booking.info'}, then:'2', else:'1')}">
+                    <f:if condition="{allowCancel}">
+                        <f:link.action action="cancel" arguments="{booking: booking}">Stornieren
+                        </f:link.action>
+                    </f:if>
+                </td>
+            </tr>
+            <f:if condition="{booking.info}">
+                <tr>
+                    <td colspan="7">{booking.info}</td>
+                </tr>
+            </f:if>
+        </f:for>
+        </tbody>
+    </table>
+</f:section>

@@ -1,0 +1,7 @@
+editor:
+  config:
+    contentsCss: "EXT:c3local/Resources/Public/Style/rte.css"
+
+processing:
+  allowTags:
+    - u

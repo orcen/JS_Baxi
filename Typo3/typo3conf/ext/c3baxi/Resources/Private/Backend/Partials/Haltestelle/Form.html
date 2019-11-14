@@ -1,0 +1,51 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+
+<f:form action="{f:if(condition: '{haltestelle}', then: 'update', else: 'create')}"
+      name="Haltestelle"
+      object="{haltestelle}">
+    <f:if condition="{haltestelle}">
+        <f:form.hidden name="haltestelle" value="{haltestelle}" />
+    </f:if>
+    <p>
+        <label>
+            <f:translate key="haltestelle.name" default="Name" />
+        </label>
+        <f:form.textfield name="name" value="{haltestelle.name}" />
+    </p>
+
+    <p>
+        <label>
+            <f:translate key="haltestelle.number" default="Nummer" />
+        </label>
+        <f:form.textfield name="number" value="{haltestelle.number}" />
+    </p>
+
+    <div style="display: flex;">
+        <p>
+            <label>
+                <f:translate key="haltestelle.latitude" default="Breitengrad" />
+            </label>
+            <f:form.textfield name="latitude" value="{haltestelle.latitude}" />
+        </p>
+
+        <p style="margin-left: 4ch;">
+            <label>
+                <f:translate key="haltestelle.longitude" default="Längengrad" />
+            </label>
+            <f:form.textfield name="longitude" value="{haltestelle.longitude}" />
+        </p>
+    </div>
+
+    <p>
+        <label>Zone</label>
+        <f:form.select name="zone" options="{zoneList}" value="{haltestelle.zone}" />
+        <f:form.button type="button" onclick="">neue Zone erstellen</f:form.button>
+    </p>
+
+    <p>
+        <f:form.submit value="Speichern" />
+    </p>
+    </f:form>
+
+</html>

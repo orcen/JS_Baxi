@@ -1,0 +1,33 @@
+.footer {
+	//display: none;
+	//position: absolute;
+	//bottom: 0;
+	//left: 0;
+	//padding: $offset $gutter;
+	color: #FFF;
+	padding: $offset*3 $gutter $offset;
+	text-align: center;
+	font-size: $font-size-xs;
+	//width: 100%;
+
+	&--tt {
+		text-align: initial;
+
+		p {
+			margin-top: $offset/2;
+
+			a.help-link {
+				color: $color_primary;
+				.icon {
+					margin-top: -3px;
+					vertical-align: middle;
+				}
+			}
+		}
+	}
+
+	@supports (display: grid) {
+		grid-row: 3;
+		grid-column: 1;
+	}
+}

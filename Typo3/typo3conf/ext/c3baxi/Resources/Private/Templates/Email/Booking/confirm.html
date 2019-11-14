@@ -1,0 +1,18 @@
+
+<div>
+    <h1>BAXI - Buchungs Bestaetigung</h1>
+
+    <div>
+        <h2>{booking.fahrt.name} {booking.fahrt.linie.nr} {booking.fahrt.linie.name}</h2>
+    </div>
+    <div>
+        <h3>{booking.user.name}</h3>
+
+        <p>Abfahrt: {booking.startStation.name}<br />
+           {departure -> f:format.date( format: 'd.m.Y H:i' )}</p>
+        <p>Ankunft: {booking.endStation.name}<br />
+           {arrival -> f:format.date( format: 'd.m.Y H:i' )}</p>
+
+        <p>Pl&auml;tzeanzahl: {booking.adults + booking.children}</p>
+    </div>
+</div>

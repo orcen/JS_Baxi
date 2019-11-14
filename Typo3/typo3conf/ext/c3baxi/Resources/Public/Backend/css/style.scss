@@ -1,0 +1,140 @@
+.tal {text-align: left}
+
+.tac {text-align: center}
+
+.tar {text-align: right}
+
+
+table.tx_c3baxi {
+	border: 1px solid #999;
+	width: 100%;
+
+	thead {
+		background: #CDCDCD;
+		border-bottom: 1px solid #999;
+	}
+
+	tbody {}
+
+	tfoot {
+		background: #DDD;
+		border-top: 1px solid #AAA;
+	}
+
+	tr {}
+
+	th {
+		font-size: 1.2em;
+
+		a {
+			font-size: .8em;
+		}
+	}
+
+	td, th {
+		padding: 2px 4px;
+		min-width: 8ch;
+
+		&.action {
+			max-width: 14ch;
+			text-align: right;
+			font-weight: bold;
+
+			a + a {
+				margin-left: 2ch;
+			}
+		}
+	}
+}
+
+.tx_c3baxi {
+
+	& + & {
+		margin-top: 2em;
+	}
+
+	&-controls {
+		margin: 2em 0;
+
+		a {
+			border: 1px solid;
+			padding: .25em .45em;
+			display: inline-block;
+		}
+	}
+
+	&-list {
+		list-style: none;
+		padding: 0;
+		height: 25em;
+		overflow: auto;
+	}
+}
+
+form {
+
+	label {
+		display: inline-block;
+		min-width: 18ch;
+	}
+
+	input {
+		min-width: 30ch;
+		padding: 2px 4px;
+	}
+}
+
+.relation_field {
+	display: flex;
+	justify-content: space-evenly;
+
+	&-block {
+		flex: 1 1 50%;
+
+		h4 {
+			font-weight: bold;
+		}
+	}
+
+	&-list {
+		height: 25em;
+		overflow: auto;
+
+		> * {
+			margin: 0;
+		}
+	}
+}
+
+.checkbox_group {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+
+	label {
+		flex: 0 0 auto;
+		min-width: auto;
+		display: inline-flex;
+		align-items: center;
+
+		+ label {
+			margin-left: 2ch;
+			&::before {
+				content: '';
+				margin-left: -1ch;
+				border-left: 1px solid #AAA;
+				height: 100%;
+				margin-right: 1ch;
+			}
+		}
+
+		span {
+			margin-left: 1ch;
+		}
+	}
+	input {
+		width: auto;
+		min-width: 0;
+		margin: 0;
+	}
+}

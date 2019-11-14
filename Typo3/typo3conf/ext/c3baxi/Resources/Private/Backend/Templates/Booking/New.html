@@ -1,0 +1,145 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Reactive" />
+
+<f:section name="header">
+    <div class="bar">
+        <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
+    </div>
+</f:section>
+<f:section name="content">
+
+    <f:form id="findRoute">
+
+        <div>
+            <label>Einstieg</label>
+            <f:form.select name="start"
+                           additionalAttributes="{data-action:'selectStation', data-target: '#start_station',autocomplete: 'off'}"
+                           value="0">
+                <f:form.select.option value="0">
+                    <f:translate key="choose_station" default="Auswählen" />
+                </f:form.select.option>
+
+                <f:for as="station" each="{stations}">
+                    <f:form.select.option
+                            value="{station.uid}"
+                            additionalAttributes="{data-zone:station.zone.uid}">
+                        {station.name}
+                    </f:form.select.option>
+                </f:for>
+
+            </f:form.select>
+        </div>
+
+        <div>
+            <label>Ausstieg</label>
+            <f:form.select name="end"
+                           additionalAttributes="{data-action:'selectStation', data-target: '#end_station',autocomplete: 'off'}"
+                           value="0">
+                <f:form.select.option value="0">
+                    <f:translate key="choose_station" default="Auswählen" />
+                </f:form.select.option>
+
+                <f:for as="station" each="{stations}">
+                    <f:form.select.option
+                            value="{station.uid}"
+                            additionalAttributes="{data-zone:station.zone.uid}">
+                        {station.name}
+                    </f:form.select.option>
+                </f:for>
+
+            </f:form.select>
+        </div>
+
+
+        <div>
+            <label>Abfahrt</label>
+            <f:form.textfield type="date" name="date" value="{datum -> f:format.date(format: 'Y-m-d')}"
+                              additionalAttributes="{autocomplete : 'off'}" />
+        </div>
+        <div>
+            <label>Abfahrt</label>
+            <f:comment>
+                <f:form.textfield type="time" size="10"
+                                  additionalAttributes="{list: 'quickTimeSelect', autocomplete: 'off'}" />
+            </f:comment>
+            <f:form.select name="time" value="{time}" options="{timeList}"
+                           prependOptionLabel="{f:translate(key: 'select time', default: 'Wunschzeit waehlen')}" />
+        </div>
+
+        <div>
+            <button type="submit" name="find" data-action="find">suche Fahrten</button>
+        </div>
+
+    </f:form>
+    <div class="output">
+        <template id="boxTemplate">
+            <h3>##name##</h3>
+            <p>##zone## ##linie##</p>
+        </template>
+        <div class="box box--start" id="start_station">
+
+        </div>
+        <div class="box box--end" id="end_station">
+
+        </div>
+        <template id="ride">
+            <div class="box box--ride" style="margin-top:16px; border: 1px solid;">
+                <p><strong>
+                    <f:translate key="booking.line" default="Linie" />
+                    :</strong> ##line##
+                </p>
+                <p><strong>
+                    <f:translate key="booking.duration" default="Fahrtdauer" />
+                    :</strong> ##duration## Min.
+                </p>
+                <p><strong>
+                    <f:translate key="booking.departure" default="Abfahrt" />
+                    :</strong> ##departure##
+                </p>
+                <p><strong>
+                    <f:translate key="booking.arrival" default="Ankunft" />
+                    :</strong> ##arrival##
+                </p>
+                <p><strong>
+                    <f:translate key="booking.date" default="Datum" />
+                    :</strong> ##date## ##time##
+                </p>
+                <f:form action="create">
+                    <f:form.hidden name="fahrt" value="" />
+                    <f:form.hidden name="date" value="" />
+                    <f:form.hidden name="startStation" value="" />
+                    <f:form.hidden name="endStation" value="" />
+                    <p><label>
+                        <f:translate key="booking.adults">Passagiere</f:translate>
+                    </label>
+                        <f:form.textfield name="adults" type="number" value="1"
+                                          additionalAttributes="{min: 1, step: 1}" />
+                    </p>
+                    <p>
+                        <label>
+                            <f:translate key="booking.user">Kunde</f:translate>
+                        </label>
+                        <f:form.select name="user"
+                                       options="{users}"
+                                       optionLabelField="name"
+                                       optionValueField="uid"
+                                       prependOptionLabel="{f:translate(key:'booking.no_user', default: 'ohne Kunden zuweisung')}"
+                                       prependOptionValue="0"></f:form.select>
+                    </p>
+                    <p>
+                        <label><f:translate key="booking.info" default="Notiz"/></label>
+                        <f:form.textarea name="info"></f:form.textarea>
+                    </p>
+                    <f:form.button>Jetzt Buchen</f:form.button>
+                </f:form>
+            </div>
+        </template>
+        <div class="list">
+
+        </div>
+
+    </div>
+
+
+</f:section>
+</html>

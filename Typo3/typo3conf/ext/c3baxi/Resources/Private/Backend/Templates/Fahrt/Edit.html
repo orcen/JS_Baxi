@@ -1,0 +1,15 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Reactive" />
+
+<f:section name="header">
+    <div class="bar">
+        <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
+        <h1>Bearbeite Fahrt "{fahrt.name} ({fahrt.linie.nr})"</h1>
+    </div>
+</f:section>
+
+<f:section name="content">
+    <f:variable name="action" value="edit" />
+    <f:render partial="Fahrt/Form" arguments="{_all}" />
+</f:section>
+</html>

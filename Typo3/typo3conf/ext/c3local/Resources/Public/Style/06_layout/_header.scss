@@ -1,0 +1,49 @@
+.header {
+	background: $color-header;
+
+	&-logo {
+		width: 200px;
+		height: 120px;
+		margin: 60px auto 0;
+		display: block;
+		vertical-align: middle;
+		border: 1px solid #FFF;
+		text-align: center;
+	}
+
+	&-banner {
+		width: 100%;
+		height: auto;
+	}
+
+	&-nav {
+		display: flex;
+		justify-content: space-between;
+		padding: $offset*2 $gutter 0;
+		//margin-bottom: $offset * -1;
+		position: relative;
+		z-index: 10;
+		font-weight: bold;
+		font-size: $font-size-sm;
+
+		@media (min-width: 768px) {
+			//margin-bottom: $offset * -2;
+
+		}
+	}
+
+	&-button {
+		text-align: center;
+		color: #FFF;
+
+
+		.btn {
+			width: 66px;
+			margin-bottom: 8px;
+
+			.icon {
+				margin-top: 0;
+			}
+		}
+	}
+}

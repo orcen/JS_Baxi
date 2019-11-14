@@ -1,0 +1,12 @@
+p, .as-p {
+	line-height: (24/16);
+	+ p,
+	* + & {
+		margin-top: $offset;
+	}
+
+}
+
+.as-p {
+	font-size: $font-size-md;
+}

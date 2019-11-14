@@ -1,0 +1,80 @@
+<div class="page_actions">
+    <f:link.page pageUid="1" class="page_actions-button">
+        <baxi:icon name="Pfeil_L" />
+        Zur&uuml;ck
+    </f:link.page>
+
+    <div class="page_actions-title">
+        <h3>Fahrt Buchen</h3>
+        <p>{fahrtZeit -> f:format.date(format: '%d.%m.%Y')}</p>
+    </div>
+
+    <span data-action="help" data-question="1" pageUid="4" class="page_actions-button">
+        Hilfe
+        <baxi:icon name="Hilfe_Klein" />
+    </span>
+</div>
+
+
+<baxi:route.selected start="{startStation}" end="{endStation}" fahrt="{fahrt}" />
+
+
+<div class="box box--price">
+
+    <p><small>Fahrpreis</small>
+        <strong>4,30 &euro;</strong> / Erwachsener
+        <baxi:icon name="Einstellungen" />
+    <small>Barzahlung bei der Fahrt.</small></p>
+
+    <div class="box-footer">
+        <p>
+            <baxi:icon name="info" />
+            Alle Fahrpreise anzeigen
+        </p>
+    </div>
+    <span class="bubble"></span>
+</div>
+
+<p class="align-center" style="font-size: 12px; margin-top: 7px">Du kannst diese Fahrt bis
+    <strong>{fahrt.buchbarBis -> f:format.date(format: 'H:i')}</strong> buchen</p>
+
+<div class="results results--reserve">
+    <div class="results-header" style="min-width:33%">&nbsp;</div>
+
+    <f:form action="save">
+
+        <p class="field-wrap">
+            <label>Fahrgäste</label>
+            <f:form.textfield name="tickets" type="number" additionalAttributes="{min: 1, step:1, max:8}"
+                              value="1" />
+
+        </p>
+
+        <p class="field-wrap">
+            <label>Anmerkung <small>(optional)</small></label>
+            <f:form.textfield name="info"
+                              additionalAttributes="{placeholder : 'Anmerkung hinzufügen', cols : 30, rows : 1}" />
+            <span class="field-description">z.B. Barrierefreier Zugang benötigt</span>
+        </p>
+
+        <p class="field-wrap">
+            <f:security.ifAuthenticated>
+                <f:then>
+                    <f:form.button type="submit" class="btn btn--next">Fahrt reservieren
+                        <baxi:icon name="Pfeil_R" />
+                    </f:form.button>
+                </f:then>
+                <f:else>
+                    <f:link.page pageUid="2" class="btn btn--next">
+                        Jetzt anmelden
+                        <baxi:icon name="Pfeil_R" />
+                    </f:link.page>
+                </f:else>
+            </f:security.ifAuthenticated>
+
+            <span class="field-description">Dafür benötigst du ein kostenloses BAXI Konto.</span>
+        </p>
+    </f:form>
+
+</div>
+

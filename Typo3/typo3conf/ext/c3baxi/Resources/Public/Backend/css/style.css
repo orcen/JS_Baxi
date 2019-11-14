@@ -1,0 +1,119 @@
+.tal {
+  text-align: left;
+}
+
+.tac {
+  text-align: center;
+}
+
+.tar {
+  text-align: right;
+}
+
+table.tx_c3baxi {
+  border: 1px solid #999;
+  width: 100%;
+}
+table.tx_c3baxi thead {
+  background: #CDCDCD;
+  border-bottom: 1px solid #999;
+}
+table.tx_c3baxi tfoot {
+  background: #DDD;
+  border-top: 1px solid #AAA;
+}
+table.tx_c3baxi th {
+  font-size: 1.2em;
+}
+table.tx_c3baxi th a {
+  font-size: 0.8em;
+}
+table.tx_c3baxi td, table.tx_c3baxi th {
+  padding: 2px 4px;
+  min-width: 8ch;
+}
+table.tx_c3baxi td.action, table.tx_c3baxi th.action {
+  max-width: 14ch;
+  text-align: right;
+  font-weight: bold;
+}
+table.tx_c3baxi td.action a + a, table.tx_c3baxi th.action a + a {
+  margin-left: 2ch;
+}
+
+.tx_c3baxi + .tx_c3baxi {
+  margin-top: 2em;
+}
+.tx_c3baxi-controls {
+  margin: 2em 0;
+}
+.tx_c3baxi-controls a {
+  border: 1px solid;
+  padding: 0.25em 0.45em;
+  display: inline-block;
+}
+.tx_c3baxi-list {
+  list-style: none;
+  padding: 0;
+  height: 25em;
+  overflow: auto;
+}
+
+form label {
+  display: inline-block;
+  min-width: 18ch;
+}
+form input {
+  min-width: 30ch;
+  padding: 2px 4px;
+}
+
+.relation_field {
+  display: flex;
+  justify-content: space-evenly;
+}
+.relation_field-block {
+  flex: 1 1 50%;
+}
+.relation_field-block h4 {
+  font-weight: bold;
+}
+.relation_field-list {
+  height: 25em;
+  overflow: auto;
+}
+.relation_field-list > * {
+  margin: 0;
+}
+
+.checkbox_group {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.checkbox_group label {
+  flex: 0 0 auto;
+  min-width: auto;
+  display: inline-flex;
+  align-items: center;
+}
+.checkbox_group label + label {
+  margin-left: 2ch;
+}
+.checkbox_group label + label::before {
+  content: "";
+  margin-left: -1ch;
+  border-left: 1px solid #AAA;
+  height: 100%;
+  margin-right: 1ch;
+}
+.checkbox_group label span {
+  margin-left: 1ch;
+}
+.checkbox_group input {
+  width: auto;
+  min-width: 0;
+  margin: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

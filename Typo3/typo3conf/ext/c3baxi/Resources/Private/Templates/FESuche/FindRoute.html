@@ -1,0 +1,127 @@
+<div id="routeFinder">
+    <f:debug>{fahrten}</f:debug>
+    <div class="page_actions">
+        <f:link.page pageUid="1" class="page_actions-button">
+            <svg class="icon" width="20" height="20">
+                <use xlink:href="#Pfeil_L" fill="currentColor" />
+            </svg>
+            Zur&uuml;ck
+        </f:link.page>
+
+        <div class="page_actions-title">
+            <f:if condition="{fahrten}">
+                <f:then>
+                    <h3>Fahrt Suchen</h3>
+                    <p>{fahrtzeit -> f:format.date( format: 'd.m.Y - \a\b H:i' )}</p>
+                </f:then>
+                <f:else>
+                    <h3>keine Fahrt<br />gefunden</h3>
+                </f:else>
+            </f:if>
+        </div>
+
+        <f:link.page pageUid="4" class="page_actions-button">Hilfe
+            <svg class="icon" width="20" height="20">
+                <use
+                        xlink:href="#Hilfe_Klein"
+                        fill="currentColor"></use>
+            </svg>
+        </f:link.page>
+    </div>
+
+    <f:if condition="{startStation} AND {endStation}">
+        <baxi:route start="{startStation}" end="{endStation}" />
+    </f:if>
+
+    <f:if condition="{fahrten}">
+        <div class="results">
+            <div class="results-header">
+
+                <f:link.action action="findRoute" controller="FESuche" pageUid="11" arguments="{shift : 'prev'}">
+                    <baxi:icon name="Uhr_kontur" width="13" height="13" />
+                    Fr&uuml;here Fahrten
+                </f:link.action>
+            </div>
+
+            <f:for as="fahrt" each="{fahrten}">
+
+                <div class="box ride">
+                    <div class="ride-header">
+                        <div>
+                            <small>Abfahrt</small><br />
+                            <time datetime="{fahrt.abfahrt.zeit -> f:format.date(format:'Y-m-d H:i')}">
+                                {fahrt.abfahrt.zeit -> f:format.date(format:'H:i')}
+                            </time>
+                        </div>
+                        <div>
+                            <small>Ankunft</small><br />
+                            <time datetime="{fahrt.ankunft.zeit -> f:format.date(format:'Y-m-d H:i')}">
+                                {fahrt.ankunft.zeit -> f:format.date(format:'H:i')}
+                            </time>
+                        </div>
+                        <div>
+                            <small>Fahrpreis</small><br />
+                            <a>
+                                {fahrt.preis -> f:format.number(decimals: 2, decimalSeparator: ',')}&nbsp;&euro;
+                                <baxi:icon name="Einstellungen" width="13" height="13" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ride-info">
+                        <span>
+                            <baxi:icon name="BAXI" width="13" height="13" />
+                            {fahrt.linie}
+                        </span>
+                        <span>
+                            <baxi:icon name="Umstieg" width="13" height="13" />
+                            {f:if(condition: '{fahrt.umstieg}', then:'mit Umstieg', else:'kein Umstieg')}
+                        </span>
+                        <span>
+                            <baxi:icon name="Uhr_kontur" width="13" height="13" /> ca {fahrt.dauer} min.
+                        </span>
+
+                    </div>
+                    <div class="box-footer box-footer--with-button">
+                        <f:if condition="{fahrt.allowed} && {fahrt.bookable}">
+                            <f:then>
+                                <f:link.action action="reserve" pageUid="13"
+                                               arguments="{fahrt : fahrt.uid}"
+                                               class="btn btn--next">
+                                    Fahrt buchen
+                                    <baxi:icon name="Pfeil_R" width="30" height="30" />
+                                </f:link.action>
+                            </f:then>
+                            <f:else>
+                                <f:if condition="!{fahrt.allowed}">
+                                    <f:then>
+                                    <span class="btn btn--next" disabled>
+                                        Nicht mehr Buchbar
+                                        <baxi:icon name="Abbrechen" width="30" height="30" />
+                                    </span>
+                                    </f:then>
+                                    <f:else>
+                                        <span class="btn btn--next" disabled>
+                                        Bereits Gebucht
+                                        <baxi:icon name="Abbrechen" width="30" height="30" />
+                                    </span>
+                                    </f:else>
+                                </f:if>
+
+                            </f:else>
+                        </f:if>
+                    </div>
+                    <span class="bubble"></span>
+                </div>
+
+            </f:for>
+
+            <div class="results-footer">
+                <f:link.action action="findRoute" controller="FESuche" pageUid="11" arguments="{shift : 'next'}">
+                    Sp&auml;tere Fahrten
+                    <baxi:icon name="Uhr_kontur" width="13" height="13" />
+                </f:link.action>
+            </div>
+        </div>
+
+    </f:if>
+</div>

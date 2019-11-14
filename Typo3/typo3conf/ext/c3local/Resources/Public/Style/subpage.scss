@@ -1,0 +1,12 @@
+@import "variables";
+@import "mixins";
+
+.subpage {
+	background-color: $color_tertiary;
+	//padding-top: $gutter*5;
+
+
+	.footer {
+		display: block;
+	}
+}

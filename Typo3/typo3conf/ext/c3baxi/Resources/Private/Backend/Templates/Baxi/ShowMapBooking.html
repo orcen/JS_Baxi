@@ -1,0 +1,225 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Reactive" />
+
+<f:section name="header">
+    <div class="bar">
+        <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
+    </div>
+</f:section>
+<f:section name="content">
+
+    <h3>{ride.linie.nr} - {ride.name}</h3>
+    <p>{ride.buchbarBis -> f:format.date(format:'d.m.Y H:i')}</p>
+    <f:for each="{waypoints}" as="stop" key="idx">
+        <p><strong>{stop.name}</strong> {stop.longitude},{stop.latitude} {stop.zone.name}</p>
+    </f:for>
+    <f:alias map="{company : ride.linie.company}">
+        <h4>{company.name}</h4>
+        <p>
+            {company.street}<br />
+            {company.zip} {company.city}
+        </p>
+        <p>
+            <strong>Tel:</strong> {company.telefon}<br />
+            <strong>E-Mail:</strong> {company.email}
+        </p>
+    </f:alias>
+
+
+    <div id="map" style="width: 100%; height:80vh;"></div>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script>
+		var platform = new H.service.Platform({
+			'apikey': 'EZLhUknwSAUtFdtTSOBuAdxIO1PkHAtXhCdydgjYBbE'
+		});
+		// Get the default map types from the platform object:
+		var defaultLayers = platform.createDefaultLayers();
+
+		// Instantiate the map:
+		var map = new H.Map(
+			document.getElementById('map'),
+			defaultLayers.vector.normal.map,
+			{
+				zoom: 10
+				// center: { lat: 52.51, lng: 13.4 }
+			});
+		// Create the parameters for the routing request:
+		var routingParameters = {
+            // The routing mode:
+            'mode': 'shortest;car',
+			// The start point of the route:
+			<f:for each="{waypoints}" as="waypoint" key="idx" >
+			'<f:format.nl2br>waypoint{idx}</f:format.nl2br>' : '<f:format.nl2br>{waypoint.latitude},{waypoint.longitude}</f:format.nl2br>',
+		    </f:for>
+
+                // representation mode 'display'
+                'representation':'display'
+            };
+
+		// Define a callback function to process the routing response:
+		var onResult = function ( result ) {
+			var route,
+				routeShape,
+				startPoint,
+				endPoint,
+				linestring;
+			if ( result.response.route ) {
+				// Pick the first route from the response:
+				route = result.response.route[ 0 ];
+				// Pick the route's shape:
+				routeShape = route.shape;
+
+				// Create a linestring to use as a point source for the route line
+				linestring = new H.geo.LineString();
+
+				// Push all the points in the shape into the linestring:
+				routeShape.forEach(function ( point ) {
+					var parts = point.split(',');
+					linestring.pushLatLngAlt(parts[ 0 ], parts[ 1 ]);
+				});
+
+				// Retrieve the mapped positions of the requested waypoints:
+				startPoint = route.waypoint[ 0 ].mappedPosition;
+				endPoint = route.waypoint[ route.waypoint.length - 1 ].mappedPosition;
+
+				// Create a polyline to display the route:
+				var routeLine = new H.map.Polyline(linestring, {
+					style: {strokeColor: 'blue', lineWidth: 3}
+				});
+
+				// Create a marker for the start point:
+				// var startMarker = new H.map.Marker({
+				// 	lat: startPoint.latitude,
+				// 	lng: startPoint.longitude
+				// });
+                //
+				// // Create a marker for the end point:
+				// var endMarker = new H.map.Marker({
+				// 	lat: endPoint.latitude,
+				// 	lng: endPoint.longitude
+				// },{
+				// 	icon : new H.map.Icon(
+				// 		"https://baxi.c3-coding.de/typo3conf/ext/c3local/Resources/Public/Images/SVG/Standort.svg",
+				// 		{
+				// 			size: {w:20, h:20}
+				// 		})
+                // });
+
+				// var Icon =  endMarker.getIcon();
+				// Icon.c = {w:20, h:20};
+				// Icon.b = {x:10, y:20};
+				// console.log( Icon, Icon.getSize() );
+
+				// Create an outline for the route polyline:
+				var routeOutline = new H.map.Polyline(linestring, {
+					style: {
+						lineWidth: 2,
+						strokeColor: 'rgba(0, 128, 255, 0.7)',
+						lineTailCap: 'arrow-tail',
+						lineHeadCap: 'arrow-head'
+					}
+				});
+// Create a patterned polyline:
+				var routeArrows = new H.map.Polyline(linestring, {
+						style: {
+							lineWidth: 2,
+							fillColor: 'white',
+							strokeColor: 'rgba(255, 255, 255, 1)',
+							lineDash: [ 0, 2 ],
+							lineTailCap: 'arrow-tail',
+							lineHeadCap: 'arrow-head'
+						}
+					}
+				);
+
+				var objects = [ routeLine, /*startMarker, endMarker,*/ routeOutline, routeArrows ];
+
+			<f:for each="{waypoints}" as="waypoint" key="idx" >
+                        var <f:format.nl2br>Waypoint{idx}</f:format.nl2br> = new H.map.Marker({
+				            lat: <f:format.nl2br>{waypoint.latitude}</f:format.nl2br>,
+					        lng: <f:format.nl2br>{waypoint.longitude}</f:format.nl2br>
+			                },{
+                            icon : new H.map.Icon(
+                                "https://baxi.c3-coding.de/typo3conf/ext/c3local/Resources/Public/Images/SVG/Standort.svg",
+                                {
+                                    size: {w:20, h:20}
+                                })
+                        });
+                    objects.push( <f:format.nl2br>Waypoint{idx}</f:format.nl2br> );
+			</f:for>
+
+				// Add the route polyline and the two markers to the map:
+				map.addObjects(objects);
+
+				// Set the map's viewport to make the whole route visible:
+				map.getViewModel().setLookAtData({bounds: routeLine.getBoundingBox()});
+			}
+		};
+
+		// Get an instance of the routing service:
+		var router = platform.getRoutingService();
+
+		// Call calculateRoute() with the routing parameters,
+		// the callback and an error callback function (called if a
+		// communication error occurs):
+		router.calculateRoute(routingParameters, onResult,
+			function ( error ) {
+				alert(error.message);
+			});
+    </script>
+
+
+    <f:comment>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVY-fpuvmbIkpU2TZlH1pZSsFA1BIZjhY"></script>
+        <script>
+			function initialize() {
+				var mapCanvas = document.getElementById('map');
+				var mapOptions = {
+					center: new google.maps.LatLng(49.8817161, 12.3303441),
+					zoom: 14,
+					streetViewControl: false,
+					scrollwheel: false
+					// mapTypeId: mapType
+				};
+				console.log(mapOptions);
+				var map = new google.maps.Map(mapCanvas, mapOptions),
+					bounds = new google.maps.LatLngBounds();
+
+				var infowindow = new google.maps.InfoWindow;
+				google.maps.event.addListener(map, 'click', function () {
+					infoWindow.close();
+				});
+
+			<
+				f:for each = "{pitstops}" as = "stop" key = "idx" >
+				var position = new google.maps.LatLng({stop.latitude}, {stop.longitude});
+				var title =
+					'<f:format.nl2br>{stop.name}</f:format.nl2br>';
+				var info = '<f:format.nl2br>{idx} - {stop.zone.name}</f:format.nl2br>';
+				var icon =
+					'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=<f:format.nl2br>{idx +1}</f:format.nl2br>|FE6256|000000';
+				var marker = new google.maps.Marker({
+					position: position,
+					map: map,
+					icon: icon,
+					content: info,
+					title: title
+				});
+				bounds.extend(position);
+				google.maps.event.addListener(marker, 'click', function () {
+					infowindow.setContent('<h3>' + this.title + '</h3><p>' + this.content + '</p>');
+					infowindow.open(map, this);
+				});
+			<
+				/f:for>;
+				map.fitBounds(bounds);
+			}
+
+			google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <div id="map" style="width: 100%; height:60vh;"></div>
+    </f:comment>
+</f:section>

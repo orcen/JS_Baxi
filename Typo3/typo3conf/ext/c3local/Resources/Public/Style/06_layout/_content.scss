@@ -1,0 +1,59 @@
+.content {
+	padding: $gutter;
+	color: #FFF;
+
+	&--lighten {
+		background-color: $color_quaternary;
+		padding-bottom: 0;
+	}
+
+	@supports (display: grid) {
+		grid-row: span 2;
+		grid-column: 1;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		&--lighten {
+			grid-row: span 2;
+			&:last-child {
+				grid-row: span 3;
+			}
+			justify-content: stretch;
+
+			> div {
+				flex: 1 1 auto;
+			}
+		}
+
+	}
+}
+
+.subcontent {
+	margin-top: $offset*2.5;
+	margin-left: $gutter*-1;
+	margin-right: $gutter*-1;
+	background: $color_primary;
+	padding: $offset*2 $gutter;
+	position: relative;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: $offset*-1.5;
+		left: 0;
+		background: inherit;
+		height: $offset*1.5;
+		width: 50%;
+		clip-path: polygon(0 0, 45% 0, 100% 100%, 0 100%);
+	}
+
+
+	h4 {
+		margin: $offset 0 floor($offset/4);
+	}
+
+	@supports (display: grid) {
+		flex: 1 1 auto;
+	}
+}

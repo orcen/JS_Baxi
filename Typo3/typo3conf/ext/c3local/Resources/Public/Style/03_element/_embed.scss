@@ -1,0 +1,8 @@
+iframe {
+	--width: 800px;
+	max-width: 100%;
+	height: calc( var(--width) / 100 * 56.25 );
+
+	&.ratio-16_9{}
+	&.ratio-4_3{}
+}

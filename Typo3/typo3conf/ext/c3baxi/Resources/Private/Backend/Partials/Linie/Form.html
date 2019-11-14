@@ -1,0 +1,84 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:form action="{f:if(condition: '{linie}', then: 'update', else : 'create')}" name="Linie" object="{linie}"
+        additionalAttributes="{'data-ajax':'C3BaxiLinie'}">
+    <f:if condition="{linie}">
+        <f:form.hidden name="linie" value="{linie}" />
+    </f:if>
+    <p>
+        <label>Nummer</label>
+        <f:if condition="{linie}">
+            <f:then>
+                <f:form.textfield name="nummer" value="{linie.nr}" additionalAttributes="{'readonly':true}" />
+            </f:then>
+            <f:else>
+                <f:form.textfield name="nummer" value="{linie.nr}" pattern="[0-9]+" />
+            </f:else>
+        </f:if>
+    </p>
+
+    <p>
+        <label>Name</label>
+        <f:form.textfield name="name" value="{linie.name}" />
+    </p>
+
+    <p>
+        <label><f:translate key="route.assigned_company"/></label>
+        <f:form.select name="company" value="{linie.company}" options="{companies}" optionLabelField="name"
+                       optionValueField="uid" prependOptionLabel="nicht ausgewaehlt" prependOptionValue="0" >
+        </f:form.select>
+    </p>
+
+    <div class="relation_field">
+        <div class="relation_field-block">
+            <h4>Zugewiessene Haltestellen</h4>
+            <p class="filter filter--simple">
+                <label>Filtern:</label>
+                <f:form.textfield name="station_filter" value=""
+                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#zonen'}"
+                />
+            </p>
+            <div class="relation_field-list">
+                <f:if condition="! {linie}">
+                    <f:form.hidden name="liste" value="" />
+                </f:if>
+                <ul class="list" id="zonen" data-droppable="true" data-uid="{linie.uid}">
+                    <f:if condition="{linie.zonen}">
+                    <f:for each="{linie.zonen}" as="zone">
+                        <li class="list-item" data-draggable="true" data-uid="{zone.uid}">{zone.name}</li>
+                    </f:for>
+                    </f:if>
+                </ul>
+            </div>
+        </div>
+        <div class="relation_field-block">
+            <h4>Verf&uuml;gbare Haltestellen</h4>
+            <p class="filter filter--simple">
+                <label>Filtern:</label>
+                <f:form.textfield name="station_filter" value=""
+                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#freie_zonen'}"
+                />
+            </p>
+            <div class="relation_field-list">
+                <ul class="list" id="freie_zonen" data-droppable="true" data-uid="-{linie.uid}">
+                    <f:if condition="{zonen}">
+                    <f:for each="{zonen}" as="zone" key="uid">
+                        <li class="list-item" data-draggable="true" data-uid="{zone.uid}">{zone.name}</li>
+                    </f:for>
+                    </f:if>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bar bar--controls">
+        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
+        <f:form.button type="submit" name="action_after" value="close" class="button button--submit">Speichern und schliessen</f:form.button>
+        <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
+    </div>
+
+</f:form>
+
+</html>

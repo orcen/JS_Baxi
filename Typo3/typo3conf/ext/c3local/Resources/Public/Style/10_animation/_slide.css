@@ -1,0 +1,11 @@
+.slide-from-right {
+  animation: slide-from-right 0.2s linear reverse forwards 1;
+}
+
+@keyframes slide-from-right {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/*# sourceMappingURL=slide.css.map */

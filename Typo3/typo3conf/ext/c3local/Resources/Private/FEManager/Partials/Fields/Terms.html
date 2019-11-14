@@ -1,0 +1,25 @@
+{namespace femanager=In2code\Femanager\ViewHelpers}
+<div class="femanager_fieldset femanager_terms form-group">
+<h3>Datenschutz</h3>
+    <p>Wir speichern deine Daten nur zum Zweck der Fahrtbuchung und geben diese nicht an Dritte weiter.
+        <f:if condition="{settings.misc.termsUrl}">
+        <f:then>
+            <f:link.page pageUid="{settings.misc.termsUrl}">Datenschutzerklärung ansehen</f:link.page>
+        </f:then>
+    </f:if></p>
+    <div class="checkbox">
+        <label class="checkbox">
+            <f:form.checkbox
+                    id="femanager_field_terms"
+                    property="terms"
+                    value="Terms and conditions"
+                    checked="false"
+                    additionalAttributes="{femanager:Validation.FormValidationData(settings:settings,fieldName:'terms')}" />
+            <f:translate key="tx_femanager_domain_model_user.terms" />
+            <f:if condition="{femanager:Validation.IsRequiredField(fieldName:'terms')}">
+                <span>*</span>
+            </f:if>
+
+        </label>
+    </div>
+</div>

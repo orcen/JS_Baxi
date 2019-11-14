@@ -1,0 +1,27 @@
+<div class="baxi_tabs">
+    <nav class="baxi_tabs-header">
+        <span data-target="booking-comming" class="is-active">Comming</span>
+        <span data-target="booking-past">Past</span>
+    </nav>
+
+    <div data-tabid="booking-comming" class="baxi_tabs-tab is-active">
+        <f:if condition="{bookings}">
+            <f:then>
+                <f:render partial="Booking/Listing" arguments="{booking: bookings, actions: {0:'show', 1: 'map', 2:'book'}}" />
+            </f:then>
+            <f:else>
+                <p>{f:translate(key:'LLL:EXT:c3baxi/Resources/Private/Langugage/locallang.xlf:booking.no_bookings_available', default:'Es sind momentan keine Buchungen vorhanden')}</p>
+            </f:else>
+        </f:if>
+    </div>
+    <div data-tabid="booking-past" class="baxi_tabs-tab">
+        <f:if condition="{booking_past}">
+            <f:then>
+                <f:render partial="Booking/Listing" arguments="{booking: booking_past,  actions: {0:'show', 1: 'map'}}" />
+            </f:then>
+            <f:else>
+                <p>{f:translate(key:'LLL:EXT:c3baxi/Resources/Private/Langugage/locallang.xlf:booking.no_bookings_available', default:'Es sind momentan keine Buchungen vorhanden')}</p>
+            </f:else>
+        </f:if>
+    </div>
+</div>
