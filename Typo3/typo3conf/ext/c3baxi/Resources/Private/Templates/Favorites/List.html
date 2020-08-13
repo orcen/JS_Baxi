@@ -12,7 +12,6 @@
            Du kannst jedem Favoriten auch einen
             <strong>eigenen Namen</strong> geben, damit du sie leichter zuordnen kannst.</p>
     </div>
-
     <div class="subcontent">
         <f:if condition="{favorites}">
             <f:then>
@@ -34,12 +33,12 @@
         </f:if>
 
 
-            <p class="{f:if(condition: '{canAddFavorite}',else:'hidden')}">
+        <p class="{f:if(condition: '{canAddFavorite}',else:'hidden')}">
                 <span id="add_favorite" data-autocomplete="favorites">
                     <span class="btn btn--glass btn--round has-icon"><baxi:icon name="add" /></span>
                     Favorit hinzufügen
                 </span>
-            </p>
+        </p>
 
 
     </div>

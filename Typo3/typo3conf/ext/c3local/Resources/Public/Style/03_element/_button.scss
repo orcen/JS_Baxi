@@ -150,9 +150,15 @@
 		&::after {
 			background: #bed9e5;
 		}
+
+		&:hover,
+		&:active {
+			background: linear-gradient( #34728d 0%, #3b7b96 57.1%, #65a6c1 100%);
+
+		}
 	}
 
-	&--cancel {
+	&--cancel.btn--cancel {
 		border-radius: 33px;
 		color: $color_white;
 		//background: linear-gradient(#f75454 0%, #df2e2e 57.1%, #d60000 100%);
@@ -163,6 +169,11 @@
 
 		&::after {
 			background: $color_error_lighter;
+		}
+
+		&:hover,
+		&:active {
+			background: linear-gradient( $color_error_darker 0%, $color_error_dark 57.1%, $color_error 100%);
 		}
 	}
 

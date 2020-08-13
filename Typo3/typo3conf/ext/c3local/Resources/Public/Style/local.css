@@ -142,9 +142,9 @@ h4, .h4 {
   border-radius: 2em;
   line-height: 2.25;
   padding: 6px 20px;
-  border: 0;
+  border: 0 !important;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: bold !important;
   position: relative;
   text-align: center;
   z-index: 1;
@@ -266,9 +266,9 @@ h4, .h4 {
   border-radius: 2em;
   line-height: 2.25;
   padding: 6px 20px;
-  border: 0;
+  border: 0 !important;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: bold !important;
   position: relative;
   text-align: center;
   z-index: 1;
@@ -332,16 +332,22 @@ h4, .h4 {
 .btn--secondary::after {
   background: #bed9e5;
 }
-.btn--cancel {
+.btn--secondary:hover, .btn--secondary:active {
+  background: linear-gradient(#34728d 0%, #3b7b96 57.1%, #65a6c1 100%);
+}
+.btn--cancel.btn--cancel {
   border-radius: 33px;
   color: #FFF;
   background: linear-gradient(#F75454 0%, #DF2E2E 57.1%, #D60000 100%);
 }
-.btn--cancel::before {
+.btn--cancel.btn--cancel::before {
   background: linear-gradient(rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 28.1%, rgba(255, 255, 255, 0.25) 100%);
 }
-.btn--cancel::after {
+.btn--cancel.btn--cancel::after {
   background: #FFC1AC;
+}
+.btn--cancel.btn--cancel:hover, .btn--cancel.btn--cancel:active {
+  background: linear-gradient(#D60000 0%, #DF2E2E 57.1%, #F75454 100%);
 }
 .btn[disabled] {
   filter: grayscale(1);
@@ -775,6 +781,9 @@ input[type=number] {
   flex: 1 0 0;
   padding-right: 20px;
 }
+.ride-header time small {
+  display: block;
+}
 .ride-info {
   font-size: 14px;
 }
@@ -997,6 +1006,15 @@ input[type=number] {
   .subcontent {
     flex: 1 1 auto;
   }
+}
+
+#routeFinder {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#routeFinder .results {
+  flex: 1 1 auto;
 }
 
 .footer {
@@ -1424,6 +1442,13 @@ div[id=kontoFavorites] span[id=add_favorite] .btn .icon {
   left: 50%;
   transform: translateX(-50%);
   color: #FFF;
+}
+
+.ui-widget-overlay {
+  backdrop-filter: blur(10px);
+}
+.ui-widget .ui-button:focus {
+  unset: background;
 }
 
 /*# sourceMappingURL=local.css.map */

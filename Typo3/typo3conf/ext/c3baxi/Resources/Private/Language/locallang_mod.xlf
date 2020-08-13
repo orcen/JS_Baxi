@@ -6,6 +6,10 @@
             <trans-unit id="mlang_tabs_tab">
                 <source>BAXI</source>
             </trans-unit>
+
+            <trans-unit id="settings.text">
+                <source>Text</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

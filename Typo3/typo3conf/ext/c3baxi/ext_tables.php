@@ -7,7 +7,7 @@
 			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 				'C3.C3baxi',
 				'BaxiSuche',
-				'Baxi Routen Suche'
+				'Baxi - Routen Suche'
 			);
 
 			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -22,6 +22,16 @@
 				'Baxi - Favoriten'
 			);
 
+			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+				'C3.C3baxi',
+				'BaxiUserPage',
+				'Baxi - Kontoseite'
+			);
+
+			$pluginSignature = 'c3baxi' . '_baxiuserpage';
+			$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:c3baxi/Configuration/FlexForms/BaxiuserPlugin.xml');
+
 			if ( TYPO3_MODE === 'BE' ) {
 				\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 					'C3.C3baxi',
@@ -30,13 +40,13 @@
 					'', // Position
 					[
 						'Baxi'        => 'index, detailBooking, showMapBooking',
-						'Linie'       => 'list, new, create, edit, update, import, delete',
+						'Linie'       => 'list, new, create, edit, update, import, delete, export',
 						'Haltestelle' => 'list, show, new, create, edit, update, delete, import',
-						'Zone'        => 'list, show, new, create, edit, update, delete',
-						'Fahrt'       => 'list, show, new, create, edit, update, delete',
+						'Zone'        => 'list, show, new, create, edit, update, delete, import',
+						'Fahrt'       => 'list, show, new, create, edit, update, delete, export',
 						'FahrtZeit'   => 'list, show, new, create, edit,update, delete',
 						'Company'     => 'list, show, new, create, edit,update, delete, import',
-						'Booking'     => 'list, listBE, show, new, create, edit,update, delete',
+						'Booking'     => 'list, listBE, show, new, create, edit, update, delete',
 					],
 					[
 						'access'                => 'user,group',
@@ -63,5 +73,7 @@
 
 			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr( 'tx_c3baxi_domain_model_fahrtzeit', 'EXT:c3baxi/Resources/Private/Language/locallang_csh_tx_c3baxi_domain_model_fahrtzeit.xlf' );
 			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages( 'tx_c3baxi_domain_model_fahrtzeit' );
+
+
 		}
 	);

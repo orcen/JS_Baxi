@@ -4,9 +4,9 @@
 	border-radius: 2em;
 	line-height: 2.25;
 	padding: floor($gutter/3) $gutter;
-	border: 0;
+	border: 0 !important;
 	font-size: $font-size-xl;
-	font-weight: bold;
+	font-weight: bold !important;
 	position: relative;
 	text-align: center;
 	z-index: 1;

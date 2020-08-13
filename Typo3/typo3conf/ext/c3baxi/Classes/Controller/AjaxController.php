@@ -4,6 +4,7 @@
 	namespace C3\C3baxi\Controller;
 
 
+	use C3\C3baxi\Domain\Model\Haltestelle;
 	use C3\C3baxi\Helper\RouteFinder;
 	use TYPO3\CMS\Core\Utility\GeneralUtility;
 	use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -83,15 +84,16 @@
 				}
 			} else {
 				if ( $found = $this->haltestellenRepository->findAllAssigned() ) {
+
 					$zoneId = FALSE;
 					if ( $this->request->hasArgument( 'ignoreZone' ) ) {
 						$zoneId = (int) $this->request->getArgument( 'ignoreZone' );
 					}
 
-//					var_dump( $zoneId );
 					foreach ( $found as $haltestelle ) {
+						if( ! ($haltestelle instanceof Haltestelle) ) continue;
+						if ( $haltestelle->getZone()->getUid() === $zoneId || $haltestelle->getZone()->getLinien()->count() == 0) continue;
 
-						if ( $haltestelle->getZone()->getUid() === $zoneId ) continue;
 
 						$result[$haltestelle->getUid()] = [
 							'name'   => $haltestelle->getName(),

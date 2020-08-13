@@ -111,6 +111,12 @@
 			flex: 1 0 0;
 			padding-right: $gutter;
 		}
+
+		time {
+			small {
+				display: block;
+			}
+		}
 	}
 
 	&-info {

@@ -99,6 +99,15 @@
 			<trans-unit id="rating.no_comment">
 				<source>ohne Kommentar</source>
 			</trans-unit>
+
+
+			<trans-uit id="settings.text">
+				<source>Text</source>
+			</trans-uit>
+
+			<trans-uit id="settings.links.favorites">
+				<source>Favorites Page</source>
+			</trans-uit>
 		</body>
 	</file>
 </xliff>

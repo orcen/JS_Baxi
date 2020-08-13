@@ -20,32 +20,42 @@
         </label>
         <f:form.textfield name="number" value="{haltestelle.number}" />
     </p>
-
+    <p>
+        <label>Zone</label>
+        <f:form.select name="zone" options="{zoneList}" value="{haltestelle.zone}" />
+        <f:form.button type="button" onclick="">neue Zone erstellen</f:form.button>
+    </p>
     <div style="display: flex;">
         <p>
             <label>
                 <f:translate key="haltestelle.latitude" default="Breitengrad" />
             </label>
-            <f:form.textfield name="latitude" value="{haltestelle.latitude}" />
+            <f:form.textfield name="latitude" value="{haltestelle.latitude}" additionalAttributes="{data-geo:'latitude'}" />
         </p>
 
         <p style="margin-left: 4ch;">
             <label>
                 <f:translate key="haltestelle.longitude" default="Längengrad" />
             </label>
-            <f:form.textfield name="longitude" value="{haltestelle.longitude}" />
+            <f:form.textfield name="longitude" value="{haltestelle.longitude}" additionalAttributes="{data-geo:'longitude'}" />
+        </p>
+        <p>
+            <button data-action="geolocate" data-target="{haltestelle.name}" type="button">Position finden</button>
         </p>
     </div>
+    <div class="" style="display: none">
+        <div id="gmap"></div>
+    </div>
 
-    <p>
-        <label>Zone</label>
-        <f:form.select name="zone" options="{zoneList}" value="{haltestelle.zone}" />
-        <f:form.button type="button" onclick="">neue Zone erstellen</f:form.button>
-    </p>
 
-    <p>
-        <f:form.submit value="Speichern" />
-    </p>
-    </f:form>
+
+    <div class="bar bar--controls">
+        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
+        <f:form.button type="submit" name="action_after" value="close" class="button button--submit">Speichern und schliessen</f:form.button>
+        <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
+    </div>
+
+</f:form>
 
 </html>

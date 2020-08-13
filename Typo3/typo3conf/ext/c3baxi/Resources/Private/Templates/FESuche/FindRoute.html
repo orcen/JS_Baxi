@@ -1,5 +1,4 @@
 <div id="routeFinder">
-    <f:debug>{fahrten}</f:debug>
     <div class="page_actions">
         <f:link.page pageUid="1" class="page_actions-button">
             <svg class="icon" width="20" height="20">
@@ -49,14 +48,22 @@
                     <div class="ride-header">
                         <div>
                             <small>Abfahrt</small><br />
+
                             <time datetime="{fahrt.abfahrt.zeit -> f:format.date(format:'Y-m-d H:i')}">
                                 {fahrt.abfahrt.zeit -> f:format.date(format:'H:i')}
+                                <f:if condition="{fahrt.abfahrt.zeit -> f:format.date(format:'d.m.Y')} != {fahrtzeit -> f:format.date( format: 'd.m.Y' )}">
+                                    <small>{fahrt.abfahrt.zeit -> f:format.date(format:'d.m.Y')}</small>
+                                </f:if>
                             </time>
                         </div>
                         <div>
                             <small>Ankunft</small><br />
                             <time datetime="{fahrt.ankunft.zeit -> f:format.date(format:'Y-m-d H:i')}">
                                 {fahrt.ankunft.zeit -> f:format.date(format:'H:i')}
+                                <f:if condition="{fahrt.ankunft.zeit -> f:format.date(format:'d.m.Y')} != {fahrtzeit -> f:format.date( format: 'd.m.Y' )}">
+                                    <small>{fahrt.ankunft.zeit -> f:format.date(format:'d.m.Y')}</small>
+                                </f:if>
+
                             </time>
                         </div>
                         <div>

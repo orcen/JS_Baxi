@@ -454,6 +454,7 @@ div[id="kontoFavorites"] {
 				border-top-left-radius: 0;
 				border-bottom-right-radius: inherit;
 				border-bottom-left-radius: inherit;
+
 			}
 			&--cancel {
 
@@ -466,5 +467,17 @@ div[id="kontoFavorites"] {
 				color: $color-white;
 			}
 		}
+	}
+}
+
+
+.ui-widget {
+
+	&-overlay {
+		backdrop-filter: blur(10px);
+	}
+
+	.ui-button:focus {
+		unset: background;
 	}
 }

@@ -9,6 +9,7 @@
 	use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 	use TYPO3\CMS\Core\Utility\GeneralUtility;
 	use TYPO3\CMS\Extbase\Object\ObjectManager\ObjectManager;
+	use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 	use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 	class FESucheController extends ActionController
@@ -144,10 +145,18 @@
 
 				$selectedLinie = $this->findeLinie( $startLinien, $endLinien );
 
-				if ( $selectedLinie ) {
 
 
+				if ( is_array( $selectedLinie ) ) {
+					foreach( $selectedLinie as $sLine ) {
+						$this->view->assign( 'fahrten', $this->findeFahrten( $sLine, $routeParams ) );
+					}
 
+					$this->view->assign( 'startStation', $routeParams['start'] );
+					$this->view->assign( 'endStation', $routeParams['end'] );
+					$this->view->assign( 'fahrtzeit', \DateTime::createFromFormat( 'U', $routeParams['time'] ) );
+				}
+				elseif( $selectedLinie ) {
 
 					$this->view->assign( 'fahrten', $this->findeFahrten( $selectedLinie, $routeParams ) );
 					$this->view->assign( 'startStation', $routeParams['start'] );
@@ -251,14 +260,25 @@
 			}
 		}
 
-		public static function findeLinie( $start, $end )
+		public static function findeLinie( ObjectStorage $start, ObjectStorage $end )
 		{
-			if ( $start->count() == 1 && $end->count() == 1 ) {
+			
+			if ( $start->count()  && $end->count() ) {
+
+				$found = [];
+				foreach ( $start as $sLinie ) {
+					if( $end->contains( $sLinie ) ) {
+						$found[] = $sLinie;
+					}
+				}
+				return $found;
+				/*
 				$sLinie = $start->current();
 				$eLinie = $end->current();
-				if ( $sLinie->getNr() == $eLinie->getNr() ) {
+
+				if ( $sLinie->getUid() == $eLinie->getUid() ) {
 					return $sLinie;
-				}
+				}*/
 			}
 			/** Todo: finde anschliesende Linien */
 			return FALSE;
@@ -324,14 +344,14 @@
 			);
 
 			if ( empty( $fahrten ) ) {
-				if ( $this->request->hasArgument( 'shift' ) ) {
-					if ( $this->request->getArgument( 'shift' ) == 'prev' )
-						$params['time'] -= (60 * 60) * 6;
-					else
-						$params['time'] += (60 * 60) * 6;
-				}
-//				$params['time'] += (60*60) * 6;
-//				return $this->findeFahrten( $linie, $params );
+//				if ( $this->request->hasArgument( 'shift' ) ) {
+//					if ( $this->request->getArgument( 'shift' ) == 'prev' )
+//						$params['time'] -= (60 * 60) * 6;
+//					else
+//						$params['time'] += (60 * 60) * 6;
+//				}
+				$params['time'] += (60*60) * 6;
+				return $this->findeFahrten( $linie, $params );
 			}
 
 			$found = [];

@@ -18,6 +18,17 @@
 
 			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 				'C3.C3baxi',
+				'BaxiUserPage',
+				[
+					'Baxiuser' => 'index',
+				],
+				// non-cacheable actions
+				[
+				]
+			);
+
+			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+				'C3.C3baxi',
 				'BaxiUserFavorites',
 				[
 					'Favorites' => 'list,add',

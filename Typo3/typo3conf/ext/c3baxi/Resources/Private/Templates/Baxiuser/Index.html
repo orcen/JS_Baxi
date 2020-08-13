@@ -1,0 +1,19 @@
+<div class="icon-wrap">
+    <svg class="icon "><use xlink:href="#Konto" fill="currentColor"></use></svg>
+</div>
+<div class="ce-bodytext">
+    <header>
+        <h1 class="as-p">Dein Baxi-Konto</h1>
+        <h2 class="h1 ">Hallo {user.name},</h2>
+    </header>
+
+    <div>{infoText -> f:format.html()}</div>
+
+    <f:if condition="{links.favorites}"><p class="align-center"><a href="{f:uri.page(pageUid: '{links.favorites}')}" class="btn"><svg class="icon"><use xlink:href="#star"></use></svg>Favoriten</a></p></f:if>
+    <f:if condition="{links.bookings}"><p class="align-center"><a href="{f:uri.page(pageUid: '{links.bookings}')}" class="btn"><svg class="icon"><use xlink:href="#ticket"></use></svg>Gebuchte Fahrten</a></p></f:if>
+    <f:if condition="{links.account}"><p class="align-center"><a href="{f:uri.page(pageUid: '{links.account}')}" class="btn"><svg class="icon"><use xlink:href="#einstellungen"></use></svg>Einstellungen</a></p></f:if>
+
+    <p class="align-center">
+        <f:link.page additionalParams="{logintype: 'logout'}" class="btn btn--cancel btn--logout">Abmelden</f:link.page>
+    </p>
+</div>

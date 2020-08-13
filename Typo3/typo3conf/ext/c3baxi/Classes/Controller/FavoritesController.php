@@ -4,6 +4,7 @@
 	namespace C3\C3baxi\Controller;
 
 
+	use C3\C3baxi\Domain\Model\Haltestelle;
 	use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
 	use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -62,8 +63,22 @@
 			else $favorites = json_decode( $favorites );
 
 			array_walk( $favorites, function( $fav ) {
-				$fav->station = $this->haltestellenRepository->findByUid( $fav->station );
+				$station = $this->haltestellenRepository->findByUid( $fav->station );
+				if( $station instanceof Haltestelle ) {
+					$fav->station = $station;
+				}
+				else {
+					$fav->station = false;
+//					unset( $fav );
+					/** ToDo: delete Favorite */
+				}
 			});
+
+			$favorites = array_filter( $favorites, function( $fav ){
+				return $fav->station;
+			});
+
+
 
 			$this->view->assign( 'favorites', $favorites );
 			$this->view->assign( 'station', $this->haltestellenRepository->findByUid( 1 ) );
