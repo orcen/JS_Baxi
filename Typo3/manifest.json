@@ -1,0 +1,23 @@
+{
+  "icons" : [
+    {
+      "src" : "/fileadmin/icons/android-chrome-192x192.png",
+      "sizes" : "192x192",
+      "type" : "image/png"
+    },
+    {
+      "src" : "/fileadmin/icons/android-chrome-512x512.png",
+      "sizes" : "512x512",
+      "type" : "image/png"
+    }
+  ],
+  "name": "Fahr mit Baxi",
+  "short_name": "Baxi",
+  "orientation": "portrait-primary",
+  "display": "fullscreen",
+  "start_url": "/",
+  "description": "",
+  "background_color": "#003E5C",
+  "theme_color": "black",
+  "lang": "de-DE"
+}

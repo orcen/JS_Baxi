@@ -3,7 +3,7 @@ jQuery.fn.Number2 = function ( params ) {
 	/** support mutltiple elements */
 	if ( this.length > 1 ) {
 		this.each(function () {
-			$(this).Number2(params);
+			jQuery(this).Number2(params);
 		});
 		return this;
 	}
@@ -113,7 +113,7 @@ jQuery('i.icon[title],span.icon[title]').each( function(){
 	icon.remove();
 });
 
-$(function () {
+jQuery(function () {
 	if ( 'PageTransition' in jQuery.fn ) {
 		// jQuery('body').PageTransition({selector: '.js-transition'});
 	}
@@ -130,6 +130,12 @@ $(function () {
 	// 	return false;
 	// });
 
+
+	jQuery('.js-modal').each( function(){
+
+		jQuery(this).dialog(dialogDefaults)
+	});
+
 	jQuery('body').on('click','[data-dismiss="alert"]',function(evt){
 		jQuery(this).closest('.alert').slideUp(150,function(){
 			var alert = jQuery(this);
@@ -137,19 +143,18 @@ $(function () {
 			alert.remove();
 		});
 	});
-	$("body").bind("DOMSubtreeModified", function() {
+	jQuery("body").bind("DOMSubtreeModified", function() {
 		jQuery('iframe.keep-ratio').each(function(){
 			this.style.setProperty('--width', jQuery(this).width() + 'px' );
 		});
 	});
 
+});
+
+jQuery(window).on("load", function ( e ) {
 
 });
 
-$(window).on("load", function ( e ) {
-
-});
-
-$(window).on("resize", function ( e ) {
+jQuery(window).on("resize", function ( e ) {
 
 });

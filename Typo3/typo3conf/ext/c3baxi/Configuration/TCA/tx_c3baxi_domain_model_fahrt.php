@@ -169,7 +169,21 @@ return [
 		        ],
 		        'cols' => 7
 	        ]
-        ]
+        ],
+	    'rueckfahrt' => [
+		    'exclude' => true,
+		    'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_fahrt.rueckfahrt',
+		    'config' => [
+			    'type' => 'check',
+			    'renderType' => 'checkboxToggle',
+			    'items' => [
+				    '0' => [
+					    '0' => '',
+					    '1' => '',
+				    ],
+			    ],
+		    ],
+	    ],
     
     ],
 ];

@@ -28,9 +28,17 @@
 				'Baxi - Kontoseite'
 			);
 
+			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+				'C3.C3baxi',
+				'DeepLinks',
+				'Baxi - Deeplinks'
+			);
+
 			$pluginSignature = 'c3baxi' . '_baxiuserpage';
 			$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:c3baxi/Configuration/FlexForms/BaxiuserPlugin.xml');
+
+			$GLOBALS['TCA']['fe_users']['columns']['password']['config']['eval'] = 'trim,password,saltedPassword';
 
 			if ( TYPO3_MODE === 'BE' ) {
 				\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
@@ -39,14 +47,15 @@
 					'baxi', // Submodule key
 					'', // Position
 					[
-						'Baxi'        => 'index, detailBooking, showMapBooking',
-						'Linie'       => 'list, new, create, edit, update, import, delete, export',
+						'Baxi'        => 'index, detailBooking, showMapBooking, confirmRide, approveRide',
+						'Linie'       => 'list, new, create, edit, update, import, delete, export, toggle, show',
 						'Haltestelle' => 'list, show, new, create, edit, update, delete, import',
 						'Zone'        => 'list, show, new, create, edit, update, delete, import',
-						'Fahrt'       => 'list, show, new, create, edit, update, delete, export',
-						'FahrtZeit'   => 'list, show, new, create, edit,update, delete',
-						'Company'     => 'list, show, new, create, edit,update, delete, import',
-						'Booking'     => 'list, listBE, show, new, create, edit, update, delete',
+						'Fahrt'       => 'list, show, new, create, edit, update, delete, export, import',
+						'FahrtZeit'   => 'list, show, new, create, edit, update, delete',
+						'Company'     => 'list, show, new, create, edit, update, delete, import',
+						'Booking'     => 'list, listBE, show, new, newCityLine, create, edit, update, delete, cancel, export',
+						'Subscription'     => 'list, listBE, show, new, create, edit, update, delete, cancel, toggle',
 					],
 					[
 						'access'                => 'user,group',

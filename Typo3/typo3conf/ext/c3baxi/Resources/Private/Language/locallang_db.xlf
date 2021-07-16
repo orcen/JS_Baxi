@@ -39,6 +39,9 @@
 			<trans-unit id="tx_c3baxi_domain_model_linie.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_linie.city_line">
+				<source>Stadtlinie</source>
+			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_fahrt">
 				<source>Fahrt</source>
 			</trans-unit>
@@ -82,17 +85,26 @@
 			<trans-unit id="tx_c3baxi_domain_model_booking.end_station">
 				<source>Ausstiegs Haltestelle</source>
 			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_booking.reminder_send">
+				<source>Unternehmer Info geschickt</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_booking.info_send">
+				<source>Kunden Info geschickt</source>
+			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_company">
-				<source>Unternhemen</source>
+				<source>Unternehmen</source>
 			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_company.name">
 				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_company.user">
+				<source>Backend Benutzer</source>
 			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_company.info">
 				<source>Notiz</source>
 			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_company.street">
-				<source>Strasse</source>
+				<source>Straße</source>
 			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_company.city">
 				<source>Ort</source>
@@ -114,6 +126,44 @@
 			</trans-unit>
 			<trans-unit id="tx_c3baxi_domain_model_company.routes">
 				<source>Linien</source>
+			</trans-unit>
+
+			<trans-unit id="tx_c3baxi_domain_model_holiday">
+				<source>Feiertag/Ferien</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.title">
+				<source>Titel</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.description">
+				<source>Beschreibung</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.startdate">
+				<source>Datum</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.enddate">
+				<source>Enddatum</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.type">
+				<source>Art</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.type.1">
+				<source>Ferien</source>
+			</trans-unit>
+			<trans-unit id="tx_c3baxi_domain_model_holiday.type.2">
+				<source>Feiertag</source>
+			</trans-unit>
+
+			<trans-unit id="route.number">
+				<source>Linien Nr.</source>
+			</trans-unit>
+			<trans-unit id="route.name">
+				<source>Linien Bezeichnung</source>
+			</trans-unit>
+			<trans-unit id="route.assigned_company">
+				<source>Unternehmen</source>
+			</trans-unit>
+			<trans-unit id="route.city_line">
+				<source>Stadtlinie</source>
 			</trans-unit>
 		</body>
 	</file>

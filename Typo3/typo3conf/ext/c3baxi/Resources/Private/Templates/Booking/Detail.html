@@ -8,8 +8,7 @@
 
     <baxi:route.selected start="{booking.startStation}" end="{booking.endStation}" fahrt="{booking.fahrt}" />
 
-
-    <f:render partial="PriceBox" arguments="{price : {}}"></f:render>
+<f:if condition="{settings.showPrice}"><f:render partial="PriceBox" arguments="{price : {}}"></f:render></f:if>
 
 
     <div class="subcontent">
@@ -27,26 +26,29 @@
 
 
         <f:if condition="{isComming}">
-            <p>
-                <f:link.action action="cancel" arguments="{booking : booking}"
-                               additionalAttributes="{data-action:'cancel'}"
-                               class="btn btn--cancel">
-                    Fahrt stornieren</f:link.action>
-            </p>
-            <p>Du kannst diese Fahrt bis {booking.fahrt.buchbarBis -> f:format.date( format:'H:i' )} Uhr
-               stornieren.</p>
-        </f:if>
-        <f:if condition="!{isComming}">
-            <f:if condition="{rating_allowed}">
             <f:then>
                 <p>
-                    <span data-action="rate" data-booking="{booking.uid}" class="btn btn--secondary">Fahrt bewerten</p>
+                    <f:link.action action="cancel" arguments="{booking : booking}"
+                                   additionalAttributes="{data-action:'cancel'}"
+                                   class="btn btn--cancel">
+                        Fahrt stornieren
+                    </f:link.action>
+                </p>
+                <p>Du kannst diese Fahrt bis {booking.fahrt.buchbarBis -> f:format.date( format:'H:i' )} Uhr
+                   stornieren.</p>
             </f:then>
             <f:else>
-                <p>
-                    <span class="btn btn--secondary is-disabled">Bewertung abgegeben</p>
+                <f:if condition="{rating_allowed}">
+                    <f:then>
+                        <p>
+                            <span data-action="rate" data-booking="{booking.uid}" class="btn btn--secondary">Fahrt bewerten</p>
+                    </f:then>
+                    <f:else>
+                        <p>
+                            <span class="btn btn--secondary is-disabled">Bewertung abgegeben</p>
+                    </f:else>
+                </f:if>
             </f:else>
-            </f:if>
         </f:if>
     </div>
 

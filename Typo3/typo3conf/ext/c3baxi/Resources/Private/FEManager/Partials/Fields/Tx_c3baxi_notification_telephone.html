@@ -1,0 +1,14 @@
+{namespace femanager=In2code\Femanager\ViewHelpers}
+<div class="femanager_fieldset femanager_name form-group">
+  <div class="checkbox">
+    <label class="checkbox">
+      <f:form.checkbox property="txC3baxiNotificationTelephone" value="1"
+                       additionalAttributes="{femanager:Validation.FormValidationData(settings:settings,fieldName:'txC3baxiNotificationTelephone')}"
+      />
+      <f:translate key="tx_femanager_domain_model_user.tx_c3baxi_notification_telephone_long" extensionName="c3baxi" />
+      <f:if condition="{femanager:Validation.IsRequiredField(fieldName:'tx_c3baxi_notification_telephone')}"><span>*</span></f:if>
+
+    </label>
+  </div>
+
+</div>

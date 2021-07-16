@@ -258,11 +258,12 @@
 	input[name="geoPicker_search"] {
 		background: url("../../../../c3local/Resources/Public/Images/SVG/suche.svg"),
 		linear-gradient(#e3e4e1 0%, #fff 31%, #fdfefc 67.6%, #e3e4e1 100%);
-		background-repeat: repeat, repeat;
-		background-size: auto, auto;
 		background-size: 20px 20px,auto auto;
 		background-repeat: no-repeat;
-		background-position: 30px center, 0 0;
+		background-position: 20px center, 0 0;
+		@media (min-width:360px) {
+			background-position: 30px center, 0 0;
+		}
 	}
 
 }

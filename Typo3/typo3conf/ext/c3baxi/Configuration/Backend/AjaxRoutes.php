@@ -9,5 +9,9 @@
 		'C3BaxiLinie' => [
 			'path' => '/C3/Baxi/Linie',
 			'target' => \C3\C3baxi\Controller\AjaxController::class. '::saveLinie'
+		],
+		'C3BaxiCompanyRoute' => [
+			'path' => '/C3/Baxi/Company',
+			'target' => \C3\C3baxi\Controller\AjaxController::class. '::saveRoute'
 		]
 	];

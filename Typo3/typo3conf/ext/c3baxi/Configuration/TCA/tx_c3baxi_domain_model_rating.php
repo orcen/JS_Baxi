@@ -46,7 +46,7 @@
 					'default'    => 0,
 				],
 			],
-			'l10n_parent'      => [
+			'l10_parent'      => [
 				'displayCond' => 'FIELD:sys_language_uid:>:0',
 				'exclude'     => TRUE,
 				'label'       => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',

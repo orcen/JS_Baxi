@@ -9,7 +9,7 @@ defined('TYPO3_MODE') || die();
 
 $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['c3_full'] = 'EXT:c3local/Configuration/RTE/full.yaml';
 $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['c3_inline'] = 'EXT:c3local/Configuration/RTE/inline.yaml';
-
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['c3'] = [	'C3\Local\ViewHelpers'];
 
 // Add Example Signal Slots for Powermail
 $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance( \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class );
@@ -25,3 +25,7 @@ $signalSlotDispatcher->connect(
     'sendTemplateEmailBeforeSend',
     \C3\Local\Domain\Service\SendMailService::class,
     'manipulateMailTo', false );
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\In2code\Femanager\Domain\Validator\PasswordValidator::class] = [
+	'className' => \C3\C3local\Domain\Validator\PasswordValidator::class
+];

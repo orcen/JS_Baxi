@@ -33,6 +33,26 @@ page {
 
     stdWrap.wrap = <div class="page_wrap">|</div>
 
+    headerData {
+        40 = TEXT
+        40.value = <meta name="theme-color" content="#003E5C" />
+        45 = TEXT
+        45.value (
+<script type="text/javascript">
+        if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js', {})
+              .then((reg) => {
+                // registration worked
+                console.log('Registration succeeded. Scope is ' + reg.scope);
+              }).catch((error) => {
+                // registration failed
+                console.log('Registration failed with ' + error);
+              });
+        }
+</script>
+        )
+    }
+
     footerData {
 
 
@@ -51,6 +71,7 @@ page {
 ##    Templating
 ##
 ##################
+
 plugin.tx_powermail {
     view {
         templateRootPaths {
@@ -83,7 +104,6 @@ plugin.tx_news {
     }
 }
 
-
 plugin.tx_femanager {
     persistence.storagePid = 3
 
@@ -104,6 +124,25 @@ plugin.tx_femanager {
 
             misc.keepPasswordIfEmpty = 1
             fillEmailWithUsername = 1 # username = email
+
+            email {
+                createUserConfirmation {
+                    sender {
+                        email = TEXT
+                        email.value = baxi@c3-coding.de
+
+                        name = TEXT
+                        name.value = Fahrmit BAXI
+                    }
+
+                    subject >
+                    subject = TEXT
+                    subject.value = Bestätigen Sie Ihr BAXI Konto
+
+                    priority.value = 2
+                }
+            }
+
         }
     }
 
@@ -113,8 +152,10 @@ plugin.tx_femanager {
         tx_femanager_domain_model_user.fullname = Name
         tx_femanager_domain_model_user.name = Name
         tx_femanager_domain_model_user.email = E-Mail
+        tx_femanager_domain_model_user.ticket_art = Kategorie
         validationErrorRequired = Feld %s ist ein Pflichtfeld
         validationError = Fehler
+
     }
 }
 
@@ -195,5 +236,11 @@ lib {
         templateRootPaths {
             10 = EXT:c3local/Resources/Private/gridElements/Templates/
         }
+    }
+}
+
+config.tx_extbase.objects{
+    TYPO3\CMS\Extbase\Domain\Model\FileReference {
+        className = C3\C3local\Domain\FileReference
     }
 }

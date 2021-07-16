@@ -6,6 +6,7 @@
 	}
 	width: 100%;
 
+
 	.icon {
 		position: absolute;
 		top: 50%;
@@ -15,10 +16,10 @@
 		outline: none;
 		margin-top: 0;
 
-		.ce-bodytext &:first-child {
-			right: auto;
-			left: $gutter*2;
-		}
+		//.ce-bodytext &:first-child {
+		//	right: auto;
+		//	left: $gutter*2;
+		//}
 	}
 
 	&.has-icon {
@@ -174,6 +175,20 @@
 		&:hover,
 		&:active {
 			background: linear-gradient( $color_error_darker 0%, $color_error_dark 57.1%, $color_error 100%);
+		}
+	}
+
+
+	&--user {
+		padding-left: gutter(2);
+		.icon {
+			left: gutter();
+		}
+		@media (min-width: 380px) {
+
+			.icon {
+				left: gutter(2);
+			}
 		}
 	}
 

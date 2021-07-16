@@ -91,21 +91,21 @@ $dialogWidthMax: 400px;
 
 	& &-titlebar {
 		position: absolute;
-		top: $offset*2;
-		left: $gutter;
-		right: $gutter;
+		top: offset(2);
+		left: gutter();
+		right: gutter();
 		font-weight: bold;
 		text-align: center;
 		padding: 14px;
 		border: 0;
-		border-radius: $offset;
+		border-radius: offset();
 		background: linear-gradient(rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.65) 40.7%, rgba(0, 0, 0, 0.9) 100%);
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 		z-index: 500;
 
 		@media (min-width: 768px) {
-			left: $gutter*3;
-			right: $gutter*3;
+			left: gutter(3);
+			right: gutter(3);
 		}
 
 		&-btn {
@@ -122,6 +122,14 @@ $dialogWidthMax: 400px;
 				width: 22px;
 				height: 22px;
 				margin: $gutter/2;
+			}
+
+			span {
+				display: none;
+
+				@include respond(380px) {
+					display: inline;
+				}
 			}
 		}
 
@@ -227,14 +235,23 @@ $dialogWidthMax: 400px;
 			font-weight: bold;
 		}
 
+		.box-content {
+			max-height: 35vh;
+			overflow: auto;
+			padding: 0 gutter(.5);
+			margin-left: gutter(-0.5);
+			margin-right: gutter(-0.5);
+		}
+
 		#helpInfo {
 			position: fixed;
-			bottom: $offset*2;
+			bottom: offset();
+
 			left: 50%;
 			width: 360px;
 			max-width: 80%;
 			transform: translateX(-50%);
-			color: $color_black;
+			color: $color_white;
 			font-size: $font-size-xs;
 
 			h3 {
@@ -251,7 +268,7 @@ $dialogWidthMax: 400px;
 
 			a {
 				font-weight: bold;
-				color: $color_black;
+				color: $color_white;
 
 				.icon {
 					vertical-align: middle;

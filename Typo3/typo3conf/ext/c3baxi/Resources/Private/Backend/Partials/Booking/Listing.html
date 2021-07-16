@@ -1,59 +1,197 @@
-
-<f:for as="day" key="date" each="{booking}">
-    <div class="booking">
-        <h3 class="align-center">{date -> f:format.date(format:'Y-m-d')}</h3>
-
+<html
+        xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+        xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+        xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+        xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers">
+<f:render partial="Booking/ListingFilter" />
+<div class="booking">
+    <f:for as="day" key="date" each="{booking}">
         <f:for as="fahrt" each="{day}">
-            <div class="booking-fahrt">
+            <div class="booking-fahrt {f:if(condition: '{fahrt.confirmed}', then:'booking-fahrt--confirmed', else: 'booking-fahrt--not_confirmed')}"
+                 data-confirmed="{f:if( condition: fahrt.confirmed, then: 1, else: 0)}"
+                 data-approved="{f:if( condition: fahrt.approved, then: 1, else: 0)}"
+                 data-remindersend="{f:if( condition: fahrt.reminderSend, then: 1, else: 0)}"
+                 data-linie="{fahrt.data.linie.nr}"
+            >
+                <f:variable name="state">
+                    <f:if condition="{fahrt.confirmed}">
+                        <f:then>{f:translate(key:'booking.confirmed')}</f:then>
+                        <f:else>
+                            <f:if condition="!{fahrt.confirmed} AND {fahrt.reminderSend}">
+                                <f:then>{f:translate(key:'booking.pending')}</f:then>
+                                <f:else>{f:translate(key:'booking.not_confirmed')}</f:else>
+                            </f:if>
+                        </f:else>
+                    </f:if>
+                </f:variable>
+
                 <div class="booking-header">
-                    <h4>{fahrt.data.linie.nr} - {fahrt.data.name}</h4>
-                    <p>Buchbar bis: {date -> f:format.date(format:'Y-m-d')} {fahrt.data.buchbarBis ->
-                       f:format.date(format:'H:i')}</p></div>
-                <div class="booking-stations">
-                    <f:for each="{fahrt.zonen}" as="zone">
-                        <f:if condition="{zone.plus} OR {zone.minus}">
-                            <p class="itinerar">
-                                <span><strong>{zone.data.name}</strong></span>
-                                <span>{f:if(condition: '{zone.plus} > 0', then: '+{zone.plus}', else: '0')}</span>
-                                <span>{f:if(condition: '{zone.minus} > 0', then: '-{zone.minus}', else: '0')}</span>
-                                <span><strong>{v:math.maximum(a: '{zone.plus - zone.minus}', b: 0 )}</strong></span>
-                            </p>
-                            <f:comment>
-                                <ul class="" style="margin-left: 0; padding-left:0;">
-                                    <f:for as="haltestelle" each="{zone.haltestellen}">
-                                        <li class="itinerar"><span>{haltestelle.name}</span><span>4</span>
-                                            <span>6</span>
-                                        </li>
-                                    </f:for>
-                                </ul>
-                            </f:comment>
-                        </f:if>
-                    </f:for>
+
+                    <p class="booking-date">{date -> f:format.date(format:'d.m.y')}</p>
+                    <h4 class="booking-fahrtname" title="Buchbar bis: {date -> f:format.date(format:'d.m.y')} {fahrt.data.buchbarBis -> f:format.date(format:'H:i')}">{fahrt.data.linie.nr} - {fahrt.data.name}</h4>
+
+                    <span class="booking-state {f:if(condition: fahrt.confirmed, then: 'booking-state--green', else: 'booking-state--red')}" title="{state -> v:format.trim()}">&nbsp;</span>
+
+
+                    <f:if condition="{actions}">
+                        <div class="booking-actions btn-group">
+                            <f:for each="{actions}" as="action">
+                                <f:switch expression="{action}">
+                                    <f:comment>
+                                        <f:case value="show">
+                                            <f:link.action action="detailBooking"
+                                                           arguments="{date: date, ride: fahrt.data}">
+                                                <core:icon identifier="actions-eye"/>
+                                                <span><f:translate key="booking.listing.details"/></span>
+                                            </f:link.action>
+                                        </f:case>
+                                    </f:comment>
+                                    <f:case value="map">
+                                        <f:link.action action="showMapBooking"
+                                                       arguments="{date: date, ride: fahrt.data}" class="btn btn-default">
+                                            <core:icon identifier="content-map" size="small"/>
+                                            <span><f:translate key="booking.listing.map"/></span>
+                                        </f:link.action>
+                                    </f:case>
+
+                                    <f:case value="book">
+                                        <f:be.security.ifHasRole role="2">
+                                            <f:comment>
+                                                <f:link.action action="new" controller="Booking" arguments="{date: date, ride: fahrt.data}">
+                                                    <core:icon identifier="actions-add"/>
+                                                    <span><f:translate key="booking.listing.add"/></span>
+                                                </f:link.action>
+                                            </f:comment>
+                                        </f:be.security.ifHasRole>
+                                    </f:case>
+
+                                    <f:case value="confirm">
+                                        <f:be.security.ifHasRole role="1">
+                                            <f:then>
+                                                <f:if condition="{fahrt.data.linie.company.user.uid} == {BE_USER}">
+                                                    <f:if condition="! {fahrt.confirmed}">
+                                                        <f:then>
+                                                            <f:link.action action="confirmRide" arguments="{date: date, ride: fahrt.data}" class="btn btn-success">
+                                                                <core:icon identifier="actions-unlock"/>
+                                                                <span><f:translate key="booking.confirm"/></span>
+                                                            </f:link.action>
+                                                        </f:then>
+                                                    </f:if>
+                                                </f:if>
+                                            </f:then>
+                                        </f:be.security.ifHasRole>
+                                    </f:case>
+
+                                    <f:case value="approve">
+                                        <f:be.security.ifHasRole role="2">
+                                            <f:then>
+                                                <f:if condition="! {fahrt.approved}">
+                                                    <f:then>
+                                                        <f:link.action action="approveRide" arguments="{date: date, ride: fahrt.data}" class="btn btn-success">
+                                                            <core:icon identifier="actions-unlock"/>
+                                                            <span><f:translate key="booking.approve"/></span>
+                                                        </f:link.action>
+                                                    </f:then>
+                                                </f:if>
+                                            </f:then>
+                                        </f:be.security.ifHasRole>
+                                    </f:case>
+                                </f:switch>
+                            </f:for>
+                        </div>
+                    </f:if>
+
                 </div>
-                <f:if condition="{actions}">
-                    <div class="booking-actions">
-                        <f:for each="{actions}" as="action">
-                            <f:switch expression="{action}">
-                                <f:case value="show">
-                                    <f:link.action action="detailBooking"
-                                                   arguments="{date: date, ride: fahrt.data}">
-                                        Details</f:link.action>
-                                </f:case>
-                                <f:case value="map">
-                                    <f:link.action action="showMapBooking"
-                                                   arguments="{date: date, ride: fahrt.data}">Map
-                                    </f:link.action>
-                                </f:case>
-                                <f:case value="book">
-                                    <f:link.action action="new" controller="Booking"
-                                                   arguments="{date: date, ride: fahrt.data}">add Booking
-                                    </f:link.action>
-                                </f:case>
-                            </f:switch>
+
+                <div class="booking-stations">
+                    <span data-toggle="collapse" data-target="+ .stations"><core:icon identifier="actions-move-right" size="small"/></span>
+                    <div style="display: none" class="stations">
+                        <p class="itinerar itinerar--head">
+                            <span>Zone</span>
+                            <span>Zustieg</span>
+                            <span>Ausstieg</span>
+                        </p>
+                        <f:for each="{fahrt.zonen}" as="zone">
+                            <f:if condition="{zone.plus} OR {zone.minus}">
+                                <p class="itinerar">
+                                    <span>{zone.data.name}</span>
+                                    <span>{f:if(condition: '{zone.plus} > 0', then: '{zone.plus}', else: '0')}</span>
+                                    <span>{f:if(condition: '{zone.minus} > 0', then: '{zone.minus}', else: '0')}</span>
+                                </p>
+                            </f:if>
                         </f:for>
                     </div>
-                </f:if>
+                </div>
+
+                <div class="booking-details">
+                    <f:for as="booked" each="{fahrt.bookings}">
+                        <div class="booking-client" data-clientid="{booked.user.uid}" data-client="{booked.user.name}">
+                            <p class="booking-client_info booking-client_info--client">
+                                <span>Kunde</span><br/>
+                                <f:if condition="{rights.users.modify}">
+                                    <f:then>
+                                        <f:if condition="{booked.user}">
+                                            <f:then><be:link.editRecord uid="{booked.user.uid}" table="fe_users">{booked.user.name} ({booked.user.uid})</be:link.editRecord></f:then>
+                                            <f:else>{booked.user.name} ({booked.user.uid})</f:else>
+                                        </f:if>
+                                    </f:then>
+                                    <f:else>
+                                        <f:if condition="{rights.users.read}">
+                                            <f:then>{booked.user.name} ({booked.user.uid})</f:then>
+                                            <f:else>{booked.user.name -> f:format.crop(maxCharacters: '5', append:'&hellip;')}</f:else>
+                                        </f:if>
+                                    </f:else>
+                                </f:if>
+                            </p>
+                            <p class="booking-client_info booking-client_info--seats">
+                                <span>Plaetze</span><br/>
+                                {booked.adults + booked.children}
+                            </p>
+
+                            <p class="booking-client_info booking-client_info--onboard"><span>Einstieg</span><br/>
+                                <f:if condition="{booked.startStation}"><f:then><span class="station_name" title="{booked.startStation.fullname}">({booked.date -> f:format.date(format: 'H:i')}) {booked.startStation.name}</span></f:then><f:else>
+                                    <span>Haltestelle nicht erlaubt</span></f:else></f:if>
+                            </p>
+                            <p class="booking-client_info booking-client_info--offboard"><span>Ausstieg</span><br/>
+                                <f:if condition="{booked.endStation}"><f:then><span class="station_name" title="{booked.endStation.fullname}">{booked.endStation.name}</span></f:then><f:else>
+                                    <span>Haltestelle nicht erlaubt</span></f:else></f:if>
+                            </p>
+                            <f:if condition="{booked.info} != ''"><p class="booking-client_info booking-client_info--info"><span>Notiz</span><br/>{booked.info}</p></f:if>
+                            <div class="booking-controls">
+                                <div class="btn-group">
+                                    <f:if condition="{rights.booking.modify}">
+                                        <f:if condition="{edit}">
+                                            <f:link.action class="btn btn-default" action="edit" controller="Booking" arguments="{booking:booked}" title="Bearbeiten">
+                                                <core:icon identifier="actions-open" size="small"/>
+                                            </f:link.action>
+                                        </f:if>
+
+                                        <f:if condition="{cancel} && {fahrt.cancelAllowed}">
+
+                                            <f:link.action action="cancel" additionalAttributes="{'data-title':'Buchung stornieren','data-content':'Soll die Buchung wirklich storniert werden?','data-severity':3}" arguments="{booking:booked}" class="btn btn-danger t3js-modal-trigger"
+                                                           controller="Booking"
+                                                           title="Stornieren">
+                                                <core:icon size="small" identifier="actions-delete"/>
+                                            </f:link.action>
+                                        </f:if>
+                                    </f:if>
+
+                                    <span class="btn btn-info" data-info="show"><core:icon identifier="content-info" size="small"/></span>
+
+                                    <div class="info">
+                                        <p><label>erstellt am:</label> {booked.tstamp -> f:format.date(format:'Y-m-d H:i')}</p>
+
+                                        <f:if condition="{booked.cruserId} != 0"><p><label>erstellt von:</label> {baxi:beuser(userid:booked.cruserId)}</p></f:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </f:for>
+                </div>
+
             </div>
         </f:for>
-    </div>
-</f:for>
+
+    </f:for>
+</div>
+</html>

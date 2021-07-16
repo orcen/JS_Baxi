@@ -72,8 +72,10 @@ require([ "jquery" ], function ( $ ) {
             return maxValue / (100 / (act / (mostParts / 100)));
         }
     };
-    jQuery('#rating').C3Graph({
-        data: graphData
-    });
+    if( typeof graphData !== 'undefined'){
+        jQuery('#rating').C3Graph({
+            data: graphData
+        });
+    }
 })
 ;

@@ -1,6 +1,14 @@
 .subpage {
   background-color: #003E5C;
 }
+@media (min-width: 834px) {
+  .subpage {
+    background: #333;
+  }
+  .subpage .page_wrap {
+    background: #003E5C;
+  }
+}
 .subpage .footer {
   display: block;
 }

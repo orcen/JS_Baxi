@@ -1,0 +1,106 @@
+.femanager {
+
+	&_status{}
+	&_flashmessages {
+		margin: offset(2) auto;
+
+		> .typo3-message {
+			border: 3px solid #FFF;
+			border-radius: 3em;
+			font-size: 18px;
+			text-align: center;
+		}
+	}
+}
+
+.tx-femanager{
+	display:flex;
+	flex-direction: column;
+	min-height: 100%;
+	justify-content: space-between;
+
+	.femanager_edit {
+		flex: 0 0 auto;
+
+		h2 {
+			//color: #000;
+		}
+
+		label {
+			color: #000;
+		}
+
+		.femanager_notification{
+			padding: 24px 24px;
+			color: #000;
+			&-info{
+				margin-bottom: 16px;
+				text-align: center;
+
+				h3 {
+					font-weight: 700;
+				}
+				p{
+					margin-top: 0;
+				}
+			}
+
+
+			.checkbox {
+				//color:
+				font-weight: 700;
+
+				input[type="checkbox"]{
+					width: 1.2em;
+					height: 1.2em;
+					margin: 0;
+					vertical-align: middle;
+					border-radius: 0;
+				}
+			}
+		}
+	}
+
+	.subcontent {
+		padding: 28px 20px;
+		min-height: 100px;
+		flex: 0 0 auto;
+		text-align: center;
+	}
+}
+
+#registrationDialog {
+	cursor: default;
+	text-align: center;
+
+	p.h1 {
+		margin-top: 0 !important;
+	}
+	p + p {
+		marign-top: offset();
+	}
+
+	.btn {
+		color: #FFF;
+	}
+
+	.help {
+		position: fixed;
+		bottom: 28px;
+		left: 50%;
+		width: 400px;
+		color: #FFF;
+		max-width: 90vw;
+		transform: translateX(-50%);
+		text-align: center;
+		h3 {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		@media (orientation: landscape) {
+			width: 90%;
+			bottom: offset();
+		}
+	}
+}

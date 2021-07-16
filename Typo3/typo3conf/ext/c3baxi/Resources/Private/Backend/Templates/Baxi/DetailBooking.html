@@ -6,6 +6,7 @@
         <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
     </div>
 </f:section>
+
 <f:section name="content">
 
     <h3>{ride.linie.nr} - {ride.name}</h3>
@@ -31,6 +32,9 @@
                 <td style="text-align: center">{booking.adults + booking.children}</td>
                 <td>{booking.startStation.name} <small>({booking.startStation.zone.name})</small></td>
                 <td>{booking.endStation.name} <small>({booking.endStation.zone.name})</small></td>
+                <td>
+                    <f:link.action action="cancel" controller="Booking" arguments="{booking:booking}">Stornieren</f:link.action>
+                </td>
             </tr>
         </f:for>
     </table>

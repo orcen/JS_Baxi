@@ -17,13 +17,13 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name',
-        'iconfile' => 'EXT:c3baxi/Resources/Public/Icons/tx_c3baxi_domain_model_company.gif'
+        'iconfile' => 'EXT:c3baxi/Resources/Public/Icons/tx_c3baxi_domain_model_company.png'
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, telefon,email,contact_person,'
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, telefon,email,contact_person, user'
         . '--palette--;LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_zone.address;address,street,city,ort,zip,routes, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
@@ -149,7 +149,7 @@ return [
 			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.street',
 			'config' => [
 				'type' => 'input',
-				'size' => '30',
+				'size' => 30,
 				'trim' => 'trim'
 			],
 		],
@@ -158,7 +158,7 @@ return [
 			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.city',
 			'config' => [
 				'type' => 'input',
-				'size' => '30',
+				'size' => 30,
 				'trim' => 'trim'
 			],
 		],
@@ -167,7 +167,7 @@ return [
 			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.zip',
 			'config' => [
 				'type' => 'input',
-				'size' => '30',
+				'size' => 30,
 				'trim' => 'trim'
 			],
 		],
@@ -176,7 +176,7 @@ return [
 			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.telefon',
 			'config' => [
 				'type' => 'input',
-				'size' => '30',
+				'size' => 30,
 				'trim' => 'trim'
 			],
 		],
@@ -185,7 +185,7 @@ return [
 			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.email',
 			'config' => [
 				'type' => 'input',
-				'size' => '30',
+				'size' => 30,
 				'trim' => 'trim'
 			],
 		],
@@ -194,10 +194,39 @@ return [
 			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.contact_person',
 			'config' => [
 				'type' => 'input',
-				'size' => '30',
+				'size' => 30,
 				'trim' => 'trim'
 			],
 		],
+	    'flatrate_base' => [
+		    'exclude' => 0,
+		    'label' => 'Flatrate Base',
+		    'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'double2'
+		    ],
+	    ],
+	    'flatrate_extra' => [
+		    'exclude' => 0,
+		    'label' => 'Flatrate Extra',
+		    'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'double2'
+		    ],
+	    ],
+        'user' => [
+        	'exclude' => 1,
+	        'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.user',
+	        'config' => [
+	        	'type' => 'select',
+		        'renderType' => 'selectSingle',
+		        'items' => [],
+		        'foreign_table' => 'be_users',
+		        'foreign_where' => 'AND usergroup = 1'
+	        ]
+        ],
         'routes' => [
         	'exclude' => 1,
 	        'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_company.routes',

@@ -2,14 +2,18 @@
 
 	display: block;
 	border-radius: 2em;
-	line-height: 2.25;
 	padding: floor($gutter/3) $gutter;
 	border: 0 !important;
-	font-size: $font-size-xl;
 	font-weight: bold !important;
 	position: relative;
 	text-align: center;
 	z-index: 1;
+	line-height: 1.5;
+	font-size: $font-size-lg;
+	@media (min-height: 670px) {
+		line-height: 2.25;
+		font-size: $font-size-xl;
+	}
 
 	&::before {
 		content: '';

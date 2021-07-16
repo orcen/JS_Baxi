@@ -2,9 +2,9 @@
     <ul class="list">
         <f:for each="{companies}" as="company">
             <li class="list-item baxi_collapsible">
-                <h4>
-                    <span data-toggle="collapse"
-                          data-target="#company-{company.uid}">
+                <h4 data-toggle="collapse"
+                    data-target="#company-{company.uid}">
+                    <span >
                               <core:icon identifier="actions-view-list-expand" />
                           </span>
                     {company.name}

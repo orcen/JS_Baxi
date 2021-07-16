@@ -21,9 +21,9 @@ class FahrtZeit extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * zeit
      * 
-     * @var int
+     * @var \DateTimeImmutable
      */
-    protected $zeit = 0;
+    protected $zeit = null;
 
     /**
      * fahrt
@@ -39,10 +39,14 @@ class FahrtZeit extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $zone = null;
 
+	/**
+	 * @var bool
+	 */
+    protected  $hidden = false;
     /**
      * Returns the zeit
      * 
-     * @return int $zeit
+     * @return \DateTimeImmutable $zeit
      */
     public function getZeit()
     {
@@ -52,10 +56,10 @@ class FahrtZeit extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the zeit
      * 
-     * @param int $zeit
+     * @param \DateTimeImmutable $zeit
      * @return void
      */
-    public function setZeit(int $zeit)
+    public function setZeit( $zeit)
     {
         $this->zeit = $zeit;
     }
@@ -101,4 +105,22 @@ class FahrtZeit extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->zone = $zone;
     }
+
+	/**
+	 * @return bool
+	 */
+	public function isHidden(): bool {
+		return $this->hidden;
+	}
+
+	/**
+	 * @param bool $hidden
+	 * @return FahrtZeit
+	 */
+	public function setHidden(bool $hidden): FahrtZeit {
+		$this->hidden = $hidden;
+		return $this;
+	}
+
+
 }

@@ -1,10 +1,16 @@
 <div id="routeFinder">
+    <f:render partial="PageActions"
+              arguments="{
+              title: '{f:if(condition: \'{fahrten}\', then:\'Fahrt Suchen\', else:\'keine Fahrt<br />gefunden\')}',
+              subtitle: '{fahrtzeit -> f:format.date( format: \'d.m.Y - \a\b H:i\' )}',
+              pageUid:1}"></f:render>
+<f:comment>
     <div class="page_actions">
         <f:link.page pageUid="1" class="page_actions-button">
             <svg class="icon" width="20" height="20">
                 <use xlink:href="#Pfeil_L" fill="currentColor" />
             </svg>
-            Zur&uuml;ck
+            <span>Zur&uuml;ck</span>
         </f:link.page>
 
         <div class="page_actions-title">
@@ -19,7 +25,7 @@
             </f:if>
         </div>
 
-        <f:link.page pageUid="4" class="page_actions-button">Hilfe
+        <f:link.page pageUid="4" class="page_actions-button"><span>Hilfe</span>
             <svg class="icon" width="20" height="20">
                 <use
                         xlink:href="#Hilfe_Klein"
@@ -27,7 +33,7 @@
             </svg>
         </f:link.page>
     </div>
-
+</f:comment>
     <f:if condition="{startStation} AND {endStation}">
         <baxi:route start="{startStation}" end="{endStation}" />
     </f:if>
@@ -43,36 +49,37 @@
             </div>
 
             <f:for as="fahrt" each="{fahrten}">
-
                 <div class="box ride">
                     <div class="ride-header">
                         <div>
                             <small>Abfahrt</small><br />
 
-                            <time datetime="{fahrt.abfahrt.zeit -> f:format.date(format:'Y-m-d H:i')}">
-                                {fahrt.abfahrt.zeit -> f:format.date(format:'H:i')}
-                                <f:if condition="{fahrt.abfahrt.zeit -> f:format.date(format:'d.m.Y')} != {fahrtzeit -> f:format.date( format: 'd.m.Y' )}">
-                                    <small>{fahrt.abfahrt.zeit -> f:format.date(format:'d.m.Y')}</small>
+                            <time datetime="{fahrt.abfahrt -> f:format.date(format:'Y-m-d H:i')}">
+                                {fahrt.abfahrt -> f:format.date(format:'H:i')}
+                                <small>{fahrt.abfahrt -> f:format.date(format:'d.m.Y')}</small>
+                                <f:if condition="{fahrt.abfahrt -> f:format.date(format:'d.m.Y')} != {fahrtzeit -> f:format.date( format: 'd.m.Y' )}">
                                 </f:if>
                             </time>
                         </div>
                         <div>
                             <small>Ankunft</small><br />
-                            <time datetime="{fahrt.ankunft.zeit -> f:format.date(format:'Y-m-d H:i')}">
-                                {fahrt.ankunft.zeit -> f:format.date(format:'H:i')}
-                                <f:if condition="{fahrt.ankunft.zeit -> f:format.date(format:'d.m.Y')} != {fahrtzeit -> f:format.date( format: 'd.m.Y' )}">
-                                    <small>{fahrt.ankunft.zeit -> f:format.date(format:'d.m.Y')}</small>
+                            <time datetime="{fahrt.ankunft -> f:format.date(format:'Y-m-d H:i')}">
+                                {fahrt.ankunft -> f:format.date(format:'H:i')}
+                                <small>{fahrt.ankunft -> f:format.date(format:'d.m.Y')}</small>
+                                <f:if condition="{fahrt.ankunft -> f:format.date(format:'d.m.Y')} != {fahrtzeit -> f:format.date( format: 'd.m.Y' )}">
                                 </f:if>
 
                             </time>
                         </div>
+                        <f:if condition="{settings.showPrices}">
                         <div>
                             <small>Fahrpreis</small><br />
                             <a>
-                                {fahrt.preis -> f:format.number(decimals: 2, decimalSeparator: ',')}&nbsp;&euro;
+                                {price.adultPrice -> f:format.number(decimals: 2, decimalSeparator: ',')}&nbsp;&euro;
                                 <baxi:icon name="Einstellungen" width="13" height="13" />
                             </a>
                         </div>
+                        </f:if>
                     </div>
                     <div class="ride-info">
                         <span>

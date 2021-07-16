@@ -219,7 +219,7 @@ jQuery.fn.GeoPicker = function (params) {
       picker.ticker.text(Number(settings.currentPosition.lat).toPrecision(8) + ', ' + Number(settings.currentPosition.lng).toPrecision(8));
     }
 
-    if (picker.map || picker.currentPosition) {
+    if ((picker.map || picker.currentPosition) && picker.selected === false) {
       // console.log( picker.mapMoved );
       if (picker.map && !picker.mapMoved) {
         // center the map, if user not dragged
@@ -386,6 +386,7 @@ jQuery.fn.GeoPicker = function (params) {
         settings.onSelect(picker.selected, picker);
       }
 
+      closeSearch();
       showSelected();
     }
   }
@@ -408,7 +409,16 @@ jQuery.fn.GeoPicker = function (params) {
     var distance = google.maps.geometry.spherical.computeDistanceBetween(picker.selected.position, picker.currentPosition.position);
 
     if (distance) {
-      subTitle.append(jQuery('<span>').html(Math.round(distance).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ') + ' m'));
+      distance = Math.round(distance).toFixed(0);
+
+      if (distance > 1000) {
+        distance = distance / 1000;
+        distance = distance.toFixed(1).toString().replace('.', ',').replace(/(\\d)(?=(\\d{3})+(?!\\d))/g, '$1 ') + "&nbsp;km";
+      } else {
+        distance = distance.toString().replace('.', ',').replace(/(\\d)(?=(\\d{3})+(?!\\d))/g, '$1 ') + "&nbsp;m";
+      }
+
+      subTitle.append(jQuery('<span>').html(distance));
     }
     /** confirm and close */
 
@@ -436,6 +446,7 @@ jQuery.fn.GeoPicker = function (params) {
       picker.selected = false;
       picker.content.toggleClass('is-selected', false);
       picker.selectedBlock.hide();
+      picker.overlay.show();
       picker.search.show(300);
     });
 

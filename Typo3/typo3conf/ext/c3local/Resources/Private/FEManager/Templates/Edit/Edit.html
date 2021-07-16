@@ -8,12 +8,13 @@
     {allUserGroups}
 
     <f:section name="main">
-        <f:render partial="Misc/FlashMessages" arguments="{_all}" />
-        <f:render partial="Misc/FormErrors" arguments="{object:User}" />
 
         <f:render partial="PageActions" arguments="{title: 'Einstellungen', pageUid: 2, hideHelp: true}" />
 
         <div class="femanager_edit">
+            <f:render partial="Misc/FlashMessages" arguments="{_all}" />
+            <f:render partial="Misc/FormErrors" arguments="{object:User}" />
+
             <f:if condition="{user}">
                 <f:then>
                     <f:form
@@ -27,7 +28,7 @@
 <!--                            <legend>-->
 <!--                                <f:translate key="titleUpdateProfile" />-->
 <!--                            </legend>-->
-
+                            <f:form.hidden name="token" value="{token}" />
                             <f:if condition="{settings.edit.fields}">
 
                                 <f:then>
@@ -45,10 +46,25 @@
                                     <f:comment>
                                         If no fields are selected in the flexform => show all
                                     </f:comment>
+                                    <h2 class="as-p">{f:translate(key: 'tx_femanager_domain_model_user.edit.title', extensionName: 'c3baxi')}</h2>
+                                    <f:render partial="Fields/Name" arguments="{_all}" />
+                                    <f:render partial="Fields/Email" arguments="{_all}" />
+                                    <f:render partial="Fields/Telephone" arguments="{_all}" />
+                                    <f:render partial="Fields/TicketArt" arguments="{_all}" />
+                                    <div class="femanager_fieldset femanager_notification">
+                                        <div class="femanager_notification-info">
+                                            <f:format.html><h3><f:translate key="tx_femanager_domain_model_user.notification.title" extensionName="c3baxi" /></h3>
+                                                <f:translate key="tx_femanager_domain_model_user.notification.text" extensionName="c3baxi" /></f:format.html>
+                                        </div>
+                                    <f:render partial="Fields/Tx_c3baxi_notification_telephone" arguments="{_all}" />
+                                    <f:render partial="Fields/Tx_c3baxi_notification_email" arguments="{_all}" />
+                                    </div>
+
+                                    <f:comment>
                                     <f:render partial="Fields/Username" arguments="{_all}" />
                                     <f:render partial="Fields/Password" arguments="{_all}" />
                                     <f:render partial="Fields/Title" arguments="{_all}" />
-                                    <f:render partial="Fields/Name" arguments="{_all}" />
+
                                     <f:render partial="Fields/FirstName" arguments="{_all}" />
                                     <f:render partial="Fields/MiddleName" arguments="{_all}" />
                                     <f:render partial="Fields/LastName" arguments="{_all}" />
@@ -56,8 +72,7 @@
                                     <f:render partial="Fields/DateOfBirth" arguments="{_all}" />
                                     <f:render partial="Fields/Company" arguments="{_all}" />
                                     <f:render partial="Fields/Www" arguments="{_all}" />
-                                    <f:render partial="Fields/Email" arguments="{_all}" />
-                                    <f:render partial="Fields/Telephone" arguments="{_all}" />
+
                                     <f:render partial="Fields/Fax" arguments="{_all}" />
                                     <f:render partial="Fields/Address" arguments="{_all}" />
                                     <f:render partial="Fields/Zip" arguments="{_all}" />
@@ -68,7 +83,7 @@
                                     <f:if condition="{femanager:Misc.CaptchaEnabled(settings:'{settings}')}">
                                         <f:render partial="Fields/Captcha" arguments="{_all}" />
                                     </f:if>
-
+                                    </f:comment>
                                     <f:render partial="Fields/SubmitUpdate" arguments="{_all}" />
                                 </f:else>
 
@@ -86,8 +101,8 @@
                 </f:else>
             </f:if>
         </div>
-	    <div class="subcontent" style="height: 200px;">
-			<p>Hinweise zum Datenschutz</p>
+	    <div class="subcontent">
+			<p><f:link.page pageUid="7">Hinweise zum Datenschutz</f:link.page></p>
 	    </div>
     </f:section>
 

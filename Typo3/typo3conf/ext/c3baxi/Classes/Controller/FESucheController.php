@@ -5,7 +5,10 @@
 
 
 	use C3\C3baxi\Domain\Model\Booking;
+	use C3\C3baxi\Domain\Model\FahrtZeit;
+	use C3\C3baxi\Helper\RouteFinder;
 	use Psr\Log\LogLevel;
+	use TYPO3\CMS\Core\Error\DebugExceptionHandler;
 	use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 	use TYPO3\CMS\Core\Utility\GeneralUtility;
 	use TYPO3\CMS\Extbase\Object\ObjectManager\ObjectManager;
@@ -87,9 +90,15 @@
 
 		}
 
+		/**
+		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+		 * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+		 */
 		public function findRouteAction()
 		{
-			$storageType = 'ses';
+			$storageType = 'ses'; // session
 
 			if ( $this->request->hasArgument( 'route' ) || $this->request->hasArgument( 'shift' ) ) {/*return FALSE;*/
 
@@ -99,10 +108,13 @@
 						'start' => $GLOBALS['TSFE']->fe_user->getKey( $storageType, 'baxi_start' ),
 						'end'   => $GLOBALS['TSFE']->fe_user->getKey( $storageType, 'baxi_end' ),
 					];
+
+
+
 					if ( $this->request->getArgument( 'shift' ) == 'prev' )
-						$routeParams['time'] -= (60 * 60) * 6;
+						$routeParams['time'] -= (60 * 60) * 12;
 					else
-						$routeParams['time'] += (60 * 60) * 6;
+						$routeParams['time'] += (60 * 60) * 12;
 				} else {
 					$routeParams = $this->request->getArgument( 'route' );
 				}
@@ -131,37 +143,42 @@
 					$errorMsg[] = 'Zielhaltestelle w&auml;hlen';
 				}
 
+
 				if ( $error ) {
 					$this->redirect( 'index', 'FESuche', 'C3.C3baxi', [], 1 );
 				}
 
 				$GLOBALS["TSFE"]->fe_user->storeSessionData();
 
-				$routeParams['start'] = $this->haltestellenRepository->findByUid( $routeParams['start'] );
-				$routeParams['end'] = $this->haltestellenRepository->findByUid( $routeParams['end'] );
+				$searchTime = new \DateTimeImmutable();
+				$searchTime = $searchTime->setTimestamp( $routeParams['time'] );
+				$start = $this->haltestellenRepository->findByUid( $routeParams['start'] );
+				$end = $this->haltestellenRepository->findByUid( $routeParams['end'] );
 
-				$startLinien = $routeParams['start']->getZone()->getLinien();
-				$endLinien = $routeParams['end']->getZone()->getLinien();
+				$routeFinder = GeneralUtility::makeInstance(RouteFinder::class, $start, $end, $searchTime);
+				$routeFinder->setTime( $searchTime );
+				$routeFinder->findLine();
+				$routeFinder->findRoutes();
 
-				$selectedLinie = $this->findeLinie( $startLinien, $endLinien );
+				if( count( $routeFinder->getFoundRoutes() ) ) {
+					$fahrten = $routeFinder->getFoundRoutes();
+					array_walk( $fahrten, function (&$fahrt){
+						$fahrt['bookable'] = true;
+					});
 
+//					$bookedRides = false;
+//					if( isset(  $GLOBALS['TSFE']->fe_user->user['uid'] ) ) {
+//						$uuid = $GLOBALS['TSFE']->fe_user->user['uid'];
+//						$bookedRides = $this->bookingRepository->findByUserAndDate( $uuid, $searchTime->getTimestamp() );
+//					}
 
-
-				if ( is_array( $selectedLinie ) ) {
-					foreach( $selectedLinie as $sLine ) {
-						$this->view->assign( 'fahrten', $this->findeFahrten( $sLine, $routeParams ) );
-					}
-
-					$this->view->assign( 'startStation', $routeParams['start'] );
-					$this->view->assign( 'endStation', $routeParams['end'] );
-					$this->view->assign( 'fahrtzeit', \DateTime::createFromFormat( 'U', $routeParams['time'] ) );
-				}
-				elseif( $selectedLinie ) {
-
-					$this->view->assign( 'fahrten', $this->findeFahrten( $selectedLinie, $routeParams ) );
-					$this->view->assign( 'startStation', $routeParams['start'] );
-					$this->view->assign( 'endStation', $routeParams['end'] );
-					$this->view->assign( 'fahrtzeit', \DateTime::createFromFormat( 'U', $routeParams['time'] ) );
+					$this->view->assignMultiple([
+						'price' => $routeFinder->getPrice(),
+						'fahrten' => $fahrten,
+						'startStation' => $routeFinder->getStart(),
+						'endStation' => $routeFinder->getEnd(),
+						'fahrtzeit' => $routeFinder->getTime()
+					]);
 				}
 			} else {
 				$this->redirect( 'index', 'FESuche', 'C3.C3baxi', [], 1 );
@@ -203,7 +220,7 @@
 			} elseif ( $endUid = $GLOBALS['TSFE']->fe_user->getKey( $storageType, 'baxi_end' ) ) {
 				$this->view->assign( 'endStation', $this->haltestellenRepository->findByUid( $endUid ) );
 			}
-
+			$this->initiateJSSettings();
 			$GLOBALS["TSFE"]->fe_user->storeSessionData();
 		}
 
@@ -220,8 +237,12 @@
 			$arguments['user'] = $GLOBALS["TSFE"]->fe_user->user['uid'];
 
 			$booking = new Booking();
-			$booking->setDate( $arguments['time'] );
-			$booking->setAdults( $arguments['tickets'] );
+			$date = new \DateTime();
+			$date->setTimestamp($arguments['time']);
+
+			$booking->setDate( $date );
+			$booking->setAdults( $arguments['adults'] );
+			$booking->setChildren( $arguments['children'] );
 
 			if ( $startStation = $this->haltestellenRepository->findByUid( $arguments['start'] ) ) {
 				$booking->setStartStation( $startStation );
@@ -243,6 +264,15 @@
 
 			if ( $fahrt = $this->fahrtenRepository->findByUid( $arguments['fahrt'] ) ) {
 				$booking->setFahrt( $fahrt );
+
+				foreach($fahrt->getZeiten() as $fahrtzeit){
+					if($fahrtzeit->getZone() === $startStation->getZone() ) {
+						$date = $this->alterDate( $fahrtzeit->getZeit(), $date );
+						$booking->setDate($date);
+						break;
+					}
+				}
+//				$date
 			} else {
 				$error = TRUE;
 			}
@@ -251,6 +281,20 @@
 			$booking->setPid( 14 );
 
 			if ( !$error ) {
+				$found = $this->bookingRepository->findRideOfDay( $arguments['time'], $fahrt );
+
+				$confirmed = false;
+
+				if( $found->count() != 0 ) {
+					foreach( $found as $prevBooking ) {
+						if( $prevBooking->isConfirmed() ) {
+							$confirmed = true;
+							break;
+						}
+					}
+				}
+				$booking->setConfirmed( $confirmed );
+
 				$this->bookingRepository->add( $booking );
 				$this->persistenceManager->persistAll();
 
@@ -260,188 +304,17 @@
 			}
 		}
 
-		public static function findeLinie( ObjectStorage $start, ObjectStorage $end )
-		{
-			
-			if ( $start->count()  && $end->count() ) {
-
-				$found = [];
-				foreach ( $start as $sLinie ) {
-					if( $end->contains( $sLinie ) ) {
-						$found[] = $sLinie;
-					}
-				}
-				return $found;
-				/*
-				$sLinie = $start->current();
-				$eLinie = $end->current();
-
-				if ( $sLinie->getUid() == $eLinie->getUid() ) {
-					return $sLinie;
-				}*/
-			}
-			/** Todo: finde anschliesende Linien */
-			return FALSE;
-		}
-
-		protected function findeFahrten( $linie, $params )
-		{
-
-			/**
-			 * ToDo:
-			 * [X] Richtung bestimmen
-			 * [X] Fahrten vor wunschzeit ausschliesen
-			 *
-			 */
-
-//			$GLOBALS['TSFE']->fe_user->setKey( 'ses', $key, $data);
-//			$GLOBALS["TSFE"]->storeSessionData();
-			// detect witch storage to use
-			$abfahrt = $params['time'];
-
-			$wunschZeit = new \DateTime();
-			$wunschZeit->setTimestamp( $abfahrt );
-
-			$fahrten = array_filter(
-				$linie->getFahrten()->toArray(),
-				function ( $fahrt ) use ( $params, $wunschZeit ) {
-
-					$weekDays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-					$weekday = $weekDays[$wunschZeit->format( 'w' )];
-
-					$endFound = FALSE;
-					foreach ( $fahrt->getZeiten() as $zeit ) {
-						// fahrt findet nicht am richtigen Wochentag statt
-						if ( !in_array( $weekday, (array) $fahrt->getTage() ) ) return FALSE;
-
-
-						$fahrtZeit = new \DateTime();
-						$fahrtZeit->setTimestamp( $zeit->getZeit() );
-						$fahrtZeit->setDate( $wunschZeit->format( 'Y' ), $wunschZeit->format( 'm' ), $wunschZeit->format( 'd' ) );
-						$timeDiff = $wunschZeit->diff( $fahrtZeit );
-
-						if ( $zeit->getZone() == $params['end']->getZone() ) {
-							$endFound = TRUE;
-						}
-
-						// richtige richtung
-						if ( $zeit->getZone() == $params['start']->getZone() && !$endFound ) {
-							if ( $timeDiff->format( '%R' ) === '+' ) {
-								return TRUE;
-							}
-
-							return FALSE;
-						} elseif ( $zeit->getZone() == $params['start']->getZone() && $endFound ) {
-							return FALSE;
-						} elseif ( $params['start']->getZone() === $params['end']->getZone() ) {
-							if ( $wunschZeit < $fahrtZeit ) {
-								return TRUE;
-							}
-							return TRUE;
-						}
-					}
-				}
-			);
-
-			if ( empty( $fahrten ) ) {
-//				if ( $this->request->hasArgument( 'shift' ) ) {
-//					if ( $this->request->getArgument( 'shift' ) == 'prev' )
-//						$params['time'] -= (60 * 60) * 6;
-//					else
-//						$params['time'] += (60 * 60) * 6;
-//				}
-				$params['time'] += (60*60) * 6;
-				return $this->findeFahrten( $linie, $params );
-			}
-
-			$found = [];
-			$bookedRides = false;
-			if( isset(  $GLOBALS['TSFE']->fe_user->user['uid'] ) ) {
-				$uuid = $GLOBALS['TSFE']->fe_user->user['uid'];
-
-				$bookedRides = $this->bookingRepository->findByUserAndDate( $uuid, $wunschZeit->getTimestamp() );
-
-			}
-
-			foreach ( $fahrten as $fahrt ) {
-
-				$tmp = [
-					'uid'      => $fahrt->getUid(),
-					'abfahrt'  => 0,
-					'ankunft'  => 0,
-					'preis'    => $this->getFahrtPreis( $params['start']->getZone(), $params['end']->getZone() ),
-					'linie'    => $linie->getNr(),
-					'umstieg'  => FALSE,
-					'dauer'    => rand( 10, 50 ),
-					'sameZone' => FALSE,
-					'allowed'  => TRUE,
-					'bookable' => TRUE,
-				];
-
-				foreach ( $fahrt->getZeiten() as $zeit ) {
-
-					if ( $zeit->getZone() == $params['start']->getZone() ) {
-						$tmp['abfahrt'] = $zeit;
-					} elseif ( $zeit->getZone() == $params['end']->getZone() ) {
-						$tmp['ankunft'] = $zeit;
-					} elseif ( $params['start']->getZone() == $params['end']->getZone() ) {
-						$tmp['abfahrt'] = $zeit->getZeit();
-						$tmp['ankunft'] = $zeit->getZeit() + (60 * 10);
-						$tmp['sameZone'] = TRUE;
-					}
-				}
-
-				$tmp['abfahrt']->setZeit( $this->alterDate( $tmp['abfahrt']->getZeit(), $params['time'] ) );
-				$tmp['ankunft']->setZeit( $this->alterDate( $tmp['ankunft']->getZeit(), $params['time'] ) );
-
-				$buchbarBis = \DateTime::createFromFormat( 'U', ($this->alterDate( $fahrt->getBuchbarBis(), $params['time'] )) );
-				$buchbarBis->setTimezone( new \DateTimeZone( 'Europe/Berlin' ) );
-
-				if ( $buchbarBis->diff( \DateTime::createFromFormat( 'U', $tmp['abfahrt']->getZeit() ) )->format( '%R' ) == '-' ) {
-					$buchbarBis->modify( '-1 day' );
-				}
-
-				$fahrt->setBuchbarBis( $buchbarBis->getTimestamp() );
-
-				$now = new \DateTime();
-
-				if ( $buchbarBis < $now ) {
-					$tmp['allowed'] = FALSE;
-				}
-				$tmp['dauer'] = ($tmp['ankunft']->getZeit() - $tmp['abfahrt']->getZeit()) / 60;
-
-				$tmp['buchbarBis'] = $buchbarBis;
-
-				if( $bookedRides ) {
-					foreach( $bookedRides as $ride ) {
-
-						if( $ride->getFahrt() === $fahrt ) {
-							$tmp['bookable'] = false;
-						}
-					}
-				}
-
-				$found[] = $tmp;
-			}
-
-			$found = array_slice( $found, 0, 3 );
-
-			return $found;
-		}
 
 		protected function getFahrtPreis( $zone1, $zone2 )
 		{
 			return rand( 20, 100 ) / 10;
 		}
 
-		protected function alterDate( $time, $referer )
+		protected function alterDate( $date, $referer )
 		{
-
-			$time = \DateTime::createFromFormat( 'U', $time );
-			$referer = \DateTime::createFromFormat( 'U', $referer );
-			$time->setDate( $referer->format( 'Y' ), $referer->format( 'm' ), $referer->format( 'd' ) );
-//			if( $time < $referer ) $time->modify( '+1 day' );
-			return $time->getTimestamp();
+//			$offset =  $referer->getOffset();
+//			$offset = $offset / (60 * 60);
+			return $referer->setTime( $date->format('H') , $date->format('i'));
 		}
 
 		protected function getUserFavorites()
@@ -462,38 +335,23 @@
 		protected function sendConfirmationEmail( Booking $booking ) {
 
 			// build content for email
-			$timezone =  new \DateTimeZone( 'Europe/Berlin' );
-			$date =  new \DateTime( );
-			$date->setTimestamp( $booking->getDate() );
-			$date->setTimezone( $timezone );
 
-			$departure =  new \DateTime( );
-			$departure->setTimestamp( $booking->getDate() );
-			$departure->setTimezone( $timezone );
+			$date =  $booking->getDate();
 
-			$arrival =  new \DateTime( );
-			$arrival->setTimestamp( $booking->getDate() );
-			$arrival->setTimezone( $timezone );
+			$departure =  $booking->getDate();
 
+			$arrival =  $booking->getDate();
 
 			$times = $booking->getFahrt()->getZeiten();
 			foreach( $times as $time ) {
 				if( $time->getZone() === $booking->getStartStation()->getZone() ) {
-					$timeObj = new \DateTime();
-					$timeObj->setTimezone( $timezone );
-					$timeObj->setTimestamp( $time->getZeit() );
 
-					$departure->setTime( $timeObj->format( 'H'), $timeObj->format('i') );
+					$departure->setTime( $time->getZeit()->format( 'H'), $time->getZeit()->format('i') );
 
-					unset( $timeObj );
 				}
 				elseif( $time->getZone() === $booking->getEndStation()->getZone() ) {
-					$timeObj = new \DateTime();
-					$timeObj->setTimezone( $timezone );
-					$timeObj->setTimestamp( $time->getZeit() );
 
-					$arrival->setTime( $timeObj->format( 'H'), $timeObj->format('i') );
-					unset( $timeObj );
+					$arrival->setTime( $time->getZeit()->format( 'H'), $time->getZeit()->format('i') );
 				}
 			}
 

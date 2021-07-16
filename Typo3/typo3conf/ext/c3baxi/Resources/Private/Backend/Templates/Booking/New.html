@@ -1,140 +1,200 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
 <f:layout name="Reactive" />
 
 <f:section name="header">
     <div class="bar">
         <f:link.action action="index" controller="Baxi" class="button button--back">zur&uuml;ck</f:link.action>
+        <h1>Neue Fahrt buchen</h1>
     </div>
 </f:section>
 <f:section name="content">
 
     <f:form id="findRoute">
-
-        <div>
-            <label>Einstieg</label>
-            <f:form.select name="start"
-                           additionalAttributes="{data-action:'selectStation', data-target: '#start_station',autocomplete: 'off'}"
-                           value="0">
-                <f:form.select.option value="0">
-                    <f:translate key="choose_station" default="Auswählen" />
-                </f:form.select.option>
-
-                <f:for as="station" each="{stations}">
-                    <f:form.select.option
-                            value="{station.uid}"
-                            additionalAttributes="{data-zone:station.zone.uid}">
-                        {station.name}
-                    </f:form.select.option>
-                </f:for>
-
-            </f:form.select>
-        </div>
-
-        <div>
-            <label>Ausstieg</label>
-            <f:form.select name="end"
-                           additionalAttributes="{data-action:'selectStation', data-target: '#end_station',autocomplete: 'off'}"
-                           value="0">
-                <f:form.select.option value="0">
-                    <f:translate key="choose_station" default="Auswählen" />
-                </f:form.select.option>
-
-                <f:for as="station" each="{stations}">
-                    <f:form.select.option
-                            value="{station.uid}"
-                            additionalAttributes="{data-zone:station.zone.uid}">
-                        {station.name}
-                    </f:form.select.option>
-                </f:for>
-
-            </f:form.select>
-        </div>
-
-
-        <div>
+        <f:form.hidden name="user" value="{beUser}" />
+        <f:render partial="Form/StationsSelect" arguments="{stations: stations}" />
+        <div class="form-group">
             <label>Abfahrt</label>
-            <f:form.textfield type="date" name="date" value="{datum -> f:format.date(format: 'Y-m-d')}"
-                              additionalAttributes="{autocomplete : 'off'}" />
-        </div>
-        <div>
-            <label>Abfahrt</label>
-            <f:comment>
-                <f:form.textfield type="time" size="10"
-                                  additionalAttributes="{list: 'quickTimeSelect', autocomplete: 'off'}" />
-            </f:comment>
-            <f:form.select name="time" value="{time}" options="{timeList}"
-                           prependOptionLabel="{f:translate(key: 'select time', default: 'Wunschzeit waehlen')}" />
+            <div class="row">
+                <div class="col-sm-6">
+                    <f:be.security.ifHasRole role="2">
+                        <f:then>
+                            <f:form.textfield class="form-control" type="date" name="date" value="{datum -> f:format.date(format: 'Y-m-d')}" additionalAttributes="{autocomplete : 'off'}"/>
+                        </f:then>
+                        <f:else>
+                            <f:form.textfield class="form-control" type="date" name="date" value="{f:format.date(format: 'Y-m-d')}"
+                                              additionalAttributes="{autocomplete : 'off', min:minDate}"/>
+                        </f:else>
+                    </f:be.security.ifHasRole>
+                </div>
+                <div class="col-sm-6">
+                    <f:form.select name="time" class="form-control" value="{time}" options="{timeList}"
+                                   prependOptionLabel="{f:translate(key: 'selecttime', default: 'Wunschzeit wählen')}"/>
+                </div>
+            </div>
         </div>
 
-        <div>
-            <button type="submit" name="find" data-action="find">suche Fahrten</button>
-        </div>
+        <p>
+            <label><f:form.checkbox value="1" name="return" id="returnRide" /> {f:translate(key: 'returnRide', default: 'Hin-/Rück- Fahrt')}</label>
+        </p>
+
+        <p>
+            <button type="submit" class="btn btn-success" name="find" data-action="find">suche Fahrten</button>
+        </p>
 
     </f:form>
+
+    <div style="display: none;" class="map-wrap">
+        <span class="close"><core:icon identifier="actions-close" /></span>
+        <p><input type="text" size="80" id="searchField"/><button id="searchBtn">Suchen</button></p>
+        <div id="map"></div>
+
+    </div>
+
     <div class="output">
-        <template id="boxTemplate">
-            <h3>##name##</h3>
-            <p>##zone## ##linie##</p>
-        </template>
-        <div class="box box--start" id="start_station">
-
-        </div>
-        <div class="box box--end" id="end_station">
-
-        </div>
         <template id="ride">
             <div class="box box--ride" style="margin-top:16px; border: 1px solid;">
-                <p><strong>
-                    <f:translate key="booking.line" default="Linie" />
-                    :</strong> ##line##
-                </p>
-                <p><strong>
-                    <f:translate key="booking.duration" default="Fahrtdauer" />
-                    :</strong> ##duration## Min.
-                </p>
-                <p><strong>
-                    <f:translate key="booking.departure" default="Abfahrt" />
-                    :</strong> ##departure##
-                </p>
-                <p><strong>
-                    <f:translate key="booking.arrival" default="Ankunft" />
-                    :</strong> ##arrival##
-                </p>
-                <p><strong>
-                    <f:translate key="booking.date" default="Datum" />
-                    :</strong> ##date## ##time##
-                </p>
-                <f:form action="create">
+
+                <div class="box-info box-info--times">
+                    <p><strong>
+                        <f:translate key="booking.line" default="Linie" />
+                        :</strong> <span>##line## - ##fahrtName##</span>
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.departure" default="Abfahrt"/>
+                        :</strong> ##departure##
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.arrival" default="Ankunft"/>
+                        :</strong> ##arrival##
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.duration" default="Fahrtdauer"/>
+                        :</strong> ##duration## Min.
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.date" default="Datum" />
+                        :</strong> <time datetime="##date## ##time##">##date##</time>
+                    </p>
+                </div>
+                <f:form action="create" class="box-form">
                     <f:form.hidden name="fahrt" value="" />
                     <f:form.hidden name="date" value="" />
                     <f:form.hidden name="startStation" value="" />
                     <f:form.hidden name="endStation" value="" />
-                    <p><label>
-                        <f:translate key="booking.adults">Passagiere</f:translate>
-                    </label>
-                        <f:form.textfield name="adults" type="number" value="1"
-                                          additionalAttributes="{min: 1, step: 1}" />
+                    <p><label><f:translate key="booking.adults">Erwachsene</f:translate></label>
+                        <f:form.textfield name="adults" class="form-control" type="number" value="1" additionalAttributes="{min: 0, step: 1,max:10}" />
+                    </p>
+                    <p><label><f:translate key="booking.children">Kinder</f:translate></label>
+                        <f:form.textfield name="children" class="form-control" type="number" value="0" additionalAttributes="{min: 0, step: 1,max:10}" />
                     </p>
                     <p>
                         <label>
                             <f:translate key="booking.user">Kunde</f:translate>
                         </label>
-                        <f:form.select name="user"
-                                       options="{users}"
-                                       optionLabelField="name"
-                                       optionValueField="uid"
-                                       prependOptionLabel="{f:translate(key:'booking.no_user', default: 'ohne Kunden zuweisung')}"
-                                       prependOptionValue="0"></f:form.select>
+                        <span>
+                            <f:form.select name="user"
+                                           class="select2"
+                                           options="{users}"
+                                           optionLabelField="bename"
+                                           optionValueField="uid"
+                                           prependOptionLabel="{f:translate(key:'booking.no_user', default: 'wählen Sie einen Kunden aus')}"
+                                           prependOptionValue=""
+                                           additionalAttributes="{required:'required'}"
+                            ></f:form.select>
+                            <label><f:form.checkbox name="new_user" class="newUserToggle" value="1"/> neuen Kunden anlegen</label>
+                        </span>
                     </p>
+                    <div style="display: none" class="newUser">
+                        <f:render partial="User/New" />
+                    </div>
                     <p>
                         <label><f:translate key="booking.info" default="Notiz"/></label>
-                        <f:form.textarea name="info"></f:form.textarea>
+                        <f:form.textarea name="info" cols="60" rows="2" class="form-control"></f:form.textarea>
                     </p>
-                    <f:form.button>Jetzt Buchen</f:form.button>
+                    <f:comment><f:link.action action="new" controller="Subscription" arguments="{fahrt:'##fahrt##',date:'##date##',start:'##start##',end:'##end##'}" class="btn btn-default">Abo Buchen</f:link.action></f:comment>
+                    <f:form.button class="btn btn-success">Jetzt Buchen</f:form.button>
                 </f:form>
             </div>
         </template>
-        <div class="list">
+        <template id="multiRide">
+            <div class="box box--ride box--small" style="margin-top:16px; border: 1px solid;">
+                <input type="hidden" name="tx_c3baxi_tools_c3baxibaxi[date][##ride##]" value="%%date%%" />
+                <label class="fake-checkbox"><input type="radio" name="tx_c3baxi_tools_c3baxibaxi[fahrt][]" value="##ride##"><span></span></label>
+
+                <div class="box-info box-info--times">
+                    <p><strong>
+                        <f:translate key="booking.line" default="Linie"/>
+                        :</strong> <span>##line## - ##fahrtName##</span>
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.departure" default="Abfahrt"/>
+                        :</strong> ##departure##
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.arrival" default="Ankunft"/>
+                        :</strong> ##arrival##
+                    </p>
+                    <p><strong>
+                        <f:translate key="booking.duration" default="Fahrtdauer"/>
+                        :</strong> ##duration## Min.
+                    </p>
+                </div>
+
+            </div>
+        </template>
+        <template id="multiForm">
+            <f:form action="create" class="box-form">
+                <f:form.hidden name="fahrt" value=""/>
+                <f:form.hidden name="date" value=""/>
+                <f:form.hidden name="startStation" value=""/>
+                <f:form.hidden name="endStation" value=""/>
+
+                <div id="rideList">
+                </div>
+                <div>
+                    <p><label>
+                        <f:translate key="booking.adults">Erwachsene</f:translate>
+                    </label>
+                        <f:form.textfield name="adults" class="form-control" type="number" value="1" additionalAttributes="{min: 0, step: 1,max:10}"/>
+                    </p>
+                    <p><label>
+                        <f:translate key="booking.children">Kinder</f:translate>
+                    </label>
+                        <f:form.textfield name="children" class="form-control" type="number" value="0" additionalAttributes="{min: 0, step: 1,max:10}"/>
+                    </p>
+                    <p>
+                        <label>
+                            <f:translate key="booking.user">Kunde</f:translate>
+                        </label>
+                        <span>
+                            <f:form.select name="user"
+                                           class="select2"
+                                           options="{users}"
+                                           optionLabelField="bename"
+                                           optionValueField="uid"
+                                           prependOptionLabel="{f:translate(key:'booking.no_user', default: 'wählen Sie einen Kunden aus')}"
+                                           prependOptionValue=""
+                                           additionalAttributes="{required:'required'}"
+                            ></f:form.select>
+                            <label><f:form.checkbox name="new_user" class="newUserToggle" value="1"/> neuen Kunden anlegen</label>
+                        </span>
+                    </p>
+                    <div style="display: none" class="newUser">
+                        <f:render partial="User/New"/>
+                    </div>
+                    <p>
+                        <label>
+                            <f:translate key="booking.info" default="Notiz"/>
+                        </label>
+                        <f:form.textarea name="info" cols="60" rows="2" class="form-control"></f:form.textarea>
+                    </p>
+                    <f:form.button class="btn btn-success">Jetzt Buchen</f:form.button>
+                </div>
+
+            </f:form>
+        </template>
+        <div class="list list--rides">
 
         </div>
 
@@ -142,4 +202,5 @@
 
 
 </f:section>
+
 </html>

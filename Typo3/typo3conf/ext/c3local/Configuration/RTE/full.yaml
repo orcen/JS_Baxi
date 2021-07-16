@@ -8,7 +8,7 @@ imports:
 # For complete documentation see http://docs.ckeditor.com/#!/api/CKEDITOR.config
 editor:
   config:
-    contentsCss: "EXT:c3local/Resources/Public/Style/local.css"
+    contentsCss: "EXT:c3local/Resources/Public/Style/rte.css"
     height: 500
     allowedContent: true
     extraAllowedContent:

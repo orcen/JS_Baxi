@@ -7,6 +7,7 @@
 	use C3\C3baxi\Domain\Model\Zone;
 	use C3\C3baxi\Domain\Repository\ZoneRepository;
 	use C3\C3baxi\Domain\Repository\HaltestelleRepository;
+	use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 	/***
 	 *
@@ -60,18 +61,23 @@
 		 *
 		 * @return void
 		 */
-		public function newAction()
-		{
+		public function newAction(Zone $zone = null) {
+			$stationList = $this->getFreeStationsList();
 
-			$unAssignedStations = $this->repository->findStations( 0 );
+			$this->view->assignMultiple([ 'free_stations'=> $stationList,
+				'assigned_stations'=> [],
+				'stations' => false,
+				'action' => 'create'
+			]);
+		}
+
+		protected function getFreeStationsList() {
+			$stationList = [];
+			$unAssignedStations = $this->haltestelleRepository->findByZone( 0 );
 			foreach ( $unAssignedStations as $row ) {
-				$stationList[$row->getUid()] = $row->getName();
+				$stationList[$row->getUid()] = $row;
 			}
-
-			$this->view->assign( 'free_stations', $stationList );
-			$this->view->assign( 'assigned_stations', [] );
-
-			$this->view->assign( 'stations', FALSE );
+			return $stationList;
 		}
 
 		/**
@@ -81,24 +87,22 @@
 		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
 		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
 		 */
-		public function createAction()
-		{
-			$request = $_REQUEST['tx_c3baxi_web_c3baxibaxi'];
-			// instantiate Zone
-			$zone = new Zone();
-			$zone->setName( $request['name'] );
+		public function createAction(Zone $zone = null) {
+			
 			// bind zone to haltestellen
-			$stationen = $this->request->getArgument( 'liste');
-			$stationen = explode( ',', $stationen );
+			if( $this->request->hasArgument( 'liste' ) ) {
+				$stationen = $this->request->getArgument('liste');
+				$stationen = explode(',', $stationen);
 
-			$stationen = array_filter( $stationen );
-			if( count( $stationen ) ) {
-				foreach( $stationen as $id ) {
-					$haltestelle = $this->haltestelleRepository->findByUid( $id );
-					$haltestelle->setZone( $zone );
-					$this->haltestelleRepository->update( $haltestelle );
+				$stationen = array_filter($stationen);
+				if ( count($stationen) ) {
+					foreach ( $stationen as $id ) {
+						$haltestelle = $this->haltestelleRepository->findByUid($id);
+						$haltestelle->setZone($zone);
+						$this->haltestelleRepository->update($haltestelle);
 
-					$zone->addHaltestelle( $haltestelle );
+						$zone->addHaltestelle($haltestelle);
+					}
 				}
 			}
 
@@ -106,12 +110,13 @@
 			$this->repository->add( $zone );
 			$this->persistenceManager->persistAll();
 
-			if( $this->request->getArgument('action_after' ) === 'edit' )
-				$this->redirect( 'edit',NULL, NULL, ['zone' => $zone ] );
-			elseif( $this->request->getArgument('action_after' ) === 'new' )
-				$this->redirect( 'new', null, null,null );
-			elseif( $this->request->getArgument('action_after' ) === 'close' )
-				$this->redirect( 'index', 'Baxi', null,null );
+			if ( $this->request->getArgument( 'action_after' ) === 'edit' ){
+				$this->redirect( 'edit', NULL, NULL, ['zone' => $zone->getUid() ] );
+			}
+			elseif ( $this->request->getArgument( 'action_after' ) === 'new' )
+				$this->redirect( 'new', NULL, NULL, NULL );
+			elseif ( $this->request->getArgument( 'action_after' ) === 'close' )
+				$this->redirect( 'index', 'Baxi', NULL, NULL );
 		}
 
 		/**
@@ -124,10 +129,7 @@
 		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
 		 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
 		 */
-		public function updateAction( \C3\C3baxi\Domain\Model\Zone $zone )
-		{
-			$request = $_REQUEST['tx_c3baxi_web_c3baxibaxi'];
-			$zone->setName( $request['name'] );
+		public function updateAction( \C3\C3baxi\Domain\Model\Zone $zone ) {
 
 			if( $this->request->hasArgument( 'removeStation')) {
 				$stationen = $this->request->getArgument( 'removeStation' );
@@ -194,17 +196,17 @@
 		 *
 		 * @return void
 		 */
-		public function editAction( Zone $zone )
-		{
-			$this->view->assign( 'zone', $zone );
-			$unAssignedStations = $this->repository->findStations( 0 );
-			foreach ( $unAssignedStations as $row ) {
-				$stationList[$row->getUid()] = $row->getName();
-			}
-			$this->view->assign( 'free_stations', $stationList );
+		public function editAction( Zone $zone ) {
+
+			$stationList = $this->getFreeStationsList();
 
 			$assignedStations = $zone->getHaltestellen();
-			$this->view->assign( 'assigned_stations', $assignedStations );
+
+			$this->view->assignMultiple([
+				'assigned_stations' => $assignedStations,
+				'free_stations' => $stationList,
+				'zone' => $zone
+			]);
 		}
 
 		/**

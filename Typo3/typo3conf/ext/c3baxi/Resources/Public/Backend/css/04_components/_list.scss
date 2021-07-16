@@ -51,6 +51,7 @@
 		.list {
 			flex: 0 0 100%;
 		}
+
 	}
 
 	&-actions {
@@ -66,5 +67,47 @@
 			display: flex;
 			flex-wrap: nowrap;
 		}
+	}
+
+	&--linie {
+
+		.list-item {
+
+			&.is-hidden {
+				h4 {
+					color: #666;
+				}
+			}
+		}
+	}
+
+
+	&--rides {
+		display: flex;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+
+		.box.box--ride {
+			flex: 0 0 300px;
+			margin: 16px 16px 16px 0;
+
+			&.box--small {
+				margin: 8px 0;
+				width: 100%;
+				flex-basis: 100%;
+			}
+		}
+	}
+}
+
+#rideList{
+	display: flex;
+	column-gap: 24px;
+	margin-bottom: 24px;
+
+	> div {
+		max-height: 400px;
+		overflow: auto;
+		scrollbar-width: thin;
 	}
 }

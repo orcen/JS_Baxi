@@ -1,60 +1,68 @@
-<div class="page_actions">
+
+<div class="page_actions" xmlns:f="http://www.w3.org/1999/html">
     <f:link.page pageUid="1" class="page_actions-button">
         <baxi:icon name="Pfeil_L" />
-        Zur&uuml;ck
+        <span>{f:translate(key:"back")}</span>
     </f:link.page>
 
     <div class="page_actions-title">
-        <h3>Fahrt Buchen</h3>
+        <h3>{f:translate(key:"bookRide")}</h3>
         <p>{fahrtZeit -> f:format.date(format: '%d.%m.%Y')}</p>
     </div>
 
     <span data-action="help" data-question="1" pageUid="4" class="page_actions-button">
-        Hilfe
+        <span>{f:translate(key:"help")}</span>
         <baxi:icon name="Hilfe_Klein" />
     </span>
 </div>
 
 
-<baxi:route.selected start="{startStation}" end="{endStation}" fahrt="{fahrt}" />
+<baxi:route.selected start="{startStation}" end="{endStation}" fahrt="{fahrt}">
+    <f:comment>Footer Ausgabe</f:comment>
+    <p data-action="help" data-question="1"><baxi:icon name="Hilfe_Klein" />&nbsp;Wieso sind die Zeitangaben nicht genauer?</p>
+</baxi:route.selected>
 
-
+<f:if condition="{settings.showPrices}">
 <div class="box box--price">
 
-    <p><small>Fahrpreis</small>
-        <strong>4,30 &euro;</strong> / Erwachsener
+    <p><small><f:translate key="price" /></small>
+        <strong>4,30 &euro;</strong> / <f:translate key="adult" />
         <baxi:icon name="Einstellungen" />
-    <small>Barzahlung bei der Fahrt.</small></p>
+    <small>{f:translate(key: 'cashOnRide')}</small></p>
 
     <div class="box-footer">
-        <p>
+        <p data-action="content" data-uri="{f:uri.page(pageUid: '19',absolute: 1)}">
             <baxi:icon name="info" />
-            Alle Fahrpreise anzeigen
+            {f:translate(key: 'showPrices')}
         </p>
     </div>
     <span class="bubble"></span>
 </div>
+</f:if>
 
-<p class="align-center" style="font-size: 12px; margin-top: 7px">Du kannst diese Fahrt bis
-    <strong>{fahrt.buchbarBis -> f:format.date(format: 'H:i')}</strong> buchen</p>
+<p class="align-center" style="font-size: 12px; margin-top: 7px"><f:format.raw>{f:translate(key: 'bookingUntil', arguments: {0:"<strong>{fahrt.buchbarBis -> f:format.date(format:'%H:%M')} {fahrtZeit -> f:format.date(format:'%e.%B')}</strong>"} )}</f:format.raw></p>
 
 <div class="results results--reserve">
     <div class="results-header" style="min-width:33%">&nbsp;</div>
 
     <f:form action="save">
-
-        <p class="field-wrap">
-            <label>Fahrgäste</label>
-            <f:form.textfield name="tickets" type="number" additionalAttributes="{min: 1, step:1, max:8}"
-                              value="1" />
+<div class="row">
+        <p class="col-6 field-wrap">
+            <label>{f:translate(key: 'passengers.adults')}</label>
+            <f:form.textfield name="adults" type="number" additionalAttributes="{min: 0, step:1, max:8}" value="1" />
 
         </p>
+        <p class="col-6 field-wrap">
+            <label>{f:translate(key: 'passengers.children')}</label>
+            <f:form.textfield name="children" type="number" additionalAttributes="{min: 0, step:1, max:8}" value="0" />
+        </p>
+</div>
 
         <p class="field-wrap">
-            <label>Anmerkung <small>(optional)</small></label>
-            <f:form.textfield name="info"
-                              additionalAttributes="{placeholder : 'Anmerkung hinzufügen', cols : 30, rows : 1}" />
-            <span class="field-description">z.B. Barrierefreier Zugang benötigt</span>
+            <label>{f:translate(key: 'notice')} <small>(optional)</small></label>
+            <f:form.select name="info" options="{settings.booking.info.options}" optionValueField="value" optionLabelField="label" />
+            <f:comment><f:form.textfield name="info" additionalAttributes="{placeholder : 'Anmerkung hinzufügen', cols : 30, rows : 1}" /></f:comment>
+            <span class="field-description">{f:translate(key: 'noticeText')}</span>
         </p>
 
         <p class="field-wrap">

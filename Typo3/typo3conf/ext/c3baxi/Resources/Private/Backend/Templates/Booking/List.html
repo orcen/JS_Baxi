@@ -3,7 +3,6 @@
 
 <f:section name="content">
     <h1>Listing for Booking</h1>
-
     <f:flashMessages />
     <f:render section="BookingTable"
               arguments="{tableTitle: 'Kommende Fahrten',allowCancel: 'true',bookings: booking_comming}" />
@@ -34,6 +33,7 @@
         </thead>
         <tbody>
         <f:for each="{bookings}" as="booking">
+
             <tr>
                 <td>{booking.fahrt.linie.nr} <br /> {booking.fahrt.name}</td>
                 <td>{booking.adults + booking.children}</td>

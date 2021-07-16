@@ -5,6 +5,7 @@
 
 
 	use TYPO3\CMS\Extbase\Mvc\Controller\AbstractController;
+	use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 	use TYPO3\CMS\Felogin\Controller\FrontendLoginController;
 	use TYPO3\CMS\Core\Utility\GeneralUtility;
 	use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -36,7 +37,7 @@
 					->uriFor(
 						'reserve',
 						[
-							'fahrt' => $selectedFahrt
+							'fahrt' => $selectedFahrt,
 						],
 						'FESuche',
 						'C3baxi',

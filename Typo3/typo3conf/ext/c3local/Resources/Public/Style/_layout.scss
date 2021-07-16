@@ -6,11 +6,20 @@ body {
 	min-height: 100vh;
 	background: $color-body;
 	overflow-x: hidden;
+	@media (min-width: 834px ) {
+		background: #333;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
 }
 
 .page_wrap {
 	transition-property: transform, opacity;
 	transition-duration: .6s;
+
 
 	&.slide-out {
 		transform: translateX(-100%);
@@ -24,8 +33,23 @@ body {
 	@supports (display: grid) {
 		display: grid;
 		min-height: 100vh;
-		grid-template-rows: [header] minmax(100px, max-content) [content] auto [footer] minmax(100px, max-content);
+		grid-template-rows: [header] minmax(100px, max-content) [content] auto [footer] minmax(40px, max-content);
 
+		@media (min-height: 670px){
+			grid-template-rows: [header] minmax(100px, max-content) [content] auto [footer] minmax(100px, max-content);
+		}
+	}
+
+	@media (min-width: 834px ) {
+		background: $color-body;
+		width: 768px;
+		min-height: 95vh;
+		//height: 1112px;
+		max-height: 95vh;
+		//margin: auto;
+		border:1px solid #000;
+		position: relative;
+		overflow: auto;
 	}
 
 }

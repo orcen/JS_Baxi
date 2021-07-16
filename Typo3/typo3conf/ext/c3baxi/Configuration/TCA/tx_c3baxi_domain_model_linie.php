@@ -1,8 +1,10 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_linie',
         'label' => 'nr',
+	    'labelAlt' => 'nr, name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -23,7 +25,7 @@ return [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, nr, name',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, nr, name,company, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, nr, name,company,zonen, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -154,7 +156,57 @@ return [
         		'type' => 'select',
 		        'foreign_table' => 'tx_c3baxi_domain_model_company'
 	        ]
-        ]
+        ],
+	    'flatrate_base_price' => [
+		    'exclude' => 0,
+		    'label' => 'Flatrate Base',
+		    'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'double2'
+		    ],
+	    ],
+	    'flatrate_unit_price' => [
+		    'exclude' => 0,
+		    'label' => 'Flatrate Extra',
+		    'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'double2'
+		    ],
+	    ],
+	    'flatrate_special_base_price' => [
+		    'exclude' => 0,
+		    'label' => 'Flatrate Base',
+		    'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'double2'
+		    ],
+	    ],
+	    'flatrate_special_unit_price' => [
+		    'exclude' => 0,
+		    'label' => 'Flatrate Extra',
+		    'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'double2'
+		    ],
+	    ],
+	    'city_line' => [
+	'exclude' => true,
+	'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_linie.city_line',
+	'config' => [
+		'type' => 'check',
+		'renderType' => 'checkboxToggle',
+		'items' => [
+			'0' => [
+				'0' => '',
+				'1' => '',
+			],
+		],
+	],
+],
 
     ],
 ];

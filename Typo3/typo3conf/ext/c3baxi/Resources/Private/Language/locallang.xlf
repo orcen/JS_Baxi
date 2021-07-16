@@ -3,6 +3,40 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-06-05T10:53:49Z" product-name="c3baxi">
 		<header/>
 		<body>
+			<trans-unit id="back">
+				<source>Zurück</source>
+			</trans-unit>
+			<trans-unit id="bookRide">
+				<source>Fahrt Buchen</source>
+			</trans-unit>
+			<trans-unit id="price">
+				<source>Fahrpreis</source>
+			</trans-unit>
+			<trans-unit id="help">
+				<source>Hilfe</source>
+			</trans-unit>
+			<trans-unit id="adult">
+				<source>Erwachsener</source>
+			</trans-unit>
+			<trans-unit id="cashOnRide">
+				<source>Barzahlung bei der Fahrt.</source>
+			</trans-unit>
+			<trans-unit id="showPrices">
+				<source>Alle Fahrpreise anzeigen</source>
+			</trans-unit>
+			<trans-unit id="bookingUntil">
+				<source>Du kannst diese Fahrt bis %s buchen</source>
+			</trans-unit>
+			<trans-unit id="passangers">
+				<source>Fahrgäste</source>
+			</trans-unit>
+			<trans-unit id="notice">
+				<source>Anmerkung</source>
+			</trans-unit>
+			<trans-unit id="noticeText">
+				<source>z.B. Barrierefreier Zugang benötigt</source>
+			</trans-unit>
+
 			<trans-unit id="tx_c3baxi_domain_model_haltestelle">
 				<source>Haltestelle</source>
 			</trans-unit>
@@ -54,6 +88,28 @@
 			<trans-unit id="tx_c3baxi_domain_model_fahrtzeit.zone">
 				<source>Zone</source>
 			</trans-unit>
+
+			<trans-unit id="tx_femanager_domain_model_user.edit.title">
+				<source>Allgemein</source>
+			</trans-unit>
+			<trans-unit id="tx_femanager_domain_model_user.tx_c3baxi_notification_telephone">
+				<source>Benachrichtigung Telefon</source>
+			</trans-unit>
+			<trans-unit id="tx_femanager_domain_model_user.tx_c3baxi_notification_telephone_long">
+				<source>Telefon-Benachrichtigungen aktivieren</source>
+			</trans-unit>
+			<trans-unit id="tx_femanager_domain_model_user.tx_c3baxi_notification_email">
+				<source>Benachrichtigung Email</source>
+			</trans-unit>
+			<trans-unit id="tx_femanager_domain_model_user.tx_c3baxi_notification_email_long">
+				<source>E-Mail Benachrichtigungen aktivieren</source>
+			</trans-unit>
+			<trans-unit id="tx_femanager_domain_model_user.notification.title">
+				<source>Benachrichtigungen</source>
+			</trans-unit>
+			<trans-unit id="tx_femanager_domain_model_user.notification.text">
+				<source>Wähle die Kanäle aus, über die du zu deinen Buchungen benachrichtigt werden möchtest.</source>
+			</trans-unit>
 			<trans-unit id="company.new">
 				<source>neues Unternehmen</source>
 			</trans-unit>
@@ -101,6 +157,51 @@
 			</trans-unit>
 
 
+			<trans-unit id="booking.listing.comming">
+				<source>Anstehende Fahrten</source>
+			</trans-unit>
+			<trans-unit id="booking.listing.past">
+				<source>Vergangene Fahrten</source>
+			</trans-unit>
+			<trans-unit id="booking.listing.canceled">
+				<source>Stornierte Fahrten</source>
+			</trans-unit>
+
+			<trans-unit id="booking.listing.details">
+				<source>Einzelheiten</source>
+			</trans-unit>
+			<trans-unit id="booking.listing.map">
+				<source>Karte</source>
+			</trans-unit>
+			<trans-unit id="booking.listing.add">
+				<source>Buchung hinzufügen</source>
+			</trans-unit>
+			<trans-unit id="booking.new">
+				<source>neue Fahrt buchen</source>
+			</trans-unit>
+			<trans-unit id="booking.new_city_line">
+				<source>neue Stadtfahrt buchen</source>
+			</trans-unit>
+			<trans-unit id="booking.confirm">
+				<source>Bestätigen</source>
+			</trans-unit>
+
+			<trans-unit id="booking.approve">
+				<source>Erlauben</source>
+			</trans-unit>
+
+			<trans-unit id="booking.confirmed">
+				<source>bestätigt</source>
+			</trans-unit>
+			<trans-unit id="booking.pending">
+				<source>wartet</source>
+			</trans-unit>
+			<trans-unit id="booking.not_confirmed">
+				<source>nicht bestätigt</source>
+			</trans-unit>
+
+
+
 			<trans-uit id="settings.text">
 				<source>Text</source>
 			</trans-uit>
@@ -108,6 +209,25 @@
 			<trans-uit id="settings.links.favorites">
 				<source>Favorites Page</source>
 			</trans-uit>
+
+			<trans-unit id="route.number">
+				<source>Linien Nr.</source>
+			</trans-unit>
+			<trans-unit id="route.name">
+				<source>Linien Bezeichnung</source>
+			</trans-unit>
+			<trans-unit id="route.assigned_company">
+				<source>Unternehmen</source>
+			</trans-unit>
+			<trans-unit id="route.city_line">
+				<source>Stadtlinie</source>
+			</trans-unit>
+			<trans-unit id="passengers.adults">
+				<source>Erwachsene</source>
+			</trans-unit>
+			<trans-unit id="passengers.children">
+				<source>Kinder</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

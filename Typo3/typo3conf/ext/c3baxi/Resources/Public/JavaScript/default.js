@@ -88,7 +88,12 @@ function BaxiFavorites(params) {
   };
   BF.items = [];
   BF.template = document.createElement("LI");
-  BF.settings = Object.assign({}, defaults, params);
+
+  if (typeof Object.assign == 'function') {
+    BF.settings = Object.assign({}, defaults, params);
+  } else {
+    BF.settings = jQuery.extend({}, defaults, params);
+  }
 
   BF.add = function () {
     var uid = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -113,6 +118,10 @@ function BaxiFavorites(params) {
         });
         Store.set(BF.settings.storeKey, BF.items);
         result = true;
+      } else if (response.status === "not_logged_in") {
+        var infoModal = jQuery("<div id='infoDialog'></div>").appendTo("body");
+        infoModal.append("\n\t\t\t\t<div class=\"\">\n\t\t\t\t<p>F\xFAr das speichern der Favoriten m\xFCssen Sie sich erst anmelden.</p>\n</div>");
+        infoModal.dialog(dialogDefaults);
       }
     });
     return result;
@@ -337,7 +346,7 @@ jQuery("[data-autocomplete='haltestelle']").on("click", function (evt) {
           favBtn = jQuery("<span class=\"controls-btn\">").appendTo(buttons);
       favBtn.html("<span class=\"btn btn--glass btn--round has-icon\"><svg class=\"icon\" width=\"30\" height=\"30\"><use xlink:href=\"#Favoriten_kontur\"></use></svg></span>Zu Favoriten");
 
-      if (!baxiSearchSettings.loggedIn) {
+      if (baxiSearchSettings.loggedIn === false) {
         favBtn.toggleClass("is-disabled", true);
       } else {
         if (Favorites.contains(picker.selected.key)) {
@@ -372,6 +381,7 @@ jQuery("[data-autocomplete='haltestelle']").on("click", function (evt) {
       }).then(function (response) {
         var subtitle = picker.content.find(".subtitle");
         subtitle.append(jQuery("<span>").text(response.linie.join(", ")));
+        picker.overlay.hide();
         ignoreZone = response.zoneId;
       });
     },
@@ -423,12 +433,12 @@ jQuery("[data-autocomplete='haltestelle']").on("click", function (evt) {
           title.html("Ende wählen");
         }
 
-        var helpBtn = jQuery("<span class=\"ui-dialog-titlebar-help ui-dialog-titlebar-btn\">Hilfe \n\t\t\t\t\t<svg class=\"icon\" width=\"30\" height=\"30\"><use xlink:href=\"#Hilfe_Klein\"></use></svg>\n\t\t\t\t\t</span>").insertAfter(title).on("click", function (evt) {
+        var helpBtn = jQuery("<span class=\"ui-dialog-titlebar-help ui-dialog-titlebar-btn\"><span>Hilfe</span> \n\t\t\t\t\t<svg class=\"icon\" width=\"30\" height=\"30\"><use xlink:href=\"#Hilfe_Klein\"></use></svg>\n\t\t\t\t\t</span>").insertAfter(title).on("click", function (evt) {
           openHelp(3);
         }); // remove standard button
 
         jQuery(this).parent().find(".ui-dialog-titlebar-close").remove();
-        var closeBtn = jQuery("<span class='ui-dialog-titlebar-customclose ui-dialog-titlebar-btn'>").html("<svg class=\"icon\" width=\"30\" height=\"30\"><use xlink:href=\"#Pfeil_L\"></use></svg>Zur\xFCck").insertBefore(title).on("click", function (evt) {
+        var closeBtn = jQuery("<span class='ui-dialog-titlebar-customclose ui-dialog-titlebar-btn'>").html("<svg class=\"icon\" width=\"30\" height=\"30\"><use xlink:href=\"#Pfeil_L\"></use></svg><span>Zur\xFCck</span>").insertBefore(title).on("click", function (evt) {
           evt.preventDefault(); // this.close(event);
 
           modal.dialog("close");
@@ -473,7 +483,8 @@ jQuery("[data-autocomplete='favorites']").on("click", function (evt) {
         }
       }).then(function (response) {
         var subtitle = picker.content.find(".subtitle");
-        subtitle.append(jQuery("<span>").text(response.linie.join(", "))); // ignoreZone = response.zoneId;
+        subtitle.append(jQuery("<span>").text(response.linie.join(", ")));
+        picker.overlay.hide(); // ignoreZone = response.zoneId;
       });
     },
     onSubmit: function onSubmit(item) {
@@ -525,7 +536,7 @@ jQuery("[data-autocomplete='favorites']").on("click", function (evt) {
 
       if (title.length) {
         title.html("Favorit hinzufügen");
-        var helpBtn = jQuery("<span class='ui-dialog-titlebar-help ui-dialog-titlebar-btn'>Hilfe <svg class=icon width=30 height='30'><use xlink:href='Hilfe_Klein'></use></svg></span>").insertAfter(title).on("click", function (evt) {
+        var helpBtn = jQuery("<span class='ui-dialog-titlebar-help ui-dialog-titlebar-btn'><span>Hilfe</span><svg class=icon width=30 height='30'><use xlink:href='Hilfe_Klein'></use></svg></span>").insertAfter(title).on("click", function (evt) {
           alert("help");
         }); // remove standard button
 
@@ -545,7 +556,7 @@ jQuery("[data-autocomplete='favorites']").on("click", function (evt) {
   });
 });
 jQuery("#kontoFavorites").on("click", "[data-action='deleteFavorite']", function (evt) {
-  if (confirm("Wirklich loeschen")) {
+  if (confirm("Wirklich löschen")) {
     var target = jQuery(this),
         stationId = target.data("uid");
     jQuery.ajax({
@@ -632,10 +643,20 @@ jQuery("[data-action='rate']").on("click", function (evt) {
     });
   };
 
-  var dialogParams = Object.assign({}, dialogDefaults, {
-    open: ratingOpen,
-    test: true
-  });
+  var dialogParams = {};
+
+  if (typeof Object.assign == 'function') {
+    dialogParams = Object.assign({}, dialogDefaults, {
+      open: ratingOpen,
+      test: true
+    });
+  } else {
+    dialogParams = jQuery.extend({}, dialogDefaults, {
+      open: ratingOpen,
+      test: true
+    });
+  }
+
   rateModal.dialog(dialogParams);
 });
 /** Booking */
@@ -652,7 +673,8 @@ jQuery("[data-action='cancel']").on('click', function (evt) {
       }
     },
     submit: function submit() {
-      console.log('confirm - true');
+      window.location.href = evt.target.href;
+      return true;
     }
   });
 });
@@ -707,7 +729,7 @@ function openHelp() {
       }
     }
   }).done(function (response) {
-    var FAQContent = "\n<p class=\"box-title\">\n<svg class=\"icon\"><use xlink:href=\"#Hilfe_Klein\"></use></svg> Hilfe</p>\n<h3>".concat(response.question, "</h3><div>\n<p>").concat(response.answer, "</p>");
+    var FAQContent = "\n<p class=\"box-title\">\n<svg class=\"icon\"><use xlink:href=\"#Hilfe_Klein\"></use></svg><span>Hilfe</span></p>\n<h3>".concat(response.question, "</h3>\n<div class=\"box-content\">\n").concat(response.answer);
 
     if (response.media) {
       if (response.media.images.length) {
@@ -738,8 +760,16 @@ function openHelp() {
     helpModal.dialog(dialogParams);
   });
 }
-/** StepForm */
 
+jQuery('[data-action="content"]').on('click', function (evt) {
+  var lightbox = jQuery('<div id="lightboxDialog"></div>').load(evt.target.dataset.uri + ' main.content', function (response, statusText, xhr) {
+    lightbox.append(jQuery('<div class="box-footer box-footer--with-button"><span class="btn btn--back" data-action="closeDialog">Schliessen</span></div>'));
+    lightbox.find('.content').children().unwrap();
+    var dialogParams = Object.assign({}, dialogDefaults, {});
+    lightbox.dialog(dialogParams);
+  });
+});
+/** StepForm */
 
 jQuery.fn.stepForm = function (params) {
   if (this.length === 0) return this; // support mutltiple elements
@@ -757,7 +787,11 @@ jQuery.fn.stepForm = function (params) {
     stepper: {},
     active: 0,
     previous: false,
-    innerWrap: null
+    innerWrap: null,
+    touch: {
+      start: null,
+      direction: null
+    }
   },
       el = this,
       defaults = {
@@ -766,7 +800,9 @@ jQuery.fn.stepForm = function (params) {
       next: ".stepForm-next",
       prev: ".stepForm-prev"
     },
-    animation: false
+    animation: false,
+    swipe: false,
+    swipeTreshold: 30
   },
       settings = jQuery.extend({}, defaults, params);
 
@@ -778,7 +814,20 @@ jQuery.fn.stepForm = function (params) {
     form.stepper = {};
     form.active = 0;
     form.first = true;
+    var div = document.createElement('DIV');
+
+    if (!('onanimationend' in div)) {
+      settings.animation = false;
+    }
+
     setup();
+
+    if (settings.swipe) {
+      el.on('touchstart', _touchStart);
+      el.on('touchend', _touchEnd);
+      el.on('swipeleft', next);
+      el.on('swiperight', prev);
+    }
   }
 
   function setup() {
@@ -914,12 +963,64 @@ jQuery.fn.stepForm = function (params) {
     }
   }
 
+  function _touchStart(evt) {
+    // evt.preventDefault();
+    form.touch.start = evt.changedTouches[0].screenX;
+  }
+
+  function _touchEnd(evt) {
+    // evt.preventDefault();
+    var treshold = Math.abs(evt.changedTouches[0].screenX - form.touch.start);
+
+    if (treshold >= settings.swipeTreshold) {
+      if (form.touch.start < evt.changedTouches[0].screenX) {
+        form.touch.direction = 'right';
+        el.trigger('swiperight');
+      } else {
+        el.trigger('swipeleft');
+      }
+
+      form.touch.start = null;
+    }
+  }
+
   init();
   return this;
 };
 
 jQuery(".js-steps").stepForm({
-  animation: true
+  animation: true,
+  swipe: true
+});
+jQuery('form', '.femanager_new').on('submit', function (evt) {
+  evt.preventDefault();
+  var form = jQuery(this);
+
+  if (jQuery('.error', form).length === 0 && typeof evt.originalEvent !== 'undefined') {
+    jQuery.ajax(form.attr('action'), {
+      method: form.attr('method'),
+      data: form.serialize()
+    }).then(function (response) {
+      var result = JSON.parse(response); // let html = jQuery('div').html(response);
+
+      if (result.status === 'SUCCESS') {
+        var el = jQuery(this),
+            registrationModal = jQuery("<div id='registrationDialog'></div>").appendTo("body");
+        registrationModal.hide();
+        var rateHTML = "<div>\n<p>Dein BAXI-Konto</p>\n<p class=\"h1\">E-Mail Best\xE4tigen</p>\n<div>".concat(result.message, "</div>\n<div class=\"help\">\n<h4><strong>Keine E-Mail erhalten?</strong></h4>\n<p>Du hast noch keine E-Mail von uns erhalten? Es kann ggf. ein paar Minuten dauern, bis sie bei dir angezeigt wird. Bitte pr\xFCfe auch deinen Spam-Ordner. Hat das nicht geholfen? E-Mail erneut senden</p>\n</div>\n<div class=\"box-footer box-footer--with-button\">\n\t\t<a href=\"/\" type=\"button\" class=\"btn btn--next\" data-action=\"closeDialog\">Zum Startbildschirm</a>\n\t</div>\n</div>");
+        registrationModal.append(rateHTML);
+        var dialogParams = {};
+
+        if (typeof Object.assign == 'function') {
+          dialogParams = Object.assign({}, dialogDefaults, {});
+        } else {
+          dialogParams = jQuery.extend({}, dialogDefaults, {});
+        }
+
+        registrationModal.dialog(dialogParams);
+      } else {}
+    });
+  }
 });
 $(window).on("load", function (e) {
   if (Store && (typeof baxiSearchSettings === "undefined" ? "undefined" : _typeof(baxiSearchSettings)) === "object") {

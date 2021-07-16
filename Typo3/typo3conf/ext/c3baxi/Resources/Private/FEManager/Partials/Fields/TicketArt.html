@@ -1,0 +1,16 @@
+{namespace femanager=In2code\Femanager\ViewHelpers}
+<div class="femanager_fieldset femanager_name form-group">
+	<label for="femanager_field_name" class="control-label"><f:translate key="tx_femanager_domain_model_user.ticket_art" /><f:if condition="{femanager:Validation.IsRequiredField(fieldName:'ticketArt')}"><span>*</span></f:if></label>
+		<femanager:form.select
+				id="femanager_field_name"
+				property="ticketArt"
+				class="form-control"
+				value="{f:if(condition: '{user}', then:'{user.ticketArt}', else:'erwachsener')}"
+				options="{kind:'Kind',student:'Student',erwachsener:'Erwachsener',senior:'Senior'}"
+				additionalAttributes="{femanager:Validation.FormValidationData(settings:settings,fieldName:'ticketArt')}" >
+			<!--<f:form.select.option>Kind</f:form.select.option>
+			<f:form.select.option>Student</f:form.select.option>
+			<f:form.select.option>Erwachsener</f:form.select.option>
+			<f:form.select.option>Senior</f:form.select.option>-->
+		</femanager:form.select>
+</div>

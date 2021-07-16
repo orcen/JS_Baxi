@@ -1,13 +1,7 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-
-<f:form action="{f:if(condition: '{fahrt}', then : 'update', else : 'create')}" name="Fahrt" object="{fahrt}">
-    <f:if condition="{fahrt}">
-        <f:form.hidden name="fahrt" value="{fahrt}" />
-    </f:if>
-
+<f:form action="update" object="{fahrt}" objectName="fahrt" controller="Fahrt">
     <p>
         <label>Name</label>
-        <f:form.textfield name="name" value="{fahrt.name}" />
+        <f:form.textfield property="name" class="form-control" required="required" />
     </p>
     <p>
         <label>Linie</label>
@@ -16,42 +10,37 @@
                 <span>{fahrt.linie.nr} - {fahrt.linie.name}</span>
             </f:then>
             <f:else>
-
-                <f:form.select options="{linienListe}" name="linie"
-                               value="{f:if(condition: '{linie}', then:'{linie.uid}', else:'{fahrt.linie.uid}')}" />
+                <f:form.select options="{linienListe}"  class="form-control" property="linie" required="required" value="{f:if(condition: '{linie}', then:'{linie}', else:'{fahrt.linie.uid}')}" />
             </f:else>
         </f:if>
     </p>
     <div>
         <h4>Fahrttage</h4>
         <div class="checkbox_group">
+            <f:if condition="!{fahrt.linie.uid}">
             <label>
-                <f:form.checkbox name="tage[]" value="Mo"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Mo', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="Mo,Di,Mi,Do,Fr" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Mo-Fr', haystack:'{fahrt.tage}')}" />
+                <span>Mo-Fr</span></label></f:if>
+            <label>
+                <f:form.checkbox name="tage[]" value="Mo" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Mo', haystack:'{fahrt.tage}')}" />
                 <span>Mo</span></label>
             <label>
-                <f:form.checkbox name="tage[]" value="Di"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Di', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="Di" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Di', haystack:'{fahrt.tage}')}" />
                 <span>Di</span></label>
             <label>
-                <f:form.checkbox name="tage[]" value="Mi"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Mi', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="Mi" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Mi', haystack:'{fahrt.tage}')}" />
                 <span>Mi</span></label>
             <label>
-                <f:form.checkbox name="tage[]" value="Do"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Do', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="Do" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Do', haystack:'{fahrt.tage}')}" />
                 <span>Do</span></label>
             <label>
-                <f:form.checkbox name="tage[]" value="Fr"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Fr', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="Fr" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Fr', haystack:'{fahrt.tage}')}" />
                 <span>Fr</span></label>
             <label>
-                <f:form.checkbox name="tage[]" value="Sa"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Sa', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="Sa" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'Sa', haystack:'{fahrt.tage}')}" />
                 <span>Sa</span></label>
             <label>
-                <f:form.checkbox name="tage[]" value="So"
-                                 checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'So', haystack:'{fahrt.tage}')}" />
+                <f:form.checkbox name="tage[]" value="So" checked="{v:condition.iterator.contains( then: 'true', else : 'false', needle: 'So', haystack:'{fahrt.tage}')}" />
                 <span>So</span></label>
         </div>
     </div>
@@ -59,48 +48,83 @@
     <div>
         <p>
             <label>Buchbar bis</label>
-            <f:form.textfield name="buchbar_bis" class="time" value="{fahrt.buchbarBis -> f:format.date(format:'H:i')}"
-                              style="width:6ch"
-                              additionalAttributes="{pattern:'[0-9][0-9]:[0-9][0-9]'}" /><br />
+            <f:form.textfield property="buchbarBis"  class="form-control time" value="{fahrt.buchbarBis -> f:format.date(format:'H:i')}"
+                              style="width:6ch" required="required"
+                              additionalAttributes="{pattern:'([0-9][0-9]:[0-9][0-9])?'}" /><br />
             <small>Sp&auml;testens 1 Stunde vor Fahrt Anfang</small>
         </p>
     </div>
     <div>
-        <f:if condition="{action} == 'new'">
+
+        <p><label><f:form.checkbox value="1" property="rueckfahrt" /> R&uuml;ckfahrt</label></p>
+
+        <f:if condition="{action} == create">
             <f:then>
-                <p><label>
-                    <f:form.checkbox value="1" name="reverse" /> R&uuml;ckfahrt
-                </label></p>
                 <f:for each="{fahrt.linie.zonen}" as="zone">
                     <p><label>{zone.name}</label>
-                        <f:form.textfield name="zeit[{zone.uid}]" class="time" value="00:00" style="width:6ch"
+                        <f:form.textfield name="zeit[{zone.uid}]" class="time form-control" value="00:00" style="width:6ch"
                                           additionalAttributes="{pattern:'[0-9][0-9]:[0-9][0-9]'}" />
                     </p>
                 </f:for>
             </f:then>
             <f:else>
-                <f:for each="{fahrt.zeiten}" as="fahrtZeit">
-                    <p><label>{fahrtZeit.zone.name}</label>
-                        <f:form.textfield name="zeit[{fahrtZeit.zone.uid}]" class="time"
-                                          value="{fahrtZeit.zeit -> f:format.date(format:'H:i')}"
-                                          style="width:6ch"
-                                          additionalAttributes="{pattern:'[0-9][0-9]:[0-9][0-9]'}" />
+                <f:for each="{zeiten}" as="fahrtZeit">
+                    <p>
+                        <f:form.hidden name="zeitZone[{fahrtZeit.zone.uid}]" value="{fahrtZeit.fahrtzeit}" />
+                        <span class="input-group">
+                            <span class="input-group-addon" style="min-width: 25ch; text-align: right"><span class="input-group-text" >{fahrtZeit.zone.name}</span></span>
+
+                        <f:if condition="{fahrtZeit.zeit} > 0">
+                            <f:then>
+                                <f:form.textfield name="zeit[{fahrtZeit.zone.uid}]" class="time form-control" value="{fahrtZeit.zeit -> f:format.date(format:'H:i')}" style="width:6ch" additionalAttributes="{pattern:'([0-9][0-9]:[0-9][0-9])?'}" />
+                            </f:then>
+                            <f:else>
+                                <f:form.textfield name="zeit[{fahrtZeit.zone.uid}]" class="time form-control" value="" style="width:6ch" additionalAttributes="{pattern:'([0-9][0-9]:[0-9][0-9])?'}" />
+                            </f:else>
+                        </f:if>
+                        </span>
                     </p>
                 </f:for>
             </f:else>
         </f:if>
 
     </div>
-    <div class="bar bar--controls">
-        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
-        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
-        <f:if condition="{action} == 'edit'">
-            <f:form.button type="submit" name="action_after" value="close"
-                           class="button button--submit">Speichern
-                                                         und schliessen</f:form.button>
-            <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
+
+    <div class="bar bar--controls btn-group">
+        <f:link.action action="index" controller="Baxi" class="btn btn-default">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="btn btn-success">Speichern</f:form.button>
+        <f:if condition="{action} == update">
+            <f:form.button type="submit" name="action_after" value="close" class="btn btn-success">Speichern und schliessen</f:form.button>
+            <f:form.button type="submit" name="action_after" value="new" class="btn btn-success">Speichern und Neu</f:form.button>
         </f:if>
     </div>
 </f:form>
+
+<f:if condition="{action} == create">
+    <f:form action="import" name="Fahrt" additionalAttributes="{enctype: 'multipart/form-data'}">
+
+        <f:if condition="{linie}">
+            <f:then><f:form.hidden name="linie" value="{linie}"></f:form.hidden></f:then>
+            <f:else>
+                <p><label>Linie</label>
+                    <f:form.select options="{linienListe}" class="form-control" name="linie" required="required"
+                                   value="{f:if(condition: '{linie}', then:'{linie}', else:'{fahrt.linie.uid}')}"/>
+                </p>
+            </f:else>
+        </f:if>
+
+        <p><label><f:form.checkbox value="1" name="reverse" /> R&uuml;ckfahrten</label></p>
+
+        <p>
+            <label>Import Datei</label>
+            <f:form.upload name="importFile" class="form-control" multiple="true" additionalAttributes="{accept:'text/csv'}" />
+        </p>
+
+        <div class="bar bar--controls">
+            <f:link.action action="index" controller="Baxi" class="btn btn-default">Storno</f:link.action>
+            <f:form.button type="submit" name="action_after" value="close" class="btn btn-success">Importieren</f:form.button>
+        </div>
+    </f:form>
+</f:if>
 
 </html>

@@ -17,7 +17,7 @@
             <f:then>
                 <f:for as="fav" each="{favorites}">
                     <div class="box box--favorite">
-                        <p class="box-title">{fav.name}</p>
+                        <p class="box-title">{fav.name -> f:format.crop(maxCharacters:15)}</p>
                         <p class="box-subtitle">
                             <baxi:station station="{fav.station}" hideZone="true" />
                         </p>

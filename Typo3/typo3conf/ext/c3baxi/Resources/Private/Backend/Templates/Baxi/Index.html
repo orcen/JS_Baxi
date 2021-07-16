@@ -1,46 +1,93 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers data-namespace-typo3-fluid="true">
 <f:layout name="Dashboard" />
 <f:section name="content">
 
-    <!-- Reservings Board -->
-    <section class="baxi_board baxi_board--wide">
+    <!-- Bookings Board -->
+    <f:if condition="{rights.booking.read}">
+    <section class="baxi_board baxi_board--wide baxi_board--high">
         <header class="baxi_board-header">
             <h2 class="baxi_board-title">
-                <f:image src="EXT:c3baxi/Resources/Public/Icons/booking.svg" />Gebuchte Fahrten</h2>
+                <f:image src="EXT:c3baxi/Resources/Public/Icons/booking.svg" />
+                Gebuchte Fahrten
+            </h2>
+            <nav class="baxi_board-actions">
+
+                <f:if condition="{rights.subscription.modify}">
+                    <f:link.action action="new" controller="Subscription" title="new Subscription" class="btn btn-icon btn-default">
+                        <core:icon identifier="actions-add" />
+                        <f:translate key="subscription.new" default="neues ABO Buchen" />
+                    </f:link.action>
+                </f:if>
+
+                <f:if condition="{rights.booking.modify}">
+                    <f:link.action action="new" controller="Booking" title="new Booking" class="btn btn-icon btn-success">
+                        <core:icon identifier="actions-add" />
+                        <f:translate key="booking.new" />
+                    </f:link.action>
+                </f:if>
+                <f:comment>
+                    <!-- Stadtfahrten wird nicht mehr gebraucht -->
+                    <f:link.action action="newCityLine" controller="Booking" title="new Booking" class="btn btn-icon btn-success">
+                        <core:icon identifier="actions-add" />
+                        <f:translate key="booking.new_city_line" />
+                    </f:link.action>
+                </f:comment>
+            </nav>
         </header>
+
         <main class="baxi_board-content">
             <f:render partial="Baxi/Booking" arguments="{_all}" />
         </main>
+
         <footer class="baxi_board-footer">
-            <nav class="baxi_board-actions">
-                <f:link.action action="new" controller="Booking" title="new Booking" class="btn btn-icon
-               btn-default">
-                    <core:icon identifier="actions-add" />
-                    new Booking
+            <div class="btn-group">
+                <f:link.action action="export" controller="Booking" target="_blank" format="download" class="btn btn-default">
+                    <core:icon identifier="actions-document-export-csv" size="small" /><span>CSV Export - 3 Tage</span>
                 </f:link.action>
-            </nav>
+                <button id="btnGroupDrop1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <core:icon identifier="actions-move-down"></core:icon>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <f:link.action action="export" arguments="{days:7}" controller="Booking" target="_blank" format="download" class="dropdown-item btn">CSV Export - 7 Tage</f:link.action>
+                    <f:link.action action="export" arguments="{days:14}" controller="Booking" target="_blank" format="download" class="dropdown-item btn">CSV Export - 14 Tage</f:link.action>
+                    <f:link.action action="export" arguments="{days:'-1'}" controller="Booking" target="_blank" format="download" class="dropdown-item btn">CSV Export - letzter Monat</f:link.action>
+                </div>
+            </div>
         </footer>
     </section>
+    </f:if>
+
+    <f:if condition="{rights.subscription.read} || {rights.holiday.read}">
+    <section class="baxi_board baxi_board--wide">
+        <header class="baxi_board-header">
+            <h2>Abos und Feiertage/Ferien</h2>
+        </header>
+        <main class="baxi_board-content">
+            <f:render partial="Baxi/Subscriptions" arguments="{subscriptions: subscriptions, datenow:datenow, holidays: holidays, rights: rights}" />
+        </main>
+        <footer class="baxi_board-footer">
+
+        </footer>
+    </section>
+       </f:if>
 
 
     <!-- Rating Board -->
+    <f:comment>
     <section class="baxi_board">
         <header class="baxi_board-header">
             <h2 class="baxi_board-title">Bewertungen</h2>
         </header>
         <main class="baxi_board-content">
-
-            <f:render partial="Baxi/Rating" arguments="{_all}"/>
+            <f:render partial="Baxi/Rating" arguments="{_all}" />
         </main>
 
-        <footer class="baxi_board-footer">
-
-        </footer>
+        <footer class="baxi_board-footer"></footer>
     </section>
-
+    </f:comment>
 
     <!-- Routes Board -->
-    <section class="baxi_board baxi_board--small" style="clear: both">
+    <section class="baxi_board baxi_board--small" style="clear: both" id="routeBoard">
         <header class="baxi_board-header">
             <h2 class="baxi_board-title">Linien</h2>
         </header>
@@ -50,62 +97,83 @@
         </main>
         <footer class="baxi_board-footer">
             <nav class="baxi_board-actions">
-                <f:link.action action="new" controller="Linie" title="neue Linie" class="btn btn-icon btn-default">
-                    <core:icon identifier="actions-add" />
-                    neue Linie
-                </f:link.action>
+                <f:if condition="{rights.linie.modify}">
+                    <f:then>
+                        <f:link.action action="new" controller="Linie" title="neue Linie" class="btn btn-icon btn-default">
+                            <core:icon identifier="actions-add" /> neue Linie
+                        </f:link.action>
+
+                        <f:link.action action="new" controller="Fahrt" class="btn btn-default">neue Fahrt</f:link.action>
+                    </f:then>
+                </f:if>
             </nav>
         </footer>
     </section>
 
 
 
+        <!-- Zones Board -->
+        <section class="baxi_board baxi_board--small">
+            <header class="baxi_board-header">
+                <h2 class="baxi_board-title">
+                    <f:image src="EXT:c3baxi/Resources/Public/Icons/zone.svg" />
+                    Zonen
+                </h2>
+            </header>
+            <main class="baxi_board-content">
+                <f:render partial="Baxi/Zonen" arguments="{_all}" />
+            </main>
+            <footer class="baxi_board-footer">
+                <f:be.security.ifHasRole role="2">
+                    <f:then>
+                <nav class="baxi_board-actions">
+                    <f:link.action action="new" controller="Zone" title="neue Zone" class="btn btn-icon btn-default">
+                        <core:icon identifier="actions-add" />
+                        neue Zone
+                    </f:link.action>
+                    <f:link.action action="import" controller="Zone" title="{f:translate(key:'zone.import')}"
+                                   class="btn btn-icon btn-default" additionalAttributes="{disabled: 'disabled'}">
+                        <core:icon identifier="actions-database-import" state="disabled" />
+                        <span class="sr-only"><f:translate key="company.import" /></span>
+                    </f:link.action>
+                    <f:link.action action="list" controller="Haltestelle" title="Haltestellen" class="btn btn-icon btn-default">
+                        <core:icon identifier="actions-viewmode-list" />
+                        Haltestellen bearbeiten
+                    </f:link.action>
+                </nav>
+                    </f:then>
+                </f:be.security.ifHasRole>
+            </footer>
+        </section>
 
-    <!-- Zones Board -->
-    <section class="baxi_board baxi_board--small">
-        <header class="baxi_board-header">
+    <f:be.security.ifHasRole role="2">
+        <f:then>
+        <!-- Company Board -->
 
-            <h2 class="baxi_board-title">
-                <f:image src="EXT:c3baxi/Resources/Public/Icons/zone.svg" /> Zonen</h2>
-        </header>
-        <main class="baxi_board-content">
-            <f:render partial="Baxi/Zonen" arguments="{_all}" />
-        </main>
-        <footer class="baxi_board-footer">
-            <nav class="baxi_board-actions">
-                <f:link.action action="new" controller="Zone" title="neue Zone" class="btn btn-icon btn-default">
-                    <core:icon identifier="actions-add" />
-                    neue Zone
-                </f:link.action>
-            </nav>
-        </footer>
-    </section>
-
-
-
-    <!-- Company Board -->
-    <section class="baxi_board baxi_board--small">
-        <header class="baxi_board-header">
-            <h2 class="baxi_board-title">Unternehmen</h2>
-        </header>
-        <main class="baxi_board-content">
-            <f:render partial="Baxi/Company" arguments="{_all}" />
-        </main>
-        <footer class="baxi_board-footer">
-            <nav class="baxi_board-actions">
-                <f:link.action action="new" controller="Company" title="{f:translate(key:'company.new')}"
-                               class="btn btn-icon btn-default">
-                    <core:icon identifier="actions-add" />
-                    <f:translate key="company.new" />
-                </f:link.action>
-                <f:link.action action="import" controller="Company" title="{f:translate(key:'company.import')}"
-                               class="btn btn-icon btn-default" additionalAttributes="{disabled: true}">
-                    <core:icon identifier="actions-database-import" state="disabled" />
-                    <span class="sr-only"><f:translate key="company.import" /></span>
-                </f:link.action>
-            </nav>
-        </footer>
-    </section>
+        <section class="baxi_board baxi_board--small">
+            <header class="baxi_board-header">
+                <h2 class="baxi_board-title">Unternehmen</h2>
+            </header>
+            <main class="baxi_board-content">
+                <f:render partial="Baxi/Company" arguments="{_all}" />
+            </main>
+            <footer class="baxi_board-footer">
+                <nav class="baxi_board-actions">
+                    <f:link.action action="new" controller="Company" title="{f:translate(key:'company.new')}"
+                                   class="btn btn-icon btn-default">
+                        <core:icon identifier="actions-add" />
+                        <f:translate key="company.new" />
+                    </f:link.action>
+                    <f:link.action action="import" controller="Company" title="{f:translate(key:'company.import')}"
+                                   class="btn btn-icon btn-default" additionalAttributes="{disabled: true}">
+                        <core:icon identifier="actions-database-import" state="disabled" />
+                        <span class="sr-only"><f:translate key="company.import" /></span>
+                    </f:link.action>
+                </nav>
+            </footer>
+        </section>
+        </f:then>
+    </f:be.security.ifHasRole>
 
 
 </f:section>

@@ -109,7 +109,9 @@
 
 		> div {
 			flex: 1 0 0;
-			padding-right: $gutter;
+			&:nth-child(n+2) {
+				margin-left: gutter();
+			}
 		}
 
 		time {
@@ -121,15 +123,21 @@
 
 	&-info {
 		font-size: $font-size-sm;
+		display: flex;
+		justify-content: space-between;
 
 		> span {
+			display: inline-flex;
+			align-items: center;
+			flex: 1 0 0;
 			&:nth-child(n+2) {
-				margin-left: $offset/2;
+				margin-left: gutter();
 			}
 		}
 
 		.icon {
 			margin-top: -2px;
+			margin-right: 2px;
 		}
 	}
 }
@@ -175,6 +183,15 @@
 	&--reserve {
 		padding-bottom: $offset*2;
 		margin-bottom: -20px;
+
+		.row{
+			display: flex;
+			column-gap: $offset;
+
+			.col-6{
+				margin-top: 0;
+			}
+		}
 	}
 }
 
@@ -235,6 +252,13 @@
 		font-weight: bold;
 		position: relative;
 
+		span {
+			display: none;
+
+			@include respond(380) {
+				display: inline;
+			}
+		}
 		&:last-child {
 			text-align: right;
 		}

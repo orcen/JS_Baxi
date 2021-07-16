@@ -11,6 +11,6 @@
 				property="email"
 				class="form-control"
 				placeholder="E-Mail eingeben"
-				value=""
+				value="{f:if(condition: '{user}', then:'{user.email}')}"
 				additionalAttributes="{femanager:Validation.FormValidationData(settings:settings,fieldName:'email')}" />
 </div>

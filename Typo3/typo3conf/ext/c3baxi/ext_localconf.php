@@ -3,6 +3,10 @@
 	call_user_func(
 		function () {
 
+
+			// Add TSconfig
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:c3baxi/Configuration/PageTSconfig/PageConfig.t3s">');
+
 			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 				'C3.C3baxi',
 				'BaxiUserRides',
@@ -48,19 +52,30 @@
 					'Ajax'    => 'search, autocomplete, stationDetail, help, favorites, ride, rating',
 					'Rating' => 'create'
 				],
+				[
+					'FESuche' => 'index, search, findRoute, reserve, save',
+				]
+			);
+
+			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+				'C3.C3baxi',
+				'DeepLinks',
+				[
+					'Deep' => 'index, confirmRide',
+				],
 				[]
+			);
+
+
+			$extbaseObjectContainer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				\TYPO3\CMS\Extbase\Object\Container\Container::class
+			);
+			$extbaseObjectContainer->registerImplementation(
+				\TYPO3\CMS\Extbase\Persistence\Generic\QueryFactoryInterface::class,
+				\C3\C3baxi\Persistence\Generic\QueryFactory::class
 			);
 		}
 	);
-
-//	$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
-//	$signalSlotDispatcher->connect(
-//		'\In2code\Femanager\Controller\UserController', // source Class
-//		'loginAsAction', // source method
-//		'\C3\C3baxi\Domain\Service\AppService' , // target Class
-//		'afterLogin', // target method
-//		FALSE
-//	);
 
 	$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['baxi'] = [
 		'C3\C3baxi\ViewHelpers',
@@ -77,7 +92,27 @@
 		)
 	);
 
-//	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauthgroup.php']['backendUserLogin'][] =
-//		\Vendor\MyExtension\Hooks\BackendUserLogin::class . '->dispatch';
 	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['felogin']['login_confirmed'][] = C3\C3baxi\Domain\Service\AppService::class . '->afterLogin';
 
+	$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Extbase\\Mvc\\Controller\\Argument'] = array('className' => 'C3\\C3baxi\\Xclass\\Extbase\\Mvc\\Controller\\Argument');
+
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][C3\C3baxi\Tasks\BaxiInfo::class] = [
+		'extension'        => 'c3baxi',
+		'title'            => 'Infomails',
+		'description'      => '',
+		'additionalFields' => C3\C3baxi\Tasks\BaxiInfoFieldProvider::class
+	];
+
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][C3\C3baxi\Tasks\Report::class] = [
+		'extension'        => 'c3baxi',
+		'title'            => 'Reports',
+		'description'      => '',
+		//		'additionalFields' => C3\C3local\Tasks\NewsImportFieldProvider::class
+	];
+
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][C3\C3baxi\Tasks\Subscription::class] = [
+		'extension'        => 'c3baxi',
+		'title'            => 'Subscriptions',
+		'description'      => 'ABO',
+		'additionalFields' => C3\C3baxi\Tasks\SubscriptionFieldProvider::class
+	];

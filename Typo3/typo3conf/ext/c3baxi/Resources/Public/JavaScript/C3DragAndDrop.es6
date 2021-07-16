@@ -1,5 +1,6 @@
 requirejs([ 'jquery', 'jquery-ui/draggable', 'jquery-ui/droppable', 'jquery-ui/sortable' ], function ( jQuery ) {
 
+	$(function() {
 	jQuery('[data-toggle="filter"]').on('input', function ( evt ) {
 		let s = evt.currentTarget.value,
 			target = jQuery(evt.currentTarget.dataset.target),
@@ -33,27 +34,37 @@ requirejs([ 'jquery', 'jquery-ui/draggable', 'jquery-ui/droppable', 'jquery-ui/s
 	}
 
 	var ajaxTarget = jQuery('form').data('ajax');
-	console.log(ajaxTarget);
+
+
 
 	jQuery('[data-draggable="true"]').draggable({revert: "invalid", helper: dragClone});
 	jQuery('[data-droppable="true"]').droppable({
 		drop: ( evt, ui ) => {
 			let dropArea = jQuery(evt.target),
-				item = jQuery(ui.draggable[ 0 ]);
+				item = jQuery(ui.draggable[ 0 ]),
+				pid = dropArea.data('uid');
 
-			// if( jQuery( evt.originalEvent.target ).hasClass('list-item') ) {
-			// 	item.insertBefore( evt.originalEvent.target );
-			// }
-			// else {
-			item.appendTo(dropArea);
-			// }
+			//
+
+			let i = 0;
+			if( dropArea.attr('id') !== 'freie_zonen') {
+				dropArea.children('.list-item').each(function () {
+					if ( jQuery(this).offset().top >= ui.offset.top ) {
+						i = 1;
+						item.insertBefore(jQuery(this));
+						return false;
+					}
+				});
+			}
+
+			if( i !== 1) {
+				item.appendTo(dropArea);
+			}
+
 			item.draggable({revert: "invalid", helper: dragClone});
-
-
-			var pid = dropArea.data('uid');
 			// 	stellenId = ui.draggable[ 0 ].dataset.id;
 
-			if ( pid != '' ) {
+			if ( pid !== '' ) {
 				jQuery.ajax(
 					TYPO3.settings.ajaxUrls[ ajaxTarget ],
 					{
@@ -66,8 +77,20 @@ requirejs([ 'jquery', 'jquery-ui/draggable', 'jquery-ui/droppable', 'jquery-ui/s
 						},
 						method: 'get',
 						complete: function ( result ) {
-							console.log(result);
-							// window.location.reload();
+							console.log( result );
+							if( result.status === 200) {
+								if( result.responseJSON.success === true ) {
+
+									if( dropArea.data('field') !== undefined ) {
+										let list = [];
+										dropArea.children('.list-item').each(function(){
+											list.push( jQuery(this).data('uid') );
+										});
+
+										jQuery('[name="'+dropArea.data('field')+'"]').val( list.join(',') );
+									}
+								}
+							}
 						}
 					});
 			}
@@ -76,5 +99,6 @@ requirejs([ 'jquery', 'jquery-ui/draggable', 'jquery-ui/droppable', 'jquery-ui/s
 				list.val(list.val() + ',' + item.data('uid'));
 			}
 		}
+	});
 	});
 });

@@ -1,0 +1,12 @@
+tx_femanager {
+    flexForm {
+        new {
+            addFieldOptions {
+                ticketArt = Kategorie
+                tx_c3baxi_notification_telephone = Benachrichtigung Telefon
+                tx_c3baxi_notification_email = Benachrichtigung Email
+            }
+        }
+        edit < tx_femanager.flexForm.new
+    }
+}

@@ -26,6 +26,13 @@ class Haltestelle extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $name = '';
 
+	/**
+	 * fullname
+	 *
+	 * @var string
+	 */
+	protected $fullname = '';
+
     /**
      * latitude
      * 
@@ -52,7 +59,17 @@ class Haltestelle extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	/**
 	 * @var string
 	 */
-    protected $number;
+    protected $number = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $wabe = 0;
+
+	/**
+	 * @var \C3\C3baxi\Domain\Model\Haltestelle
+	 */
+    protected $calculation = null;
 
     /**
      * Returns the name
@@ -117,30 +134,45 @@ class Haltestelle extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->longitude = $longitude;
     }
 
-    /**
-     * Returns the zone
-     * 
-     * @return \C3\C3baxi\Domain\Model\Zone $zone
-     */
-    public function getZone()
-    {
-        return $this->zone;
-    }
+	/**
+	 * @return Zone
+	 */
+	public function getZone(): ?Zone {
+		return $this->zone;
+	}
 
-    /**
-     * Sets the zone
-     * 
-     * @param \C3\C3baxi\Domain\Model\Zone $zone
-     * @return void
-     */
-    public function setZone(\C3\C3baxi\Domain\Model\Zone $zone)
-    {
-        $this->zone = $zone;
-    }
+	/**
+	 * @param Zone $zone
+	 * @return Haltestelle
+	 */
+	public function setZone(?Zone $zone): Haltestelle {
+		$this->zone = $zone;
+		return $this;
+	}
 
     public function unsetZone() {
     	$this->zone = 0;
     }
+
+    public function hasZone() {
+    	return ! ($this->zone == 0);
+    }
+
+    public function getFullName() {
+    	$fullname = $this->name;
+    	if( $this->zone ) {
+    		$fullname .= ' - ' . $this->zone->getName();
+    		$linien = [];
+    		foreach( $this->zone->getLinien() as $line ) {
+    			$linien[] = $line->getNr();
+		    }
+    		if(! empty($linien)) {
+			    $fullname .= ' (' . implode(', ', $linien) . ')';
+		    }
+	    }
+
+    	return $fullname;
+	}
 
 	/**
 	 * @return string
@@ -148,6 +180,25 @@ class Haltestelle extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	public function getNumber() {
 		return $this->number;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getWabe() : ?int {
+		return $this->wabe;
+	}
+
+	/**
+	 * @param int $wabe
+	 *
+	 * @return Haltestelle
+	 */
+	public function setWabe( int $wabe ) : Haltestelle {
+		$this->wabe = $wabe;
+		return $this;
+	}
+
+
 
 	/**
 	 * @param string $number
@@ -159,7 +210,19 @@ class Haltestelle extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 		return $this;
 	}
 
+	/**
+	 * @return Haltestelle
+	 */
+	public function getCalculation(): ?Haltestelle {
+		return $this->calculation;
+	}
 
-
-
-}
+	/**
+	 * @param Haltestelle $calculation
+	 * @return Haltestelle
+	 */
+	public function setCalculation(?Haltestelle $calculation): Haltestelle {
+		$this->calculation = $calculation;
+		return $this;
+	}
+	}

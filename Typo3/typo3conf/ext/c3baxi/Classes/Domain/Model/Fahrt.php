@@ -43,12 +43,17 @@
 		protected $tage = NULL;
 
 		/**
-		 * @var integer
+		 * @var \DateTime
 		 */
 		protected $buchbarBis;
 
 		/**
-		 * @return int
+		 * @var bool
+		 */
+		protected $rueckfahrt = false;
+
+		/**
+		 * @return \DateTime
 		 */
 		public function getBuchbarBis()
 		{
@@ -56,7 +61,7 @@
 		}
 
 		/**
-		 * @param int $buchbarBis
+		 * @param \DateTime $buchbarBis
 		 */
 		public function setBuchbarBis( $buchbarBis = 0) : void
 		{
@@ -120,7 +125,7 @@
 		 *
 		 * @return void
 		 */
-		public function setTage( $tage )
+		public function setTage( $tage = [] )
 		{
 			$this->tage = implode( ',', $tage );
 		}
@@ -192,15 +197,28 @@
 			$this->linie = $linie;
 		}
 
+		/**
+		 * @return bool
+		 */
+		public function isRueckfahrt(): bool {
+			return $this->rueckfahrt;
+		}
+
+		/**
+		 * @param bool $rueckfahrt
+		 */
+		public function setRueckfahrt(bool $rueckfahrt): void {
+			$this->rueckfahrt = $rueckfahrt;
+		}
+
+
 
 		public function getStationTime( \C3\C3baxi\Domain\Model\Haltestelle $station ){
 			if( $station->getZone() === null ) return false;
 
 			foreach ( $this->zeiten as $zeit ) {
 				if( $zeit->getZone() === $station->getZone() ) {
-					$stationTime = new \DateTime();
-					$stationTime->setTimezone( new \DateTimeZone( 'Europe/Berlin') );
-					$stationTime->setTimestamp( $zeit->getZeit() );
+					$stationTime = $zeit->getZeit();
 					return $stationTime ;
 				}
 			}

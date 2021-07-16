@@ -19,7 +19,10 @@
 	&-nav {
 		display: flex;
 		justify-content: space-between;
-		padding: $offset*2 $gutter 0;
+		padding: offset() gutter() 0;
+		@include respond(380) {
+			padding: offset(2) gutter() 0;
+		}
 		//margin-bottom: $offset * -1;
 		position: relative;
 		z-index: 10;

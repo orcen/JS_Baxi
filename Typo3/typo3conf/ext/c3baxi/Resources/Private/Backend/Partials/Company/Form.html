@@ -1,102 +1,167 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+<f:form action="{f:if(condition: '{action} == \'new\'', then : 'create', else : 'update')}" objectName="company"
+        object="{company}" additionalAttributes="{'data-ajax':'C3BaxiCompanyRoute'}">
 
-<f:form action="{f:if(condition: '{action} == \'new\'', then : 'create', else : 'update')}" name="Fahrt"
-        object="{company}">
+    <div role="tabpanel">
+        <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
+            <li role="presentation" class="t3js-tabmenu-item  active">
+                <a href="#tab-1" title="" aria-controls="tab-1" role="tab" data-toggle="tab">
+                    Unternehmendaten
+                </a>
+            </li>
+            <li role="presentation" class="t3js-tabmenu-item ">
+                <a href="#tab-2" title="" aria-controls="tab-2" role="tab" data-toggle="tab">
+                    Abrechnungsdaten
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-1">
+                <div class="panel panel-tab">
+                    <div class="panel-body">
+                        <p>
+                            <label>
+                                <f:translate key="company.name"/>
+                            </label>
+                            <f:form.textfield class="form-control" property="name"/>
+                        </p>
 
-    <f:if condition="{company}">
-        <f:form.hidden name="company" value="{company}" />
-    </f:if>
+                        <div class="form-group">
+                            <h4>
+                                <f:translate key="company.address"/>
+                            </h4>
+                            <p>
+                                <label>
+                                    <f:translate key="company.street"/>
+                                </label>
+                                <f:form.textfield class="form-control" property="street"/>
+                            </p>
+                            <p>
+                                <label>
+                                    <f:translate key="company.city"/>
+                                </label>
+                                <f:form.textfield class="form-control" property="city"/>
+                            </p>
+                            <p>
+                                <label>
+                                    <f:translate key="company.zip"/>
+                                </label>
+                                <f:form.textfield class="form-control" name="zip"/>
+                            </p>
+                        </div>
 
-    <p>
-        <label><f:translate key="company.name"/></label>
-        <f:form.textfield name="name" value="{company.name}" />
-    </p>
+                        <div>
+                            <h4>
+                                <f:translate key="company.contact"/>
+                            </h4>
+                            <p>
+                                <label>
+                                    <f:translate key="company.contact_person"/>
+                                </label>
+                                <f:form.textfield class="form-control" property="contactPerson"/>
+                            </p>
+                            <p>
+                                <label>
+                                    <f:translate key="company.telefon"/>
+                                </label>
+                                <f:form.textfield class="form-control" property="telefon"/>
+                            </p>
+                            <p>
+                                <label>
+                                    <f:translate key="company.email"/>
+                                </label>
+                                <f:form.textfield class="form-control" property="email"/>
+                            </p>
+                        </div>
 
-    <div>
-        <h4><f:translate key="company.address"/></h4>
-        <p>
-            <label><f:translate key="company.street"/></label>
-            <f:form.textfield name="street" value="{company.street}" />
-        </p>
-        <p>
-            <label><f:translate key="company.city"/></label>
-            <f:form.textfield name="city" value="{company.city}" />
-        </p>
-        <p>
-            <label><f:translate key="company.zip"/></label>
-            <f:form.textfield name="zip" value="{company.zip}" />
-        </p>
-    </div>
+                        <p>
+                            <label>
+                                <f:translate key="company.info"/>
+                            </label>
+                            <f:form.textarea class="form-control" property="info" rows="4" cols="80"/>
+                        </p>
 
-    <div>
-        <h4><f:translate key="company.contact" /></h4>
-        <p>
-            <label><f:translate key="company.contact_person"/></label>
-            <f:form.textfield name="contact_person" value="{company.contactPerson}" />
-        </p>
-        <p>
-            <label><f:translate key="company.telefon"/></label>
-            <f:form.textfield name="telefon" value="{company.telefon}" />
-        </p>
-        <p>
-            <label><f:translate key="company.email"/></label>
-            <f:form.textfield type="email" name="email" value="{company.email}" />
-        </p>
-    </div>
+                        <div class="relation_field">
+                            <div class="relation_field-block">
+                                <h4>Zugewiessene Linien</h4>
+                                <p class="filter filter--simple">
+                                    <label>Filtern:</label>
+                                    <f:form.textfield class="form-control" name="route_filter" value=""
+                                                      additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#stationen'}"
+                                    />
+                                </p>
+                                <div class="relation_field-list form-control">
+                                    <f:if condition="! {company}">
+                                        <f:form.hidden name="liste" value=""/>
+                                    </f:if>
+                                    <ul class="list" id="stations" data-droppable="true" data-uid="{company.uid}">
+                                        <f:for each="{assigned_routes}" as="route">
+                                            <li class="list-item" data-draggable="true" data-uid="{route.uid}">{route.nr} - {route.name}</li>
+                                        </f:for>
+                                    </ul>
 
-    <p>
-        <label><f:translate key="company.info"/></label>
-        <f:form.textarea name="info" rows="4" cols="80" value="{company.info}" />
-    </p>
+                                </div>
+                            </div>
+                            <div class="relation_field-block">
+                                <h4>Verf&uuml;gbare Linien</h4>
+                                <p class="filter filter--simple">
+                                    <label>Filtern:</label>
+                                    <f:form.textfield class="form-control" name="route_filter" value=""
+                                                      additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#free_stations'}"
+                                    />
+                                </p>
+                                <div class="relation_field-list form-control">
+                                    <ul class="list" id="free_routes" data-droppable="true" data-uid="-{company.uid}">
+                                        <f:for each="{free_routes}" as="route" key="uid">
+                                            <li class="list-item" data-draggable="true" data-uid="{route.uid}">{route.nr} - {route.name}</li>
+                                        </f:for>
+                                    </ul>
+                                </div>
 
-    <div class="relation_field">
-        <div class="relation_field-block">
-            <h4>Zugewiessene Linien</h4>
-            <p class="filter filter--simple">
-                <label>Filtern:</label>
-                <f:form.textfield name="route_filter" value=""
-                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#stationen'}"
-                />
-            </p>
-            <div class="relation_field-list">
-                <f:if condition="! {company}">
-                    <f:form.hidden name="liste" value="" />
-                </f:if>
-                <ul class="list" id="stations" data-droppable="true" data-uid="{company.uid}">
-                    <f:for each="{assigned_routes}" as="route">
-                        <li class="list-item" data-draggable="true" data-uid="{route.uid}">{route.name}</li>
-                    </f:for>
-                </ul>
-
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="relation_field-block">
-            <h4>Verf&uuml;gbare Linien</h4>
-            <p class="filter filter--simple">
-                <label>Filtern:</label>
-                <f:form.textfield name="route_filter" value=""
-                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#free_stations'}"
-                />
-            </p>
-            <div class="relation_field-list">
-                <ul class="list" id="free_routes" data-droppable="true" data-uid="-{company.uid}">
-                    <f:for each="{free_routes}" as="route" key="uid">
-                        <li class="list-item" data-draggable="true" data-uid="{uid}">{route}</li>
-                    </f:for>
-                </ul>
-            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-2">
+                <div class="panel panel-tab">
+                    <div class="panel-body">
 
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>
+                                        <label>
+                                            <f:translate key="company.flatrate.base" default="bis 15km"/>
+                                        </label>
+                                        <span class="input-group"><f:form.textfield type="number" additionalAttributes="{step:0.01,min:0}" class="form-control" property="flatrateBase"/><span class="input-group-addon">&euro;</span></span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <p>
+                                        <label>
+                                            <f:translate key="company.flatrate.extra" default="weiterer km"/>
+                                        </label>
+                                        <span class="input-group"><f:form.textfield type="number" additionalAttributes="{step:0.01,min:0}" class="form-control" property="flatrateExtra"/><span class="input-group-addon">&euro;</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="bar bar--controls">
-        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
-        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
-        <f:if condition="{action} == 'edit'">
-            <f:form.button type="submit" name="action_after" value="close"
-                           class="button button--submit">Speichern
-                                                         und schliessen</f:form.button>
-            <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
-        </f:if>
+        <f:link.action action="index" controller="Baxi" class="btn btn-default">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="btn btn-success">Speichern</f:form.button>
+        <f:form.button type="submit" name="action_after" value="close" class="btn btn-success">Speichern und schliessen</f:form.button>
+        <f:form.button type="submit" name="action_after" value="new" class="btn btn-success">Speichern und Neu</f:form.button>
+
     </div>
 
 </f:form>
+</html>

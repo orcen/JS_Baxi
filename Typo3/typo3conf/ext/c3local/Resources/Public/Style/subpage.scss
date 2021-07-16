@@ -3,6 +3,13 @@
 
 .subpage {
 	background-color: $color_tertiary;
+
+	@media (min-width: 834px ) {
+		background: #333;
+		.page_wrap{
+			background: $color_tertiary;
+		}
+	}
 	//padding-top: $gutter*5;
 
 

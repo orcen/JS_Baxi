@@ -2,8 +2,9 @@
 namespace C3\C3baxi\Domain\Model;
 
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use \C3\C3baxi\Domain\Model\Zone;
+
 /***
  *
  * This file is part of the "Baxi Fahrten" Extension for TYPO3 CMS.
@@ -17,7 +18,7 @@ use \C3\C3baxi\Domain\Model\Zone;
 /**
  * Linie
  */
-class Linie extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Linie extends AbstractEntity
 {
 
     /**
@@ -43,13 +44,52 @@ class Linie extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\C3\C3baxi\Domain\Model\Zone>
+	 *
 	 */
 	protected $zonen;
 
 	/**
-	 * @var \C3\C3baxi\Domain\Model\Company
+	 * @var \C3\C3baxi\Domain\Model\Company|null
 	 */
-	protected $company;
+	protected $company = null;
+
+	/**
+	 * @var bool
+	 */
+	protected $hidden;
+
+	/**
+	 * @var bool
+	 */
+	protected $cityLine = false;
+
+	/**
+	 * @var \DateTime
+	 */
+	protected $starttime = null;
+
+	/**
+	 * @var \DateTime
+	 */
+	protected $endtime = null;
+
+	/**
+	 * @var float
+	 */
+	protected $flatrateBasePrice = 0.0;
+	/**
+	 * @var float
+	 */
+	protected $flatrateUnitPrice = 0.0;
+	/**
+	 * @var float
+	 */
+	protected $flatrateSpecialBasePrice = 0.0;
+	/**
+	 * @var float
+	 */
+	protected $flatrateSpecialUnitPrice = 0.0;
+
 
 	/**
 	 * @return ObjectStorage
@@ -114,6 +154,24 @@ class Linie extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 		$this->fahrten->detach( $fahrt );
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isHidden() : bool {
+		return $this->hidden;
+	}
+
+	/**
+	 * @param bool $hidden
+	 *
+	 * @return Linie
+	 */
+	public function setHidden( bool $hidden ) : Linie {
+		$this->hidden = $hidden;
+		return $this;
+	}
+
+
 
     /**
      * Returns the name
@@ -158,23 +216,42 @@ class Linie extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
 	/**
-	 * @return Company
+	 * @return Company|null
 	 */
-	public function getCompany() : ?Company
-	{
+	public function getCompany(): ?Company {
 		return $this->company;
 	}
 
 	/**
-	 * @param Company $company
-	 *
+	 * @param Company|null $company
 	 * @return Linie
 	 */
-	public function setCompany( Company $company ) : Linie
-	{
+	public function setCompany(?Company $company): Linie {
 		$this->company = $company;
 		return $this;
 	}
+
+
+
+	public function removeCompany(){
+		$this->company = null;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isCityLine(): bool {
+		return $this->cityLine;
+	}
+
+	/**
+	 * @param bool $cityLine
+	 */
+	public function setCityLine(bool $cityLine): void {
+		$this->cityLine = $cityLine;
+	}
+
 
 
 
@@ -183,4 +260,98 @@ class Linie extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 		$this->fahrten = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 		$this->zonen = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getStarttime(): ?\DateTime {
+		return $this->starttime;
+	}
+
+	/**
+	 * @param \DateTime $starttime
+	 */
+	public function setStarttime(?\DateTime $starttime): void {
+		$this->starttime = $starttime;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getEndtime(): ?\DateTime {
+		return $this->endtime;
+	}
+
+	/**
+	 * @param \DateTime $endtime
+	 */
+	public function setEndtime(?\DateTime $endtime): void {
+		$this->endtime = $endtime;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getFlatrateBasePrice(): float {
+		return $this->flatrateBasePrice;
+	}
+
+	/**
+	 * @param float $flatrateBasePrice
+	 * @return Linie
+	 */
+	public function setFlatrateBasePrice(float $flatrateBasePrice): Linie {
+		$this->flatrateBasePrice = $flatrateBasePrice;
+		return $this;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getFlatrateUnitPrice(): float {
+		return $this->flatrateUnitPrice;
+	}
+
+	/**
+	 * @param float $flatrateUnitPrice
+	 * @return Linie
+	 */
+	public function setFlatrateUnitPrice(float $flatrateUnitPrice): Linie {
+		$this->flatrateUnitPrice = $flatrateUnitPrice;
+		return $this;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getFlatrateSpecialBasePrice(): float {
+		return $this->flatrateSpecialBasePrice;
+	}
+
+	/**
+	 * @param float $flatrateSpecialBasePrice
+	 * @return Linie
+	 */
+	public function setFlatrateSpecialBasePrice(float $flatrateSpecialBasePrice): Linie {
+		$this->flatrateSpecialBasePrice = $flatrateSpecialBasePrice;
+		return $this;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getFlatrateSpecialUnitPrice(): float {
+		return $this->flatrateSpecialUnitPrice;
+	}
+
+	/**
+	 * @param float $flatrateSpecialUnitPrice
+	 * @return Linie
+	 */
+	public function setFlatrateSpecialUnitPrice(float $flatrateSpecialUnitPrice): Linie {
+		$this->flatrateSpecialUnitPrice = $flatrateSpecialUnitPrice;
+		return $this;
+	}
+
+
 }

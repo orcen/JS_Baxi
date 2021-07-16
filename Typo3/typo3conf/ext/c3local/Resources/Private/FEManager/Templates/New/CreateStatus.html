@@ -1,0 +1,25 @@
+<f:layout name="Default" />
+
+User / Status
+
+<f:section name="main">
+<!--	<h1><f:translate key="createStatus">User registration</f:translate></h1>-->
+<!--	<f:render partial="Misc/FlashMessages" arguments="{_all}" />
+
+	<f:if condition="{returnTo}">
+		<f:link.typolink parameter="{returnTo}" class="btn btn&#45;&#45;next">Buchung fertigstellen</f:link.typolink>
+	</f:if>-->
+
+	<c3:dialog id="registrationDialog" title="Title">
+
+		<div>
+			<p>E-Mail bestätigt</p>
+			<p class="h1">Dein Baxi-Konto wurde aktiviert</p>
+			<p>Deine E-Mail wurde bestätigt. Du kannst jetzt Fahrten buchen und dein Konto im vollen Umfang nutzen.</p>
+		</div>
+		<div class="box-footer box-footer--with-button">
+			<a href="/konto" type="button" class="btn btn--next" data-action="closeDialog">Zum deinem Baxi-Konto</a>
+		</div>
+		</div>
+	</c3:dialog>
+</f:section>

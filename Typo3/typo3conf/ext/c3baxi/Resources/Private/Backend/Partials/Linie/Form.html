@@ -1,84 +1,166 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:form action="{f:if(condition: '{linie}', then: 'update', else : 'create')}" name="Linie" object="{linie}"
-        additionalAttributes="{'data-ajax':'C3BaxiLinie'}">
-    <f:if condition="{linie}">
-        <f:form.hidden name="linie" value="{linie}" />
-    </f:if>
-    <p>
-        <label>Nummer</label>
-        <f:if condition="{linie}">
-            <f:then>
-                <f:form.textfield name="nummer" value="{linie.nr}" additionalAttributes="{'readonly':true}" />
-            </f:then>
-            <f:else>
-                <f:form.textfield name="nummer" value="{linie.nr}" pattern="[0-9]+" />
-            </f:else>
-        </f:if>
-    </p>
+<f:form action="{action}" name="Linie" object="{linie}" objectName="linie" additionalAttributes="{'data-ajax':'C3BaxiLinie'}">
 
-    <p>
-        <label>Name</label>
-        <f:form.textfield name="name" value="{linie.name}" />
-    </p>
+    <div role="tabpanel">
+        <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
+            <li role="presentation" class="t3js-tabmenu-item  active">
+                <a href="#tab-1" title="" aria-controls="tab-1" role="tab" data-toggle="tab">
+                    Grundangaben
+                </a>
+            </li>
+            <li role="presentation" class="t3js-tabmenu-item ">
+                <a href="#tab-2" title="" aria-controls="tab-2" role="tab" data-toggle="tab">
+                    Abrechnungsdaten
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-1">
+                <div class="panel panel-tab">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    <label>{f:translate(key:"route.number")}</label>
+                                    <f:if condition="{linie}">
+                                        <f:then>
+                                            <f:form.textfield class="form-control" property="nr"  additionalAttributes="{'readonly':true}" />
+                                        </f:then>
+                                        <f:else>
+                                            <f:form.textfield class="form-control" property="nr" pattern="[0-9]+" />
+                                        </f:else>
+                                    </f:if>
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <label>{f:translate(key:"route.name")}</label>
+                                    <f:form.textfield property="name" class="form-control" />
+                                </p>
+                            </div>
+                        </div>
 
-    <p>
-        <label><f:translate key="route.assigned_company"/></label>
-        <f:form.select name="company" value="{linie.company}" options="{companies}" optionLabelField="name"
-                       optionValueField="uid" prependOptionLabel="nicht ausgewaehlt" prependOptionValue="0" >
-        </f:form.select>
-    </p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    <label>{f:translate(key:"route.assigned_company")}</label>
+                                    <f:form.select property="company" options="{companies}" optionLabelField="name" class="form-control"
+                                                   optionValueField="uid" prependOptionLabel="nicht ausgewaehlt" prependOptionValue="0" >
+                                    </f:form.select>
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <label>{f:translate(key:"route.city_line")}</label><br />
+                                    <span>
+                                        <f:form.checkbox property="cityLine" value="1"/>
+                                        </span>
+                                </p>
+                            </div>
+                        </div>
 
-    <div class="relation_field">
-        <div class="relation_field-block">
-            <h4>Zugewiessene Haltestellen</h4>
-            <p class="filter filter--simple">
-                <label>Filtern:</label>
-                <f:form.textfield name="station_filter" value=""
-                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#zonen'}"
-                />
-            </p>
-            <div class="relation_field-list">
-                <f:if condition="! {linie}">
-                    <f:form.hidden name="liste" value="" />
-                </f:if>
-                <ul class="list" id="zonen" data-droppable="true" data-uid="{linie.uid}">
-                    <f:if condition="{linie.zonen}">
-                    <f:for each="{linie.zonen}" as="zone">
-                        <li class="list-item" data-draggable="true" data-uid="{zone.uid}">{zone.name}</li>
-                    </f:for>
-                    </f:if>
-                </ul>
+                        <div class="relation_field">
+                            <div class="relation_field-block">
+                                <h4>Zugewiessene Haltestellen</h4>
+                                <p class="filter filter--simple">
+                                    <label>Filtern:</label>
+                                    <f:form.textfield name="station_filter" value="" class="form-control"
+                                                      additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#zonen' }"
+                                    />
+                                </p>
+                                <div class="relation_field-list form-control">
+                                    <f:if condition="! {linie}">
+                                        <f:form.hidden name="liste" value="" />
+                                    </f:if>
+                                    <ul class="list" id="zonen" data-droppable="true" data-uid="{linie.uid}" data-field="tx_c3baxi_tools_c3baxibaxi[zonen]">
+                                        <f:if condition="{linie.zonen}">
+                                        <f:for each="{linie.zonen}" as="zone">
+                                            <li class="list-item" data-draggable="true" data-uid="{zone.uid}">{zone.name}</li>
+                                        </f:for>
+                                        </f:if>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="relation_field-block">
+                                <h4>Verf&uuml;gbare Haltestellen</h4>
+                                <p class="filter filter--simple">
+                                    <label>Filtern:</label>
+                                    <f:form.textfield name="station_filter" value="" additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#freie_zonen'}" class="form-control" />
+                                </p>
+                                <div class="relation_field-list form-control">
+                                    <ul class="list" id="freie_zonen" data-droppable="true" data-uid="-{linie.uid}">
+                                        <f:if condition="{zonen}">
+                                        <f:for each="{zonen}" as="zone" key="uid">
+                                            <li class="list-item" data-draggable="true" data-uid="{zone.uid}">{zone.name}</li>
+                                        </f:for>
+                                        </f:if>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <f:form.hidden name="zonen" value="{v:iterator.extract(key:'uid', content: linie.zonen) -> v:iterator.implode(glue: ',')}"/>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="relation_field-block">
-            <h4>Verf&uuml;gbare Haltestellen</h4>
-            <p class="filter filter--simple">
-                <label>Filtern:</label>
-                <f:form.textfield name="station_filter" value=""
-                                  additionalAttributes="{'autocomplete':'off','data-toggle':'filter', 'data-target':'#freie_zonen'}"
-                />
-            </p>
-            <div class="relation_field-list">
-                <ul class="list" id="freie_zonen" data-droppable="true" data-uid="-{linie.uid}">
-                    <f:if condition="{zonen}">
-                    <f:for each="{zonen}" as="zone" key="uid">
-                        <li class="list-item" data-draggable="true" data-uid="{zone.uid}">{zone.name}</li>
-                    </f:for>
-                    </f:if>
-                </ul>
-            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-2">
+                <div class="panel panel-tab">
+                    <div class="panel-body">
 
-        </div>
-    </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>
+                                        <label>
+                                            Werktag bis 15km
+                                        </label>
+                                        <span class="input-group"><f:form.textfield type="number" additionalAttributes="{step:0.01,min:0}" class="form-control" property="flatrateBasePrice"/><span class="input-group-addon">&euro;</span></span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <p>
+                                        <label>
+                                            Kilometerpreis
+                                        </label>
+                                        <span class="input-group"><f:form.textfield type="number" additionalAttributes="{step:0.01,min:0}" class="form-control" property="flatrateUnitPrice"/><span class="input-group-addon">&euro;</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>
+                                        <label>
+                                            Sa/So/Feiertag bis 15km
+                                        </label>
+                                        <span class="input-group"><f:form.textfield type="number" additionalAttributes="{step:0.01,min:0}" class="form-control" property="flatrateSpecialBasePrice"/><span class="input-group-addon">&euro;</span></span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <p>
+                                        <label>
+                                            Sa/So/Feiertag Kilometerpreis
+                                        </label>
+                                        <span class="input-group"><f:form.textfield type="number" additionalAttributes="{step:0.01,min:0}" class="form-control" property="flatrateSpecialUnitPrice"/><span class="input-group-addon">&euro;</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     <div class="bar bar--controls">
-        <f:link.action action="index" controller="Baxi" class="button button--cancel">Storno</f:link.action>
-        <f:form.button type="submit" name="action_after" value="edit" class="button button--submit">Speichern</f:form.button>
-        <f:form.button type="submit" name="action_after" value="close" class="button button--submit">Speichern und schliessen</f:form.button>
-        <f:form.button type="submit" name="action_after" value="new" class="button button--submit">Speichern und Neu</f:form.button>
+        <f:link.action action="index" controller="Baxi" class="btn btn-default">Storno</f:link.action>
+        <f:form.button type="submit" name="action_after" value="edit" class="btn btn-success">Speichern</f:form.button>
+        <f:form.button type="submit" name="action_after" value="close" class="btn btn-success">Speichern und schliessen</f:form.button>
+        <f:form.button type="submit" name="action_after" value="new" class="btn btn-success">Speichern und Neu</f:form.button>
     </div>
 
+        </div>
+    </div>
 </f:form>
 
 </html>

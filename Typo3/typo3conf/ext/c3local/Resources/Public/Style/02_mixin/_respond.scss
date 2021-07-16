@@ -1,0 +1,88 @@
+$fix-mqs: false !default;
+
+// function respond
+// @width 	: index from sizes list
+// @dir		: string, min/max, default is min, cause we make mobile first
+//
+@mixin respond ( $width, $dir : 'min' ) {
+
+	//$width: map-get( $breakpoints, $bp );
+
+	@if $width == null {
+		$width : $bp;
+		@warn $width;
+	}
+
+	@if $dir == 'max' {
+		$width : $width - 1;
+	}
+
+	$dir: $dir + '-width';
+
+	@if $fix-mqs {
+		@if $fix-mqs <= $width { // ...and if we should apply these rules...
+			@content;
+		}
+	}
+	@else if( $width == 0) {
+		@content;
+	}
+	@else {
+		@media screen and ($dir: $width) {
+			@content;
+		}
+	}
+}
+@mixin repsond( $bp, $dir : 'min' ) {
+	@warn 'Thats a Typo you Repsond! :D';
+	@include respond( $bp, $dir ) {
+		@content;
+	}
+}
+
+// calls respond( $media, max )
+@mixin respond-to( $media ) {
+	@warn '`respond-to` is deprecated';
+	@include respond( $media, 'max' ) { @content; }
+}
+// calls respond( $media )
+@mixin respond-from( $media ) {
+	@warn '`respond-from` is deprecated';
+	@include respond( $media ) { @content; }
+}
+
+@mixin respond-between ( $from, $to ) {
+	@media screen and ( min-width: map-get( $breakpoints, $from ) ) and ( max-width: map-get( $breakpoints, $to ) ) { @content }
+}
+
+// respond to Height
+@mixin respondHeight ( $height, $dir : 'min' ) {
+
+	// @warn 'Respond from: ' $height;
+	@if $dir == 'max' {
+		$height : $height - 1;
+	}
+
+	$dir: $dir + '-height';
+
+	@if( $height > 0 ) {
+		$height : $height + 'px';
+		@media screen and ($dir: $height) {
+
+			@content;
+		}
+	}
+	@else {
+		@content;
+	}
+
+}
+
+$old-ie: false !default;
+@mixin old-ie {
+	// Only use this content if we're dealing with old IE
+	// @warn 'ie';
+	@if $old-ie {
+			@content;
+	}
+}

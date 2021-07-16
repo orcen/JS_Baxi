@@ -9,6 +9,18 @@
 			<trans-unit id="name.description">
 				<source>name</source>
 			</trans-unit>
+			<trans-unit id="route.number">
+				<source>Linien Nr.</source>
+			</trans-unit>
+			<trans-unit id="route.name">
+				<source>Linien Bezeichnung</source>
+			</trans-unit>
+			<trans-unit id="route.assigned_company">
+				<source>Unternehmen</source>
+			</trans-unit>
+			<trans-unit id="route.city_line">
+				<source>Stadtlinie</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

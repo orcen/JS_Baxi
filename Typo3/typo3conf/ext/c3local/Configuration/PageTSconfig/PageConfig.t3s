@@ -4,23 +4,6 @@ RTE.config.tt_content.bodytext.preset = c3_full
 RTE.config.tx_news_domain_model_news.bodytext.preset = c3_full
 RTE.config.tt_content.header.preset = c3_inline
 
-#RTE.default.proc {
-#    # no remapping should happen, tags should stay as they are
-#    HTMLparser_rte {
-#        tags {
-#            b.remap >
-#            i.remap >
-#        }
-#    }
-#    # no remapping should happen, tags should stay as they are
-#    HTMLparser_db {
-#        tags {
-#            strong.remap >
-#            em.remap >
-#        }
-#    }
-#}
-
 TCEFORM {
 	tt_content {
 		## Customize layout class for content elements

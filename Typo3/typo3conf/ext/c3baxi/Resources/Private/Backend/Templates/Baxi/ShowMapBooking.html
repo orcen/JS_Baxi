@@ -43,7 +43,7 @@
 			document.getElementById('map'),
 			defaultLayers.vector.normal.map,
 			{
-				zoom: 10
+				zoom: 10,
 				// center: { lat: 52.51, lng: 13.4 }
 			});
 		// Create the parameters for the routing request:
@@ -90,23 +90,29 @@
 					style: {strokeColor: 'blue', lineWidth: 3}
 				});
 
+				// var icon = new H.map.Icon('<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect stroke="white" fill="#1b468d" x="1" y="1" width="22" height="22" /><text x="12" y="18" font-size="12pt" font-family="Arial" font-weight="bold" text-anchor="middle" fill="white">H</text></svg>');
+				var icon = new H.map.Icon('<svg xmlns="http://www.w3.org/2000/svg" width="71" height="100"><path d="M35.952 0A35.992 35.992 0 000 35.952c0 21.416 22.7 50.949 32.049 62.2a5.1 5.1 0 007.858 0c9.3-11.249 32-40.782 32-62.2A35.992 35.992 0 0035.952 0zM51.36 41.09H41.089v10.27a5.137 5.137 0 01-10.27 0V41.09H20.544a5.137 5.137 0 01-.286-10.271h10.557V20.545a5.137 5.137 0 1110.27-.287v10.557h10.267a5.137 5.137 0 01.286 10.271h-.286z" fill="#95c121"/></svg>',{
+					size : {
+						h: 20,
+                        w: 12
+                    }
+                });
+
 				// Create a marker for the start point:
-				// var startMarker = new H.map.Marker({
-				// 	lat: startPoint.latitude,
-				// 	lng: startPoint.longitude
-				// });
+				var startMarker = new H.map.Marker({
+					lat: startPoint.latitude,
+					lng: startPoint.longitude
+				},{
+					icon : icon
+                });
                 //
 				// // Create a marker for the end point:
-				// var endMarker = new H.map.Marker({
-				// 	lat: endPoint.latitude,
-				// 	lng: endPoint.longitude
-				// },{
-				// 	icon : new H.map.Icon(
-				// 		"https://baxi.c3-coding.de/typo3conf/ext/c3local/Resources/Public/Images/SVG/Standort.svg",
-				// 		{
-				// 			size: {w:20, h:20}
-				// 		})
-                // });
+				var endMarker = new H.map.Marker({
+					lat: endPoint.latitude,
+					lng: endPoint.longitude
+				},{
+					icon : icon
+                });
 
 				// var Icon =  endMarker.getIcon();
 				// Icon.c = {w:20, h:20};
@@ -116,7 +122,7 @@
 				// Create an outline for the route polyline:
 				var routeOutline = new H.map.Polyline(linestring, {
 					style: {
-						lineWidth: 2,
+						lineWidth: 1,
 						strokeColor: 'rgba(0, 128, 255, 0.7)',
 						lineTailCap: 'arrow-tail',
 						lineHeadCap: 'arrow-head'
@@ -125,29 +131,23 @@
 // Create a patterned polyline:
 				var routeArrows = new H.map.Polyline(linestring, {
 						style: {
-							lineWidth: 2,
+							lineWidth: 4,
 							fillColor: 'white',
-							strokeColor: 'rgba(255, 255, 255, 1)',
-							lineDash: [ 0, 2 ],
+							strokeColor: 'rgba(128, 255, 128, 1)',
+							lineDash: [ 0, 4 ],
 							lineTailCap: 'arrow-tail',
 							lineHeadCap: 'arrow-head'
 						}
 					}
 				);
 
-				var objects = [ routeLine, /*startMarker, endMarker,*/ routeOutline, routeArrows ];
+				var objects = [ routeLine, startMarker, endMarker, routeOutline, routeArrows ];
 
 			<f:for each="{waypoints}" as="waypoint" key="idx" >
                         var <f:format.nl2br>Waypoint{idx}</f:format.nl2br> = new H.map.Marker({
 				            lat: <f:format.nl2br>{waypoint.latitude}</f:format.nl2br>,
 					        lng: <f:format.nl2br>{waypoint.longitude}</f:format.nl2br>
-			                },{
-                            icon : new H.map.Icon(
-                                "https://baxi.c3-coding.de/typo3conf/ext/c3local/Resources/Public/Images/SVG/Standort.svg",
-                                {
-                                    size: {w:20, h:20}
-                                })
-                        });
+			                },{icon:icon});
                     objects.push( <f:format.nl2br>Waypoint{idx}</f:format.nl2br> );
 			</f:for>
 
@@ -155,6 +155,7 @@
 				map.addObjects(objects);
 
 				// Set the map's viewport to make the whole route visible:
+        console.log( routeLine.getBoundingBox() );
 				map.getViewModel().setLookAtData({bounds: routeLine.getBoundingBox()});
 			}
 		};

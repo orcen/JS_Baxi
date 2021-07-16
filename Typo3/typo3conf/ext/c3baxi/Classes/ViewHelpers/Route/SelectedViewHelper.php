@@ -6,6 +6,7 @@
 
 	use C3\C3baxi\ViewHelpers\IconViewHelper;
 	use C3\C3baxi\ViewHelpers\StationViewHelper;
+	use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 	use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 	use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -20,6 +21,7 @@
 			$this->registerArgument( 'time', 'string', 'Zeit' );
 			$this->registerArgument( 'fahrt', 'object', 'Fahrt' );
 		}
+
 
 		public static function renderStatic( array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext ) {
 			$fahrt = $arguments['fahrt'];
@@ -38,8 +40,10 @@
 				if ( $abfahrt != 0 && $ankunft != 0 ) break;
 			}
 
-			$duration = $ankunft->getZeit() - $abfahrt->getZeit();
-			$uidx = -1;
+			$duration = $ankunft->getZeit()->diff( $abfahrt->getZeit());
+			$duration = $duration->format('%i');
+
+			$uidx = 0;
 			$units = [
 				'Minuten',
 				'Stunden'
@@ -49,30 +53,30 @@
 				$uidx++;
 			}
 
-			$duration = 'ca. ' . $duration . ' ' . $units[$uidx];
+			$durationString = 'ca. ' . $duration . ' ' . $units[$uidx];
 
-			$linie = $arguments['fahrt']->getLinie();
+//			$linie = $arguments['fahrt']->getLinie();
 
 			$result = '<div class="box">';
 			$result .= '<div class="box-content route route--selected">';
 			$result .= '<div class="route-station">';
 			$result .= '<p>' . $arguments['start']->getName()
-				. '<small>Abfahrt: ab ' . date( 'H:i', $abfahrt->getZeit() ) . '</small>'
+				. '<small>Abfahrt: ab ' . $abfahrt->getZeit()->format('H:i') . '</small>'
 				. '</p>';
 			$result .= '</div>';
 			$result .= '<div class="route-info">'
-				. '<span><svg class="icon" width="16" height="16"><use xlink:href="#BAXI"/></svg>&nbsp;' . $linie->getNr() . '</span>'
-				. '<span><svg class="icon" width="16" height="16"><use xlink:href="#Uhr_kontur"/></svg>&nbsp;' . $duration . '</span>'
+				. '<span><svg class="icon" width="16" height="16"><use xlink:href="#BAXI"/></svg>&nbsp;' . $arguments['fahrt']->getLinie()->getNr() . '</span>'
+				. '<span><svg class="icon" width="16" height="16"><use xlink:href="#Uhr_kontur"/></svg>&nbsp;' . $durationString . '</span>'
 				. '</div>';
 			$result .= '<div class="route-station">';
 			$result .= '<p>' . $arguments['end']->getName()
-				. '<small>Ankunft: ab ' . date( 'H:i', $ankunft->getZeit() ) . '</small>'
+				. '<small>Ankunft: ab ' . $ankunft->getZeit()->format('H:i' ) . '</small>'
 				. '</p>';
 			$result .= '</div>';
 			$result .= '</div>';
 //			$result .= StationViewHelper::renderStatic( ['station' => $arguments['start']], $renderChildrenClosure, $renderingContext );
 			$result .= '<div class="box-footer">';
-			$result .= '<p data-action="help" data-question="1">' . IconViewHelper::renderStatic( ['name' => 'Hilfe_Klein'], $renderChildrenClosure, $renderingContext ) . '&nbsp;Wieso sind die Zeitangaben nicht genauer?</p>';
+			$result .= $renderChildrenClosure();
 			$result .= '</div>';
 			$result .= '<span class="bubble"></span></div>';
 			return $result;

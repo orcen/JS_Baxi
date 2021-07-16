@@ -4,6 +4,8 @@
 	namespace C3\C3baxi\Domain\Model;
 
 
+	use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
+
 	class Company extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	{
 		/**
@@ -47,11 +49,50 @@
 		protected $contactPerson = '';
 
 		/**
+		 * @var float
+		 */
+		protected $flatrateBase = 10;
+
+		/**
+		 * @var float
+		 */
+		protected $flatrateExtra = 1.4;
+
+		/**
+		 * @var \TYPO3\CMS\Beuser\Domain\Model\BackendUser
+		 */
+		protected $user;
+
+
+		public function __construct()
+		{
+			$this->routes = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+		}
+
+
+		/**
+		 * @return \TYPO3\CMS\Beuser\Domain\Model\BackendUser
+		 */
+		public function getUser() {
+			return $this->user;
+		}
+
+		/**
+		 * @param \TYPO3\CMS\Beuser\Domain\Model\BackendUser $user
+		 *
+		 * @return Company
+		 */
+		public function setUser( \TYPO3\CMS\Beuser\Domain\Model\BackendUser $user ) : Company {
+			$this->user = $user;
+			return $this;
+		}
+
+		/**
 		 * routes
 		 *
 		 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\C3\C3baxi\Domain\Model\Linie>
 		 */
-		protected $routes;
+		protected $routes = null;
 
 		/**
 		 * @return string
@@ -227,22 +268,18 @@
 		/**
 		 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 		 */
-		public function getRoutes() : \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-		{
+		public function getRoutes(): ?\TYPO3\CMS\Extbase\Persistence\ObjectStorage {
 			return $this->routes;
 		}
 
 		/**
 		 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $routes
-		 *
 		 * @return Company
 		 */
-		public function setRoutes( \TYPO3\CMS\Extbase\Persistence\ObjectStorage $routes ) : Company
-		{
+		public function setRoutes(?\TYPO3\CMS\Extbase\Persistence\ObjectStorage $routes): Company {
 			$this->routes = $routes;
 			return $this;
 		}
-
 
 		/**
 		 * @param \C3\C3baxi\Domain\Model\Linie $route
@@ -250,6 +287,7 @@
 		public function addRoute( Linie $route ) : Company
 		{
 			$this->routes->attach( $route );
+			return $this;
 		}
 
 		/**
@@ -260,5 +298,38 @@
 			$this->routes->detach( $route );
 			return $this;
 		}
+
+		/**
+		 * @return float
+		 */
+		public function getFlatrateBase(): float {
+			return $this->flatrateBase;
+		}
+
+		/**
+		 * @param float $flatrateBase
+		 * @return Company
+		 */
+		public function setFlatrateBase(float $flatrateBase): Company {
+			$this->flatrateBase = $flatrateBase;
+			return $this;
+		}
+
+		/**
+		 * @return float
+		 */
+		public function getFlatrateExtra(): float {
+			return $this->flatrateExtra;
+		}
+
+		/**
+		 * @param float $flatrateExtra
+		 * @return Company
+		 */
+		public function setFlatrateExtra(float $flatrateExtra): Company {
+			$this->flatrateExtra = $flatrateExtra;
+			return $this;
+		}
+
 
 	}

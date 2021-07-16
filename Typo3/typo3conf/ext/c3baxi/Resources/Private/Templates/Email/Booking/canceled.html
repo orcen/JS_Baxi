@@ -1,0 +1,15 @@
+
+<div>
+    <h1>BAXI - Buchung storniert</h1>
+
+    <div>
+        <h2>{booking.fahrt.name} {booking.fahrt.linie.nr} {booking.fahrt.linie.name}</h2>
+        {date -> f:format.date(format:'d.m.Y')}
+    </div>
+    <div>
+        <h3>{booking.user.name}</h3>
+
+
+        <p>Pl&auml;tzeanzahl: {booking.adults + booking.children}</p>
+    </div>
+</div>

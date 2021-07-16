@@ -25,5 +25,10 @@
             </f:for>
         </f:if>
 
+        <f:if condition="! {booking_comming} AND ! {booking_past}}">
+            <h2>Sie haben noch keine gebuchte Fahrten!</h2>
+            <f:link.page pageUid="1" class="btn btn--next">neu Fahrt buchen</f:link.page>
+        </f:if>
+
     </div>
 </div>

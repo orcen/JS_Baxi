@@ -100,6 +100,16 @@
 			}
 		}
 
+		.field-number {
+			.btn-spinner{
+				@include respond(380px,max) {
+					&.btn-spinner--up {left: 75% !important;}
+					&.btn-spinner--down {left: 25% !important;}
+				}
+			}
+
+		}
+
 		.field-description {
 			text-align: center;
 			display: block;
@@ -174,3 +184,4 @@ input {
 	}
 
 }
+

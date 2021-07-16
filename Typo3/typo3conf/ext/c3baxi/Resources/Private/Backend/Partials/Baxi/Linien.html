@@ -1,5 +1,4 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-
 <div class="list list--linie">
     <f:for as="linie" each="{linien}">
         <div class="list-item baxi_collapsible">
@@ -10,50 +9,58 @@
                           </span>
                 <span>{linie.nr} {linie.name}</span>
             </h4>
-            <span class="list-actions">
-                    <f:link.action class="btn btn-icon btn-default" action="edit"
-                                   arguments="{linie : linie }"
-                                   controller="Linie"
-                                   title="Linie bearbeiten">
-                        <core:icon identifier="actions-open" />
-                    </f:link.action>
-                    <f:link.action class="btn btn-icon btn-default" action="delete"
-                                   arguments="{linie : linie }"
-                                   controller="Linie"
-                                   title="Linie l&ouml;schen">
-                    <core:icon identifier="actions-edit-delete" />
+
+            <span class="list-actions btn-group">
+                <f:if condition="{rights.linie.modify}">
+                    <f:then>
+                        <f:link.action class="btn btn-icon btn-default" action="toggle"
+                                       arguments="{linie : linie }"
+                                       controller="Linie">
+                            <core:icon identifier="{f:if(condition: '{linie.hidden} == 1', then: 'actions-edit-unhide',else:'actions-edit-hide')}" size="small" />
+                        </f:link.action>
+                        <f:link.action class="btn btn-icon btn-default" action="edit"
+                                       arguments="{linie : linie }"
+                                       controller="Linie"
+                                       title="Linie bearbeiten">
+                            <core:icon identifier="actions-open" />
+                        </f:link.action>
+                        <f:link.action class="btn btn-icon btn-default" action="delete"
+                                       arguments="{linie : linie }"
+                                       controller="Linie"
+                                       title="Linie l&ouml;schen">
+                            <core:icon identifier="actions-edit-delete" />
+                        </f:link.action>
+                    </f:then>
+                </f:if>
+                <f:link.action class="btn btn-icon btn-default" action="show"
+                       arguments="{linie : linie }"
+                       controller="Linie"
+                       title="Linie anzeigen">
+                    <core:icon identifier="actions-view" />
                 </f:link.action>
             </span>
 
-
-            <div class="baxi_tabs baxi_collapsible-block" style="flex: 1 1 100%;" id="linie-{linie.uid}">
-
+            <div class="baxi_tabs baxi_collapsible-block" style="flex: 0 0 100%;" id="linie-{linie.uid}">
                 <nav class="baxi_tabs-header">
                     <span data-target="fahrten-{linie.uid}" class="is-active">Fahrten</span>
                     <span data-target="route-{linie.uid}">Route</span>
                 </nav>
 
-                <div data-tabid="fahrten-{linie.uid}" class="baxi_tabs-tab is-active">
-                    <div class="bar">
-                        <f:link.action action="export" controller="Fahrt" class="btn btn-default"
-                                       arguments="{linie: linie, type: 'fahrplan'}">Fahrplan Exportieren
-                        </f:link.action>
-                        <f:link.action action="new" controller="Fahrt" class="btn btn-default"
-                                       arguments="{linie: linie}">neue fahrt
-                        </f:link.action>
-                    </div>
-                    <ul class="list">
-                        <f:for as="fahrt" each="{linie.fahrten}">
-                            <li class="list-item">
 
-                                <span>{fahrt.name}<br />
-                                    <small>
-                                        <f:for as="tag" each="{fahrt.tage}" iteration="idx"><span>{tag}</span><f:if
-                                                condition="! {idx.isLast}">, </f:if></f:for>
-                                    </small>
+                <div data-tabid="fahrten-{linie.uid}" class="baxi_tabs-tab is-active">
+
+                    <ul class="list">
+                        <v:iterator.sort subject="{linie.fahrten}" as="sortierteFahrten" sortBy="name" order="ASC" sortFlags="SORT_STRING">
+                        <f:for as="fahrt" each="{sortierteFahrten}">
+                            <li class="list-item" style="{f:if(condition:'{fahrt.rueckfahrt}',then:'color:green')}">
+
+                                <span style="min-width: 15ch">{fahrt.name}<br />
+                                    <small><v:iterator.implode content="{fahrt.tage}" glue="," /></small>
                                 </span>
-                                <span>{fahrt.buchbarBis -> f:format.date(format:'H:i')}</span>
-                                <span class="list-actions">
+                                <span>{fahrt.buchbarBis -> f:format.date(format:'%H:%M')}</span>
+
+                                <span class="list-actions btn-group">
+                                    <f:if condition="{rights.fahrt.modify}">
                                     <f:link.action class="btn btn-icon btn-default btn-small" action="edit"
                                                    controller="Fahrt"
                                                    arguments="{fahrt : fahrt}">
@@ -64,10 +71,26 @@
                                                    arguments="{fahrt : fahrt}">
                                         <core:icon identifier="actions-delete" />
                                     </f:link.action>
+                                    </f:if>
                                 </span>
                             </li>
                         </f:for>
+                        </v:iterator.sort>
                     </ul>
+
+                    <f:if condition="{rights.fahrt.modify}">
+                        <div class="bar">
+                            <f:comment>
+                                <f:link.action action="export" controller="Linie" class="btn btn-default"
+                                               arguments="{linie: linie, type: 'fahrplan'}">Fahrplan Exportieren
+                                </f:link.action>
+                            </f:comment>
+                            <f:link.action action="new" controller="Fahrt" class="btn btn-default"
+                                           arguments="{linie: linie}">neue Fahrt hinzufügen
+                            </f:link.action>
+                        </div>
+                    </f:if>
+
                 </div>
 
                 <div data-tabid="route-{linie.uid}" class="baxi_tabs-tab">
@@ -79,6 +102,7 @@
                         </f:for>
                     </ul>
                 </div>
+
 
             </div>
         </div>

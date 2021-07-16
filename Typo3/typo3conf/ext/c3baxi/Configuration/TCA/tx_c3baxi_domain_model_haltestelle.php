@@ -20,10 +20,10 @@ return [
         'iconfile' => 'EXT:c3baxi/Resources/Public/Icons/Standort@2x.png'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, number, latitude, longitude, zone',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, number, latitude, longitude, zone,calculation,',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, number, latitude, longitude, zone, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, number, latitude, longitude, zone, calculation, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -124,6 +124,15 @@ return [
 				'eval' => 'trim'
 			]
 		],
+        'wabe' => [
+			'exclude' => true,
+			'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_haltestelle.wabe',
+			'config' => [
+				'type' => 'input',
+				'size' => '10',
+				'eval' => 'trim,int'
+			]
+		],
         'name' => [
             'exclude' => true,
             'label' => 'LLL:EXT:c3baxi/Resources/Private/Language/locallang_db.xlf:tx_c3baxi_domain_model_haltestelle.name',
@@ -168,6 +177,13 @@ return [
                 ],
             ],
         ],
-    
+		'calculation'=> [
+			'exclude' => true,
+			'label'=> 'Abrechnungsstelle',
+			'config' => [
+				'type' => 'inline',
+				'foreign_table' => 'tx_c3baxi_domain_model_haltestelle',
+			]
+		]
     ],
 ];
